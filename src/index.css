@@ -1,0 +1,38 @@
+@import 'tailwindcss';
+
+/* Layout concept: a single-column accordion of section cards, each holding
+   compact instance cards; editing happens in a popover, not inline. */
+@theme {
+  --font-sans: 'Manrope', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+}
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Accordion panel: animates height via grid-template-rows, no JS measuring. */
+.accordion-panel {
+  display: grid;
+  grid-template-rows: 1fr;
+  transition: grid-template-rows 220ms ease;
+}
+.accordion-panel[data-collapsed='true'] {
+  grid-template-rows: 0fr;
+}
+.accordion-panel > div {
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .accordion-panel {
+    transition: none;
+  }
+}

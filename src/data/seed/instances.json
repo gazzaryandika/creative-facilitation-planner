@@ -1,0 +1,62 @@
+[
+  {
+    "id": "instance-ddbb19ee-fc3f-45ba-a533-8451471bd9f5",
+    "techniqueId": "ice-breaker-technique-quiz",
+    "actualMinutes": 10,
+    "facilitatorNotes": "Four containers, four answers (or a dartboard with four zones, decided on the spot per venue). Keep it quick and light, with no scores."
+  },
+  {
+    "id": "instance-0558069f-3a32-4c78-9e8d-91d48c9f872f",
+    "techniqueId": "mind-mapping",
+    "actualMinutes": 12,
+    "facilitatorNotes": "Problem owner explains the PaG and answers questions. Centre word: \"creativity knowledge\" — confirmed after the mentor session. Prompt the RG twice: once for what's written down (books, named techniques), once for what only passes by example (a mindset, the kind of thing Mark gave students that's in no book)."
+  },
+  {
+    "id": "instance-cf01ae65-914c-47bd-bade-86cfc4efc67b",
+    "techniqueId": "spontaneous-clustering",
+    "actualMinutes": 8,
+    "facilitatorNotes": "RG was tired after a full day — kept to 8 minutes, well under the book's usual range. Facilitator helps if the RG is slow. Aim for 3 to 6 families; a rest cluster is fine. Many distinct clusters → all go forward to How-To's; few, similar clusters → pick the most outstanding."
+  },
+  {
+    "id": "instance-generate-how-tos-pap-1a2b3c4d",
+    "techniqueId": "generate-how-tos-and-pap",
+    "actualMinutes": 15,
+    "facilitatorNotes": "Default: many clusters → many How-To's, to diverge as much as possible. Few, similar clusters → How-To's only for the most outstanding ones. If the RG stalls after 3 minutes, offer one of the three fallback PaPs. Problem owner confirms the PaP is relevant before it's read aloud and written large."
+  },
+  {
+    "id": "instance-purge-on-pap-5e6f7a8b",
+    "techniqueId": "purge-on-the-pap",
+    "actualMinutes": 10,
+    "facilitatorNotes": "Read a few aloud, no discussion. This empties the obvious so the excursion isn't spent regenerating it."
+  },
+  {
+    "id": "instance-c75125b5-07a2-4637-9058-f5c7512ce557",
+    "techniqueId": "excursion-random-words",
+    "actualMinutes": 15,
+    "facilitatorNotes": "Cool evening outdoors ruled out running the whole session outside, so stayed with Random Words rather than Random Objects. Draw the word with the PaP out of sight; chain each new word from the last answer, not just one layer deep."
+  },
+  {
+    "id": "instance-force-fitting-9c0d1e2f",
+    "techniqueId": "force-fitting-brainsketching",
+    "actualMinutes": 35,
+    "facilitatorNotes": "Pass drawings around and build on them. MATEC was dropped as too complex for this case; mentor confirmed force fitting plus brainsketching as the better combination after the excursion."
+  },
+  {
+    "id": "instance-b47ef5f2-e26e-4eef-b7bd-d3ea99c54608",
+    "techniqueId": "c-box",
+    "actualMinutes": 20,
+    "facilitatorNotes": "Axes: value creation for students vs. student engagement. Sem said he can make a crazy idea work himself, so use a joker card or dot to protect one bold, low-scoring idea. Sem names the options he takes forward and wants something tangible to hand over — a poster or a booklet."
+  },
+  {
+    "id": "instance-wrap-up-3a4b5c6d",
+    "techniqueId": "wrap-up-close",
+    "actualMinutes": 5,
+    "facilitatorNotes": "Thank the RG. Sem reacts as problem owner. Agree what the client receives afterward — the client report needs this agreement up front. Keep the PaP, C-box and chosen idea visible on the wall."
+  },
+  {
+    "id": "instance-reflection-7e8f9a0b",
+    "techniqueId": "reflection-what-so-what-now-what",
+    "actualMinutes": 15,
+    "facilitatorNotes": "Each participant answers alone, then shares. Ask Sem to reflect too."
+  }
+]

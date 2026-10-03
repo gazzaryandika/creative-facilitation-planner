@@ -1,0 +1,53 @@
+[
+  {
+    "id": "seed-xemia",
+    "name": "Xemia session plan",
+    "description": "PENDING — the PRD cites this as the first seed template (data product vs. software product, business-centric case) but the actual plan document (sections, technique instances, times, Problem as Given text) was not found anywhere in the vault. Paste in the real plan before the demo; this entry is a placeholder so the Template Picker has something to render and clone.",
+    "isSeedTemplate": true,
+    "targetLengthMinutes": 0,
+    "problemOwnerName": "",
+    "problemOwnerDescription": "",
+    "problemAsGiven": "",
+    "introduction": "",
+    "sections": {
+      "problem-as-given": [],
+      "introduction": [],
+      "problem-finding": [],
+      "idea-finding": [],
+      "solution-finding": [],
+      "wrap-up": []
+    },
+    "createdAt": "2026-10-01T00:00:00.000Z",
+    "updatedAt": "2026-10-01T00:00:00.000Z"
+  },
+  {
+    "id": "seed-creativity-guru",
+    "name": "Creativity Guru session plan",
+    "description": "The real plan, transcribed from \"IDEM104 - Session Plan Creativity Guru Case (Case 2).md\" — built across several rounds, a live rehearsal and a mentor meeting. Total 145 min plus the untimed introduction (target 150, matching Xemia; Problem Finding was trimmed by 5 after mentor feedback that it ran long). One structural note: this document's own math puts the ice breaker inside Problem Finding's 45-minute budget, not in a separate Introduction block — the app's Introduction section is left empty here to match that, even though the base framework lists Introduction as its own section.",
+    "isSeedTemplate": true,
+    "targetLengthMinutes": 150,
+    "problemOwnerName": "Sem Carree",
+    "problemOwnerDescription": "Course coordinator for IDEM104, representing the course's other owners. Received the creativity legacy — roughly 100 books and a CF suitcase of random objects — from Mark, who lectured the course for about 25 years before his death two weeks before this session. Gave no written brief; stated the problem live and asked the team to draft one or two problem statements themselves. Wants something tangible to hand over to students afterward (a poster or a booklet), and said he can personally make a bold, low-scoring idea work himself — protect at least one audacious option rather than scoring it out. Source: IDEM104 - MoM Case 2 Check-in with Sem Carree; IDEM104 - Session Plan Creativity Guru Case (Case 2).md.",
+    "problemAsGiven": "Sem and the course owners hold a legacy of creativity knowledge and materials: books, techniques, mindsets, slide decks and objects. They do not want to lose it.\n\nThe gap: a shelf of books or a library exists, but the value for students lies in use, inspiration and a stretched mindset. Passing on a book alone does not make students use it — two routes exist, knowledge and physical items, and each needs its own answer.\n\nAs given by Sem: How to make the knowledge and materials of creativity gurus benefit students, so students use them, get inspired and stretch their mindset?",
+    "introduction": "Sem presents the case as problem owner. The team facilitates. Sem owns the content, the team owns the process.\n\nCase background: client is Sem Carree and the course owners, TU Delft Creative Facilitation course. Target user: design students at TU Delft (programme, year and prior creativity training to confirm with Sem). The legacy of the gurus does not reach students in a form they use. A long-time lecturer of the course died two weeks ago and left his books and objects to Sem; Sem decides how to tell this.\n\nWhat is the legacy: gurus Osborn, Koestler, Runco and De Bono, each with a different style, some close by at TU Delft. Materials: about 100 creativity books, a CF suitcase of random objects, slide decks and mindsets. Two routes: get the knowledge to students, and make the physical items benefit students.\n\nSource: IDEM104 - Session Plan Creativity Guru Case (Case 2).md.",
+    "sections": {
+      "problem-as-given": [],
+      "introduction": [],
+      "problem-finding": [
+        "instance-ddbb19ee-fc3f-45ba-a533-8451471bd9f5",
+        "instance-0558069f-3a32-4c78-9e8d-91d48c9f872f",
+        "instance-cf01ae65-914c-47bd-bade-86cfc4efc67b",
+        "instance-generate-how-tos-pap-1a2b3c4d"
+      ],
+      "idea-finding": [
+        "instance-purge-on-pap-5e6f7a8b",
+        "instance-c75125b5-07a2-4637-9058-f5c7512ce557",
+        "instance-force-fitting-9c0d1e2f"
+      ],
+      "solution-finding": ["instance-b47ef5f2-e26e-4eef-b7bd-d3ea99c54608"],
+      "wrap-up": ["instance-wrap-up-3a4b5c6d", "instance-reflection-7e8f9a0b"]
+    },
+    "createdAt": "2026-10-03T00:00:00.000Z",
+    "updatedAt": "2026-10-03T00:00:00.000Z"
+  }
+]
