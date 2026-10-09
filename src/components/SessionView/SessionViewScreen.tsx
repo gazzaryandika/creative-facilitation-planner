@@ -3,9 +3,12 @@ import { useMemo } from 'react'
 import { SECTION_LABELS, TECHNIQUE_SECTION_ORDER } from '../../data/models'
 import { exportPlanToDocx } from '../../export/planToDocx'
 import {
+  effectiveDescription,
   effectiveMaterials,
+  effectiveName,
   instanceMap,
   planTotalMinutes,
+  resolveTechnique,
   sectionStageFlow,
   sectionTotalMinutes,
 } from '../../lib/planMath'
@@ -131,15 +134,22 @@ export function SessionViewScreen({ planId, onEdit, onStartLive }: SessionViewSc
                 <ol className="mt-3 space-y-4">
                   {instanceIds.map((instanceId) => {
                     const instance = instances.get(instanceId)
-                    const technique = instance && techniques.get(instance.techniqueId)
-                    if (!instance || !technique) return null
-                    const aim = technique.purpose || technique.inShort
+                    if (!instance) return null
+                    const technique = resolveTechnique(instance, techniques)
+                    const aim = effectiveDescription(instance, technique)
                     const materials = effectiveMaterials(instance, technique)
 
                     return (
                       <li key={instanceId}>
                         <div className="flex items-baseline justify-between gap-3">
-                          <h3 className="font-semibold text-stone-900">{technique.name}</h3>
+                          <h3 className="font-semibold text-stone-900">
+                            {effectiveName(instance, technique)}
+                            {!technique && (
+                              <span className="ml-2 align-middle text-xs font-normal text-stone-400">
+                                (free text)
+                              </span>
+                            )}
+                          </h3>
                           <span className="shrink-0 text-xs font-semibold tabular-nums text-stone-500">
                             {instance.actualMinutes} min
                           </span>

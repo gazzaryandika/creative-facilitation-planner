@@ -1,7 +1,7 @@
 import { ArrowRight, Info, Trash2, X } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { SECTION_LABELS, TECHNIQUE_SECTION_ORDER, type SectionId, type Technique, type TechniqueInstance } from '../../data/models'
-import { effectiveMaterials, instanceMap, planTotalMinutes } from '../../lib/planMath'
+import { effectiveDescription, effectiveMaterials, effectiveName, instanceMap, planTotalMinutes } from '../../lib/planMath'
 import { usePlannerStore } from '../../store/usePlannerStore'
 import { TechniqueDetailModal } from '../TechniqueDetailModal'
 import { TimeBudgetBar } from '../TimeBudgetBar'
@@ -22,10 +22,14 @@ export function InstanceEditModal({ instance, technique, planId, sectionId, onCl
   const allInstances = usePlannerStore((s) => s.instances)
   const [showDetail, setShowDetail] = useState(false)
 
+  const isFreeText = !instance.techniqueId
+
   // Edits are staged here and only written to the store on "Confirm changes" —
   // nothing in this modal takes effect until then.
   const [draftMinutes, setDraftMinutes] = useState(instance.actualMinutes)
   const [draftSectionId, setDraftSectionId] = useState<SectionId>(sectionId)
+  const [draftName, setDraftName] = useState(effectiveName(instance, technique))
+  const [draftDescription, setDraftDescription] = useState(effectiveDescription(instance, technique))
   const [draftMaterials, setDraftMaterials] = useState(effectiveMaterials(instance, technique))
   const [draftNotes, setDraftNotes] = useState(instance.facilitatorNotes)
 
@@ -33,6 +37,8 @@ export function InstanceEditModal({ instance, technique, planId, sectionId, onCl
   const isDirty =
     draftMinutes !== instance.actualMinutes ||
     movingSection ||
+    (isFreeText && draftName !== effectiveName(instance, technique)) ||
+    draftDescription !== effectiveDescription(instance, technique) ||
     draftMaterials !== effectiveMaterials(instance, technique) ||
     draftNotes !== instance.facilitatorNotes
 
@@ -50,6 +56,8 @@ export function InstanceEditModal({ instance, technique, planId, sectionId, onCl
       actualMinutes: draftMinutes,
       facilitatorNotes: draftNotes,
       materials: draftMaterials,
+      description: draftDescription,
+      ...(isFreeText ? { customName: draftName } : {}),
     })
     if (movingSection) {
       moveInstanceAcrossSections(planId, sectionId, draftSectionId, instance.id, 0)
@@ -58,7 +66,7 @@ export function InstanceEditModal({ instance, technique, planId, sectionId, onCl
   }
 
   function handleRemove() {
-    if (!window.confirm(`Remove "${technique?.name ?? 'this technique'}" from the plan?`)) return
+    if (!window.confirm(`Remove "${effectiveName(instance, technique)}" from the plan?`)) return
     removeInstanceFromSection(planId, sectionId, instance.id)
     onClose()
   }
@@ -70,11 +78,22 @@ export function InstanceEditModal({ instance, technique, planId, sectionId, onCl
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-start justify-between gap-4 border-b border-stone-100 px-5 py-4">
-          <div className="min-w-0">
-            <p className="text-xs font-medium uppercase tracking-wide text-stone-400">Editing</p>
-            <h3 className="truncate text-lg font-semibold text-stone-900">
-              {technique?.name ?? 'Unknown technique'}
-            </h3>
+          <div className="min-w-0 flex-1">
+            <p className="text-xs font-medium uppercase tracking-wide text-stone-400">
+              Editing{isFreeText ? ' · free text' : ''}
+            </p>
+            {isFreeText ? (
+              <input
+                value={draftName}
+                onChange={(e) => setDraftName(e.target.value)}
+                placeholder="Name this step…"
+                className="mt-0.5 w-full border-none bg-transparent text-lg font-semibold text-stone-900 focus:outline-none"
+              />
+            ) : (
+              <h3 className="truncate text-lg font-semibold text-stone-900">
+                {technique?.name ?? 'Unknown technique'}
+              </h3>
+            )}
           </div>
           <button
             type="button"
@@ -134,11 +153,29 @@ export function InstanceEditModal({ instance, technique, planId, sectionId, onCl
           )}
 
           <label className="block">
+            <span className="text-xs font-medium uppercase tracking-wide text-stone-400">
+              {isFreeText ? 'Description' : 'Description / aim'}
+            </span>
+            <textarea
+              value={draftDescription}
+              onChange={(e) => setDraftDescription(e.target.value)}
+              placeholder={isFreeText ? 'What happens in this step…' : "Override this technique's purpose for this plan…"}
+              rows={isFreeText ? 3 : 2}
+              className="mt-1 w-full rounded-md border border-stone-300 px-3 py-2 text-sm focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
+            />
+            {!isFreeText && technique && (technique.purpose || technique.inShort) && draftDescription !== (technique.purpose || technique.inShort) && (
+              <p className="mt-1 text-xs text-stone-400">
+                Overrides this technique's usual description for this plan only.
+              </p>
+            )}
+          </label>
+
+          <label className="block">
             <span className="text-xs font-medium uppercase tracking-wide text-stone-400">Materials</span>
             <textarea
               value={draftMaterials}
               onChange={(e) => setDraftMaterials(e.target.value)}
-              placeholder="What this technique needs for this plan…"
+              placeholder="What this step needs for this plan…"
               rows={2}
               className="mt-1 w-full rounded-md border border-stone-300 px-3 py-2 text-sm focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
             />

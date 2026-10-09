@@ -3,7 +3,7 @@ import { CSS } from '@dnd-kit/utilities'
 import { ChevronDown, GripVertical, Pencil } from 'lucide-react'
 import { useState } from 'react'
 import type { Technique, TechniqueInstance } from '../../data/models'
-import { effectiveMaterials } from '../../lib/planMath'
+import { effectiveDescription, effectiveMaterials, effectiveName } from '../../lib/planMath'
 
 interface InstanceCardProps {
   instance: TechniqueInstance
@@ -23,7 +23,9 @@ export function InstanceCard({ instance, technique, onEdit }: InstanceCardProps)
     opacity: isDragging ? 0.5 : 1,
   }
 
-  if (!technique) {
+  // A techniqueId pointing at nothing is a real data problem; no techniqueId at
+  // all just means this is a free-text step, which is the normal, intended case.
+  if (instance.techniqueId && !technique) {
     return (
       <div
         ref={setNodeRef}
@@ -35,8 +37,10 @@ export function InstanceCard({ instance, technique, onEdit }: InstanceCardProps)
     )
   }
 
+  const isFreeText = !instance.techniqueId
+  const description = effectiveDescription(instance, technique)
   const materials = effectiveMaterials(instance, technique)
-  const hasDetail = Boolean(materials || instance.facilitatorNotes)
+  const hasDetail = Boolean(description || materials || instance.facilitatorNotes)
 
   return (
     <div
@@ -76,7 +80,14 @@ export function InstanceCard({ instance, technique, onEdit }: InstanceCardProps)
           onClick={onEdit}
           className={`flex min-w-0 flex-1 items-center gap-3 py-2.5 pr-3 text-left ${hasDetail ? '' : 'pl-2'}`}
         >
-          <p className="min-w-0 flex-1 truncate font-medium text-stone-900">{technique.name}</p>
+          <p className="min-w-0 flex-1 truncate font-medium text-stone-900">
+            {effectiveName(instance, technique)}
+            {isFreeText && (
+              <span className="ml-1.5 rounded-full bg-violet-100 px-1.5 py-0.5 align-middle text-[10px] font-medium text-violet-700">
+                free text
+              </span>
+            )}
+          </p>
           <span className="shrink-0 rounded-full bg-stone-100 px-2 py-0.5 text-xs font-semibold tabular-nums text-stone-600">
             {instance.actualMinutes} min
           </span>
@@ -91,6 +102,7 @@ export function InstanceCard({ instance, technique, onEdit }: InstanceCardProps)
         <div className="accordion-panel" data-collapsed={!expanded}>
           <div>
             <div className="space-y-1.5 py-2 pr-3 pl-11">
+              {description && <p className="text-xs text-stone-600">{description}</p>}
               {instance.facilitatorNotes && (
                 <p className="whitespace-pre-wrap text-xs text-stone-600">{instance.facilitatorNotes}</p>
               )}

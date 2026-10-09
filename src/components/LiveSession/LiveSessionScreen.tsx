@@ -1,7 +1,7 @@
 import { ChevronLeft, ChevronRight, Pause, Play, Square } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
 import { SECTION_LABELS } from '../../data/models'
-import { effectiveMaterials, flattenInstances, instanceMap } from '../../lib/planMath'
+import { effectiveDescription, effectiveMaterials, effectiveName, flattenInstances, instanceMap } from '../../lib/planMath'
 import { usePlannerStore } from '../../store/usePlannerStore'
 import { StageFlowBadges } from '../StageFlowBadges'
 import { TimeBudgetBar } from '../TimeBudgetBar'
@@ -72,7 +72,7 @@ export function LiveSessionScreen({ planId, onEnd }: LiveSessionScreenProps) {
   const currentTotalSeconds = current.instance.actualMinutes * 60
   const currentRemaining = currentTotalSeconds - secondsElapsedInStep
   const wholeTotalSeconds = steps.reduce((sum, s) => sum + s.instance.actualMinutes * 60, 0)
-  const aim = current.technique?.purpose || current.technique?.inShort
+  const aim = effectiveDescription(current.instance, current.technique)
   const materials = effectiveMaterials(current.instance, current.technique)
 
   return (
@@ -141,7 +141,7 @@ export function LiveSessionScreen({ planId, onEnd }: LiveSessionScreenProps) {
             <StageFlowBadges stages={current.technique ? [current.technique.stage] : []} />
           </div>
           <h1 className="mt-2 text-3xl font-bold tracking-tight text-stone-900">
-            {current.technique?.name ?? 'Unknown technique'}
+            {effectiveName(current.instance, current.technique)}
           </h1>
 
           {aim && <p className="mt-3 font-serif text-lg leading-relaxed text-stone-700">{aim}</p>}
@@ -165,7 +165,7 @@ export function LiveSessionScreen({ planId, onEnd }: LiveSessionScreenProps) {
           {next ? (
             <div className="mt-8 rounded-lg border border-stone-200 bg-white px-4 py-3">
               <p className="text-xs font-semibold uppercase tracking-wide text-stone-400">Up next</p>
-              <p className="mt-1 font-semibold text-stone-900">{next.technique?.name ?? 'Unknown technique'}</p>
+              <p className="mt-1 font-semibold text-stone-900">{effectiveName(next.instance, next.technique)}</p>
               <p className="text-xs text-stone-500">
                 {SECTION_LABELS[next.sectionId]} · {next.instance.actualMinutes} min
               </p>

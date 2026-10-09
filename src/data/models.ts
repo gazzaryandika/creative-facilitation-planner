@@ -58,7 +58,12 @@ export interface Technique {
 
 export interface TechniqueInstance {
   id: string
-  techniqueId: string
+  /** Absent for a free-text step: a one-off written directly into this plan, not drawn from (or added to) the technique library. */
+  techniqueId?: string
+  /** The step's name when it has no techniqueId. Ignored for a library-backed instance, which uses the technique's own name. */
+  customName?: string
+  /** Overrides the technique's purpose/aim for this plan only; the whole description for a free-text step. Undefined falls back to the technique's own purpose/inShort. */
+  description?: string
   actualMinutes: number
   facilitatorNotes: string
   /** Overrides the technique's default materials for this plan only. Undefined falls back to the technique's own materials; an explicit empty string means "none for this plan," not "unset." */

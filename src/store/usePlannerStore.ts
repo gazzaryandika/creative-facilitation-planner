@@ -48,9 +48,18 @@ interface PlannerState {
     sectionId: SectionId,
     techniqueId: string,
   ) => Promise<void>
+  /** Adds a one-off step written directly into the plan, not drawn from (or added to) the technique library. */
+  addFreeTextInstanceToSection: (
+    planId: string,
+    sectionId: SectionId,
+    customName: string,
+    description: string,
+  ) => Promise<void>
   updateInstance: (
     instanceId: string,
-    patch: Partial<Pick<TechniqueInstance, 'actualMinutes' | 'facilitatorNotes' | 'materials'>>,
+    patch: Partial<
+      Pick<TechniqueInstance, 'actualMinutes' | 'facilitatorNotes' | 'materials' | 'description' | 'customName'>
+    >,
   ) => Promise<void>
   removeInstanceFromSection: (
     planId: string,
@@ -71,7 +80,33 @@ interface PlannerState {
   ) => Promise<void>
 }
 
-export const usePlannerStore = create<PlannerState>((set, get) => ({
+export const usePlannerStore = create<PlannerState>((set, get) => {
+  async function attachInstance(
+    planId: string,
+    sectionId: SectionId,
+    instance: TechniqueInstance,
+  ): Promise<void> {
+    const plan = get().plans.find((p) => p.id === planId)
+    if (!plan) throw new Error(`Plan ${planId} not found`)
+
+    const updatedPlan: SessionPlan = {
+      ...plan,
+      sections: {
+        ...plan.sections,
+        [sectionId]: [...plan.sections[sectionId], instance.id],
+      },
+      updatedAt: new Date().toISOString(),
+    }
+
+    await repository.saveInstance(instance)
+    await repository.savePlan(updatedPlan)
+    set((state) => ({
+      instances: [...state.instances, instance],
+      plans: state.plans.map((p) => (p.id === planId ? updatedPlan : p)),
+    }))
+  }
+
+  return {
   loaded: false,
   techniques: [],
   plans: [],
@@ -187,30 +222,22 @@ export const usePlannerStore = create<PlannerState>((set, get) => ({
   addInstanceToSection: async (planId, sectionId, techniqueId) => {
     const technique = get().techniques.find((t) => t.id === techniqueId)
     if (!technique) throw new Error(`Technique ${techniqueId} not found`)
-    const plan = get().plans.find((p) => p.id === planId)
-    if (!plan) throw new Error(`Plan ${planId} not found`)
-
-    const instance: TechniqueInstance = {
+    await attachInstance(planId, sectionId, {
       id: newId('instance'),
       techniqueId,
       actualMinutes: technique.time?.minMinutes ?? 0,
       facilitatorNotes: '',
-    }
-    const updatedPlan: SessionPlan = {
-      ...plan,
-      sections: {
-        ...plan.sections,
-        [sectionId]: [...plan.sections[sectionId], instance.id],
-      },
-      updatedAt: new Date().toISOString(),
-    }
+    })
+  },
 
-    await repository.saveInstance(instance)
-    await repository.savePlan(updatedPlan)
-    set((state) => ({
-      instances: [...state.instances, instance],
-      plans: state.plans.map((p) => (p.id === planId ? updatedPlan : p)),
-    }))
+  addFreeTextInstanceToSection: async (planId, sectionId, customName, description) => {
+    await attachInstance(planId, sectionId, {
+      id: newId('instance'),
+      customName,
+      description,
+      actualMinutes: 10,
+      facilitatorNotes: '',
+    })
   },
 
   updateInstance: async (instanceId, patch) => {
@@ -277,4 +304,5 @@ export const usePlannerStore = create<PlannerState>((set, get) => ({
       plans: state.plans.map((p) => (p.id === planId ? updatedPlan : p)),
     }))
   },
-}))
+  }
+})

@@ -11,7 +11,7 @@ import {
   WidthType,
 } from 'docx'
 import { SECTION_LABELS, TECHNIQUE_SECTION_ORDER, type SessionPlan, type Technique, type TechniqueInstance } from '../data/models'
-import { effectiveMaterials } from '../lib/planMath'
+import { effectiveDescription, effectiveMaterials, effectiveName, resolveTechnique } from '../lib/planMath'
 
 const TABLE_HEADERS = ['Time', 'What', 'Aim', 'Materials', 'Notes']
 
@@ -29,8 +29,8 @@ function headerRow(): TableRow {
 function instanceRow(instance: TechniqueInstance, technique: Technique | undefined): TableRow {
   const cells = [
     `${instance.actualMinutes} min`,
-    technique?.name ?? `Unknown technique (${instance.techniqueId})`,
-    technique?.purpose ?? technique?.inShort ?? '',
+    effectiveName(instance, technique),
+    effectiveDescription(instance, technique),
     effectiveMaterials(instance, technique),
     instance.facilitatorNotes,
   ]
@@ -89,7 +89,7 @@ export async function exportPlanToDocx(
                 ],
               })
             }
-            return instanceRow(instance, techniqueById.get(instance.techniqueId))
+            return instanceRow(instance, resolveTechnique(instance, techniqueById))
           }),
         ],
       }),

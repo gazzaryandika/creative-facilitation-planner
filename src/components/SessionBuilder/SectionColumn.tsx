@@ -3,7 +3,7 @@ import { SortableContext, arrayMove, verticalListSortingStrategy } from '@dnd-ki
 import { ChevronDown, Plus } from 'lucide-react'
 import { useState } from 'react'
 import { SECTION_LABELS, type SectionId, type SessionPlan, type Technique, type TechniqueInstance } from '../../data/models'
-import { sectionStageFlow, sectionTotalMinutes } from '../../lib/planMath'
+import { resolveTechnique, sectionStageFlow, sectionTotalMinutes } from '../../lib/planMath'
 import { usePlannerStore } from '../../store/usePlannerStore'
 import { StageFlowBadges } from '../StageFlowBadges'
 import { InstanceCard } from './InstanceCard'
@@ -20,6 +20,7 @@ interface SectionColumnProps {
 export function SectionColumn({ plan, sectionId, instances, techniques }: SectionColumnProps) {
   const reorderWithinSection = usePlannerStore((s) => s.reorderWithinSection)
   const addInstanceToSection = usePlannerStore((s) => s.addInstanceToSection)
+  const addFreeTextInstanceToSection = usePlannerStore((s) => s.addFreeTextInstanceToSection)
   const [collapsed, setCollapsed] = useState(false)
   const [pickerOpen, setPickerOpen] = useState(false)
   const [editingInstanceId, setEditingInstanceId] = useState<string | null>(null)
@@ -91,7 +92,7 @@ export function SectionColumn({ plan, sectionId, instances, techniques }: Sectio
                     <InstanceCard
                       key={instanceId}
                       instance={instance}
-                      technique={techniques.get(instance.techniqueId)}
+                      technique={resolveTechnique(instance, techniques)}
                       onEdit={() => setEditingInstanceId(instanceId)}
                     />
                   )
@@ -105,8 +106,12 @@ export function SectionColumn({ plan, sectionId, instances, techniques }: Sectio
       {pickerOpen && (
         <TechniquePickerPopover
           onClose={() => setPickerOpen(false)}
-          onPick={async (techniqueId) => {
+          onPickLibrary={async (techniqueId) => {
             await addInstanceToSection(plan.id, sectionId, techniqueId)
+            setPickerOpen(false)
+          }}
+          onAddFreeText={async (customName, description) => {
+            await addFreeTextInstanceToSection(plan.id, sectionId, customName, description)
             setPickerOpen(false)
           }}
         />
@@ -115,7 +120,7 @@ export function SectionColumn({ plan, sectionId, instances, techniques }: Sectio
       {editingInstance && (
         <InstanceEditModal
           instance={editingInstance}
-          technique={techniques.get(editingInstance.techniqueId)}
+          technique={resolveTechnique(editingInstance, techniques)}
           planId={plan.id}
           sectionId={sectionId}
           onClose={() => setEditingInstanceId(null)}

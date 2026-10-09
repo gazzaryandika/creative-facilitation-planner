@@ -9,6 +9,29 @@ export function effectiveMaterials(instance: TechniqueInstance, technique: Techn
   return instance.materials ?? technique?.materials ?? ''
 }
 
+/** A free-text step's own name, or the library technique's name. */
+export function effectiveName(instance: TechniqueInstance, technique: Technique | undefined): string {
+  return technique?.name ?? instance.customName ?? 'Untitled step'
+}
+
+/** The instance's own description/aim override if set, the technique's purpose/inShort otherwise, or the whole description for a free-text step. */
+export function effectiveDescription(instance: TechniqueInstance, technique: Technique | undefined): string {
+  return instance.description ?? technique?.purpose ?? technique?.inShort ?? ''
+}
+
+/** A free-text instance has no techniqueId — it's a one-off written directly into the plan. */
+export function isFreeTextInstance(instance: TechniqueInstance): boolean {
+  return !instance.techniqueId
+}
+
+/** Looks up an instance's technique, or undefined for a free-text step (no lookup attempted). */
+export function resolveTechnique(
+  instance: TechniqueInstance,
+  techniques: Map<string, Technique>,
+): Technique | undefined {
+  return instance.techniqueId ? techniques.get(instance.techniqueId) : undefined
+}
+
 export function sectionTotalMinutes(
   plan: SessionPlan,
   sectionId: SectionId,
@@ -41,7 +64,7 @@ export function sectionStageFlow(
   const flow: Stage[] = []
   for (const id of instanceIds) {
     const instance = instances.get(id)
-    const technique = instance && techniques.get(instance.techniqueId)
+    const technique = instance && resolveTechnique(instance, techniques)
     if (!technique) continue
     if (flow[flow.length - 1] !== technique.stage) flow.push(technique.stage)
   }
@@ -70,7 +93,7 @@ export function flattenInstances(
     for (const id of plan.sections[sectionId]) {
       const instance = instances.get(id)
       if (!instance) continue
-      steps.push({ sectionId, instance, technique: techniques.get(instance.techniqueId) })
+      steps.push({ sectionId, instance, technique: resolveTechnique(instance, techniques) })
     }
   }
   return steps
