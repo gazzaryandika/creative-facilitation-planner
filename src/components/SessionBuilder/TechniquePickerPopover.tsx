@@ -103,6 +103,21 @@ export function TechniquePickerPopover({ sectionId, onPickLibrary, onWriteOwn, o
         </div>
 
         <div className="min-h-0 flex-1 overflow-y-auto px-4 py-2">
+          {sectionId === 'introduction' && (
+            <button
+              type="button"
+              onClick={onWriteOwn}
+              className="mt-2 flex w-full items-start gap-3 rounded-lg border border-teal-200 bg-teal-50 px-3 py-2.5 text-left transition-colors hover:border-teal-300 hover:bg-teal-100"
+            >
+              <PenLine size={16} className="mt-0.5 shrink-0 text-teal-700" />
+              <span>
+                <span className="block text-sm font-medium text-teal-900">Write an introduction item</span>
+                <span className="block text-xs text-teal-800">
+                  Welcome, the brief, the agenda, ground rules… set the time, what you'll introduce and what to prepare.
+                </span>
+              </span>
+            </button>
+          )}
           {groups.map((group) => (
             <section key={group.fit} className="py-2">
               <h5 className={`flex items-center gap-1.5 text-xs font-semibold ${GROUP_STYLES[group.fit].text}`}>

@@ -1,6 +1,7 @@
-import { Download, Pencil, Play } from 'lucide-react'
+import { Download, FileJson, Pencil, Play } from 'lucide-react'
 import { useMemo } from 'react'
 import { SECTION_LABELS, TECHNIQUE_SECTION_ORDER } from '../../data/models'
+import { downloadPlanFile } from '../../export/planFile'
 import { exportPlanToDocx } from '../../export/planToDocx'
 import { billOfMaterials, effectiveMaterialItems, effectiveMaterialsNote, formatLine } from '../../lib/materials'
 import {
@@ -48,6 +49,15 @@ export function SessionViewScreen({ planId, onEdit, onStartLive }: SessionViewSc
       <div className="flex flex-wrap items-start justify-between gap-4">
         <h1 className="text-3xl font-bold tracking-tight text-stone-900">{plan.name}</h1>
         <div className="flex flex-wrap items-center gap-2">
+          <button
+            type="button"
+            onClick={() => downloadPlanFile(plan, allInstances)}
+            title="Download this plan as a file you can send to someone else"
+            className="flex items-center gap-1.5 rounded-md border border-stone-300 bg-white px-3.5 py-2 text-sm font-medium text-stone-700 transition-colors hover:bg-stone-50"
+          >
+            <FileJson size={15} />
+            Download .json
+          </button>
           <button
             type="button"
             onClick={() => exportPlanToDocx(plan, allInstances, allTechniques)}
@@ -105,9 +115,9 @@ export function SessionViewScreen({ planId, onEdit, onStartLive }: SessionViewSc
       </section>
 
       <section className="mt-6">
-        <h2 className="text-xs font-semibold uppercase tracking-wide text-stone-400">Introduction</h2>
+        <h2 className="text-xs font-semibold uppercase tracking-wide text-stone-400">Case background</h2>
         <div className="mt-1">
-          <Prose text={plan.introduction} placeholder="No introduction recorded yet." />
+          <Prose text={plan.introduction} placeholder="No case background recorded yet." />
         </div>
       </section>
 

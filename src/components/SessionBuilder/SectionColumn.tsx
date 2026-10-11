@@ -80,7 +80,7 @@ export function SectionColumn({ plan, sectionId, instances, techniques }: Sectio
           <div className="space-y-2 border-t border-stone-100 px-4 pt-3 pb-4">
             {instanceIds.length === 0 && (
               <p className="rounded-lg border border-dashed border-stone-200 bg-stone-50 px-3 py-5 text-center text-xs text-stone-400">
-                No techniques yet.
+                {sectionId === 'introduction' ? 'Nothing planned yet — add the welcome, the brief, the agenda…' : 'No steps yet.'}
               </p>
             )}
             <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>

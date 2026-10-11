@@ -44,6 +44,8 @@ export function MaterialsEditor({ lines, onChange, participantCount }: Materials
     onChange([...lines, line])
     setQuery('')
     setHighlight(0)
+    // Close the list so it doesn't cover the fields below; typing reopens it for the next item.
+    setOpen(false)
     inputRef.current?.focus()
   }
 

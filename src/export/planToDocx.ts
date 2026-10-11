@@ -71,7 +71,7 @@ export async function exportPlanToDocx(
     new Paragraph({ text: 'Problem as Given', heading: HeadingLevel.HEADING_1 }),
     new Paragraph(plan.problemAsGiven || '—'),
 
-    new Paragraph({ text: 'Introduction', heading: HeadingLevel.HEADING_1 }),
+    new Paragraph({ text: 'Case background', heading: HeadingLevel.HEADING_1 }),
     new Paragraph(plan.introduction || '—'),
   ]
 

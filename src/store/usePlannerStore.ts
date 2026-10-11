@@ -7,6 +7,8 @@ import type {
   TechniqueInstance,
 } from '../data/models'
 import type { Repository } from '../data/repository'
+import type { PlanFile } from '../export/planFile'
+import { emptySections } from '../data/models'
 
 // Swap this one line for a backend-backed Repository implementation in v2.
 const repository: Repository = new LocalStorageRepository()
@@ -25,6 +27,8 @@ interface PlannerState {
   loadAll: () => Promise<void>
 
   cloneTemplate: (templateId: string, newName: string) => Promise<string>
+  /** Adds a plan from a shared plan file as a new, independent copy. Returns its id. */
+  importPlanFile: (file: PlanFile) => Promise<string>
   createBlankPlan: (name: string) => Promise<string>
   deletePlan: (planId: string) => Promise<void>
   setActivePlan: (planId: string | null) => void
@@ -170,6 +174,44 @@ export const usePlannerStore = create<PlannerState>((set, get) => {
       instances: [...state.instances, ...clonedInstances],
     }))
     return clonedPlan.id
+  },
+
+  importPlanFile: async (file) => {
+    // Fresh ids for the plan and every step, so importing never overwrites anything
+    // and the same file can be imported twice.
+    const idMap = new Map<string, string>()
+    const instances: TechniqueInstance[] = file.instances.map((inst) => {
+      const id = newId('instance')
+      idMap.set(inst.id, id)
+      return { ...inst, id }
+    })
+    const sections = emptySections()
+    for (const sectionId of Object.keys(sections) as SectionId[]) {
+      sections[sectionId] = (file.plan.sections?.[sectionId] ?? [])
+        .map((id) => idMap.get(id))
+        .filter((id): id is string => Boolean(id))
+    }
+    const taken = new Set(get().plans.map((p) => p.name))
+    const baseName = file.plan.name || 'Imported plan'
+    const now = new Date().toISOString()
+    const plan: SessionPlan = {
+      ...file.plan,
+      id: newId('plan'),
+      name: taken.has(baseName) ? `${baseName} (imported)` : baseName,
+      isSeedTemplate: false,
+      participantCount: file.plan.participantCount ?? 6,
+      problemOwnerName: file.plan.problemOwnerName ?? '',
+      problemOwnerDescription: file.plan.problemOwnerDescription ?? '',
+      problemAsGiven: file.plan.problemAsGiven ?? '',
+      introduction: file.plan.introduction ?? '',
+      sections,
+      createdAt: now,
+      updatedAt: now,
+    }
+    for (const inst of instances) await repository.saveInstance(inst)
+    await repository.savePlan(plan)
+    set((state) => ({ plans: [...state.plans, plan], instances: [...state.instances, ...instances] }))
+    return plan.id
   },
 
   createBlankPlan: async (name) => {
