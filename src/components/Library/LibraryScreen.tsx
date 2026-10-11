@@ -1,7 +1,7 @@
 import { ChevronRight, Search, X } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import type { DiamondPhase, ExperienceLevel, Stage, Technique } from '../../data/models'
-import { FIT_ORDER, PHASES, matchesQuery, nameMatches, phaseFit, shortDescription } from '../../lib/techniqueFit'
+import { FIT_ORDER, PHASES, headerImageUrl, matchesQuery, nameMatches, phaseFit, shortDescription } from '../../lib/techniqueFit'
 import { usePlannerStore } from '../../store/usePlannerStore'
 import { TechniqueDetailModal } from '../TechniqueDetailModal'
 import { TechniqueTags } from '../TechniqueTags'
@@ -139,6 +139,14 @@ export function LibraryScreen() {
               onClick={() => setSelected(t)}
               className="group flex w-full items-center justify-between gap-4 px-4 py-3 text-left transition-colors hover:bg-stone-50"
             >
+              {t.headerImage && (
+                <img
+                  src={headerImageUrl(t)}
+                  alt=""
+                  loading="lazy"
+                  className="h-16 w-20 shrink-0 rounded-md object-cover sm:h-20 sm:w-28"
+                />
+              )}
               <div className="min-w-0 flex-1">
                 <p className="font-medium text-stone-900">
                   {t.name}

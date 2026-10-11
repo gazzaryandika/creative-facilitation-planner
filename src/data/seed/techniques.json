@@ -36,7 +36,8 @@
     "background": "Alex Osborn (the O in advertising agency BBDO) found meetings between \"creatives\" and \"suits\" unproductive. In the 1940s he introduced rules for \"organized ideation\", later famous as brainstorming, and wrote them up in Applied Imagination (1953). Most people think they know brainstorming, but few run it well, making it the most misunderstood and misapplied creativity technique.",
     "custom": false,
     "source": "Road Map for CPS Techniques (Heijne & van der Meer, 2019), §3.1.1, pp. 40-43",
-    "pendingTranscription": false
+    "pendingTranscription": false,
+    "headerImage": "technique-headers/brainstorming-traditional.jpg"
   },
   {
     "id": "brainwriting-with-post-its",
@@ -76,7 +77,8 @@
     "background": "Classic Brainstorming hits two limits: the scribe's writing speed, and shouting favours some people over others. Osborn already tested written variants. Post-its made the written version the standard in almost every session.\n\nKey references: Osborn (1953), Isaksen, Dorval & Treffinger (2000).",
     "custom": false,
     "source": "Road Map for CPS Techniques (Heijne & van der Meer, 2019), §3.1.2, pp. 44-47",
-    "pendingTranscription": false
+    "pendingTranscription": false,
+    "headerImage": "technique-headers/brainwriting-with-post-its.jpg"
   },
   {
     "id": "brainwriting-6-3-5",
@@ -116,7 +118,8 @@
     "background": "Developed by Bernd Rohrbach in 1968 and refined by Helmut Schlicksupp (in Geschka, 1978). Horst Geschka (1979) at the Battelle Institute added extra worksheets so people could work at their own pace, calling it the \"brainwriting pool\". Gryskiewicz (1980) found brainwriting especially useful for incremental-change options.",
     "custom": false,
     "source": "Road Map for CPS Techniques (Heijne & van der Meer, 2019), §3.1.3, pp. 48-51",
-    "pendingTranscription": false
+    "pendingTranscription": false,
+    "headerImage": "technique-headers/brainwriting-6-3-5.jpg"
   },
   {
     "id": "creative-confrontation",
@@ -159,7 +162,8 @@
     "background": "Emerged in the early 1960s, after Guilford and Osborn. Focus moves from fluency to flexibility (\"slow thinking\", Kahneman). Koestler (1964): real novelty comes from colliding incompatible frames of thought. Gordon's Synectics (1961) applied this with a fixed analogy sequence. Prince coined \"excursions\". De Bono called the family \"lateral thinking\". Von Oech and Aznar list hundreds of variants.",
     "custom": false,
     "source": "Road Map for CPS Techniques (Heijne & van der Meer, 2019), §3.1.4, pp. 52-55",
-    "pendingTranscription": false
+    "pendingTranscription": false,
+    "headerImage": "technique-headers/creative-confrontation.jpg"
   },
   {
     "id": "excursion-criminal-round",
@@ -195,7 +199,8 @@
     "background": "A textbook example of guiding a group through all three waves of Extended Effort, especially the jump from wave 2 to wave 3, \"from silly to good\" (Parnes et al., 1977). First written up as Criminal Round by Van Leeuwen and Terhürne (1999/2010). Common among Dutch facilitators.",
     "custom": false,
     "source": "Road Map for CPS Techniques (Heijne & van der Meer, 2019), §3.1.5, pp. 56-59. This is step 6 of Creative Confrontation.",
-    "pendingTranscription": false
+    "pendingTranscription": false,
+    "headerImage": "technique-headers/excursion-criminal-round.jpg"
   },
   {
     "id": "excursion-take-a-walk",
@@ -231,7 +236,8 @@
     "background": "Wallas (1926/1970) named incubation as its own step in the creative process: stepping away from the PaP and thinking about something else. Experienced facilitators build in incubation with gaps of up to two weeks between announcing and running sessions, and with breaks during sessions. Aznar and Bléas (2018) describe turning the break into a literal excursion inside Creative Confrontation.",
     "custom": false,
     "source": "Road Map for CPS Techniques (Heijne & van der Meer, 2019), §3.1.6, pp. 60-63. These are the sub-steps of Creative Confrontation step 6, \"generate options in the domain of the excursion\".",
-    "pendingTranscription": false
+    "pendingTranscription": false,
+    "headerImage": "technique-headers/excursion-take-a-walk.jpg"
   },
   {
     "id": "excursion-hidden-presumptions",
@@ -267,7 +273,8 @@
     "background": "Schein (1991) describes three levels of what we see: artefacts, values and norms, and basic assumptions. A chair is an artefact, but we mostly see its function and our belief about it. Naming these frozen beliefs lets us unfreeze them. Described as \"Presuppositions\" by Van Leeuwen and Terhürne (2010).",
     "custom": false,
     "source": "Road Map for CPS Techniques (Heijne & van der Meer, 2019), §3.1.7, pp. 64-67. Step 6 of Creative Confrontation.",
-    "pendingTranscription": false
+    "pendingTranscription": false,
+    "headerImage": "technique-headers/excursion-hidden-presumptions.jpg"
   },
   {
     "id": "excursion-absurd-questioning",
@@ -303,7 +310,8 @@
     "background": "Inexperienced RGs feel trapped by a strong PaP and stay in the obvious. Humour breaks dominant paradigms. Koestler (1964) saw humour as the archetype of \"bisociation\". Tassoul (2009) formatted this technique.",
     "custom": false,
     "source": "Road Map for CPS Techniques (Heijne & van der Meer, 2019), §3.1.8, pp. 68-71. Step 6 of Creative Confrontation.",
-    "pendingTranscription": false
+    "pendingTranscription": false,
+    "headerImage": "technique-headers/excursion-absurd-questioning.jpg"
   },
   {
     "id": "excursion-random-words",
@@ -339,7 +347,8 @@
     "background": "Introduced by De Bono (1971). Widely used (Byttebier & Vullings, 2007). Good description in Tassoul (2009).",
     "custom": false,
     "source": "Road Map for CPS Techniques (Heijne & van der Meer, 2019), §3.1.9, pp. 72-75. Step 6 of Creative Confrontation.",
-    "pendingTranscription": false
+    "pendingTranscription": false,
+    "headerImage": "technique-headers/excursion-random-words.jpg"
   },
   {
     "id": "excursion-random-objects",
@@ -375,7 +384,8 @@
     "background": "It's hard to say who first used objects to spark ideas. Osborn's Applied Imagination (1953) mentions it briefly. Isaksen et al. (2000) describe it as a basic forced-fitting technique, which this book calls Creative Confrontation.",
     "custom": false,
     "source": "Road Map for CPS Techniques (Heijne & van der Meer, 2019), §3.1.10, pp. 76-79. These are the sub-steps of Creative Confrontation step 6, \"generate options in the domain of the excursion\".",
-    "pendingTranscription": false
+    "pendingTranscription": false,
+    "headerImage": "technique-headers/excursion-random-objects.jpg"
   },
   {
     "id": "excursion-visual-stimulation",
@@ -411,7 +421,8 @@
     "background": "From the Battelle research institute in the early 1970s. Pictures proved the richest and safest triggers. Smell, music, taste and texture provoke wider reactions, including fear and blocks. Published in English by Geschka et al. (1976) as Visual Confrontation.",
     "custom": false,
     "source": "Road Map for CPS Techniques (Heijne & van der Meer, 2019), §3.1.11, pp. 80-83. Step 6 of Creative Confrontation.",
-    "pendingTranscription": false
+    "pendingTranscription": false,
+    "headerImage": "technique-headers/excursion-visual-stimulation.jpg"
   },
   {
     "id": "excursion-guided-fantasy",
@@ -448,7 +459,8 @@
     "background": "Gordon (1961) and Prince (1970) described techniques where the RG builds scenarios through mental journeys. Csikszentmihalyi (1997) later called the resulting state \"flow\". McKim (1972) first set out principles of what he called Visual Thinking. Isaksen et al. (2000) describe it formally as Imagery Trek, and Bromberger (2004) wrote a Dutch book on it.",
     "custom": false,
     "source": "Road Map for CPS Techniques (Heijne & van der Meer, 2019), §3.1.12, pp. 84-87. The facilitator prepares the journey's content before the session, or with the RG during the first diamond. These are the sub-steps of Creative Confrontation step 6.",
-    "pendingTranscription": false
+    "pendingTranscription": false,
+    "headerImage": "technique-headers/excursion-guided-fantasy.jpg"
   },
   {
     "id": "excursion-personal-analogy",
@@ -484,7 +496,8 @@
     "background": "Gordon (1961) brought analogies into deliberate creativity. Synectics describes five stages of excursions built on analogy and metaphor, starting with Personal Analogy as the way to get familiar with the problem. Prince (1970) gave another description. In Japan, Nakayama independently developed the similar NM-method (Schwarz-Geschka, 2010). Most later authors follow Gordon (e.g. Nolan, 1989), sometimes in a different order.",
     "custom": false,
     "source": "Road Map for CPS Techniques (Heijne & van der Meer, 2019), §3.1.13, pp. 88-91. These are the sub-steps of Creative Confrontation step 6.",
-    "pendingTranscription": false
+    "pendingTranscription": false,
+    "headerImage": "technique-headers/excursion-personal-analogy.jpg"
   },
   {
     "id": "excursion-direct-analogy-or-metaphor",
@@ -521,7 +534,8 @@
     "background": "Gordon (1961) and Prince (1970) brought direct analogies into deliberate creativity and found biological metaphors especially strong. That idea grew into the whole field of biomimicry (e.g. Benyus, 1997). More on Synectics on the website.",
     "custom": false,
     "source": "Road Map for CPS Techniques (Heijne & van der Meer, 2019), §3.1.14, pp. 92-95. These are the sub-steps of Creative Confrontation step 6.",
-    "pendingTranscription": false
+    "pendingTranscription": false,
+    "headerImage": "technique-headers/excursion-direct-analogy-or-metaphor.jpg"
   },
   {
     "id": "excursion-symbolic-and-fantasy-analogy",
@@ -558,7 +572,8 @@
     "background": "Gordon (1961) introduced symbolic and fantasy analogies to deliberate creativity. Later variants include Book Title (Prince, 1970), Poetic Stimulation (Van Leeuwen & Terhürne, 2010) and Superhero (Byttebier & Vullings, 2007).",
     "custom": false,
     "source": "Road Map for CPS Techniques (Heijne & van der Meer, 2019), §3.1.15, pp. 96-99. These are the sub-steps of Creative Confrontation step 6.",
-    "pendingTranscription": false
+    "pendingTranscription": false,
+    "headerImage": "technique-headers/excursion-symbolic-and-fantasy-analogy.jpg"
   },
   {
     "id": "flower-association",
@@ -598,7 +613,8 @@
     "background": "Association means one word triggers another. Aristotle already named five mechanisms (Vanosmael & De Bruyn, 1989): polar opposites (black/white), parts and wholes (finger/hand), closeness (pen/paper), cause and effect (snow/slippery), and analogy by shape or sound (duck/swan, bike/hike). The name comes from the associations radiating out like petals. The more structured Lotus Blossom was invented by Yasuo Matsumura, director of Clover Management Research in Japan, to bring structure to mind mapping (Tatsuno, 1990).",
     "custom": false,
     "source": "Road Map for CPS Techniques (Heijne & van der Meer, 2019), §3.1.16, pp. 100-103",
-    "pendingTranscription": false
+    "pendingTranscription": false,
+    "headerImage": "technique-headers/flower-association.jpg"
   },
   {
     "id": "how-tos-or-h2s",
@@ -639,7 +655,8 @@
     "background": "A strong starting point for the second diamond is vital for complex open problems, which technical and social problems often are (more than advertising problems). Prince (1970) and his successor Nolan (1989) gave the first explicit description of moving from PaG to PaP. The phrasing comes from the Buffalo CPS school (Parnes, 1997; Isaksen et al., 2000), with its stems \"How to…\", \"Wouldn't it be nice if…\" and \"In what ways might I…\". Now found in almost every modern source (e.g. Tassoul, 2009).",
     "custom": false,
     "source": "Road Map for CPS Techniques (Heijne & van der Meer, 2019), §3.1.17, pp. 104-107",
-    "pendingTranscription": false
+    "pendingTranscription": false,
+    "headerImage": "technique-headers/how-tos-or-h2s.jpg"
   },
   {
     "id": "interactive-brainsketching",
@@ -682,7 +699,8 @@
     "background": "Developed by Pickens (1980) and described by VanGundy (1988, 2005). Remko van der Lugt (2001) compared Brainwriting with Post-its with several brain-drawing variants, originally as a visual alternative for TU Delft design students in the second diamond. Sketching produced fewer options but more hitchhiking, and proved powerful in the third diamond.",
     "custom": false,
     "source": "Road Map for CPS Techniques (Heijne & van der Meer, 2019), §3.1.18, pp. 108-111. Starting point: converged options from the second diamond (Idea Finding).",
-    "pendingTranscription": false
+    "pendingTranscription": false,
+    "headerImage": "technique-headers/interactive-brainsketching.jpg"
   },
   {
     "id": "ladder-of-abstraction",
@@ -723,7 +741,8 @@
     "background": "Korzybski (1933) created the \"Structural Differential\" diagram for abstracting; Hayakawa (1979) used an abstraction ladder to explain it. Parnes (1981) used a \"Why method\" to generate increasingly abstract problem statements. Isaksen, Dorval and Treffinger (2000) described the Ladder of Abstraction with why and how questions as a generating tool for every diverging stage of CPS. Also called the means-end hierarchy or Progressive Abstraction.",
     "custom": false,
     "source": "Road Map for CPS Techniques (Heijne & van der Meer, 2019), §3.1.19, pp. 112-115",
-    "pendingTranscription": false
+    "pendingTranscription": false,
+    "headerImage": "technique-headers/ladder-of-abstraction.jpg"
   },
   {
     "id": "making-a-collage",
@@ -768,7 +787,8 @@
     "background": "From the French coller, to stick. Japanese artists have used collage alongside calligraphy for over 1,000 years. It was a Victorian folk art and was later taken up by avant-garde artists like Picasso and Braque (Butler-Kisber, 2008). Brockelman (2001) studies collage in postmodern art. It moved into qualitative research as a way to surface unconscious thoughts and to reflect and conceptualise. Tassoul (2009) suggests ways to use it in creative sessions.",
     "custom": false,
     "source": "Road Map for CPS Techniques (Heijne & van der Meer, 2019), §3.1.20, pp. 116-119",
-    "pendingTranscription": false
+    "pendingTranscription": false,
+    "headerImage": "technique-headers/making-a-collage.jpg"
   },
   {
     "id": "matec",
@@ -814,7 +834,8 @@
     "background": "Developed in the 1970s by J.P. Sol at the French consultancy Créargie (Sol, 1974). The name stands for MATrice d'Eloignement Creatif, \"Creative Distancing Matrix\". COCD promoted it in Dutch-speaking regions (Vanosmael & De Bruyn, 1989), where it was popular in the 1990s, but it's missing from the newer book by de Bruyn's successors (Byttebier & Vullings, 2007). Tassoul (2009) describes it well.",
     "custom": false,
     "source": "Road Map for CPS Techniques (Heijne & van der Meer, 2019), §3.1.21, pp. 120-123",
-    "pendingTranscription": false
+    "pendingTranscription": false,
+    "headerImage": "technique-headers/matec.jpg"
   },
   {
     "id": "mind-mapping-in-a-group-session",
@@ -856,7 +877,8 @@
     "background": "Mind-map-like diagrams go back thousands of years; Porphyry of Tyre organised Aristotle's works as a \"tree of knowledge\" in the third century (Guerrero & Ramos, 2015). Novak developed what became concept mapping in 1972. Tony Buzan coined and trademarked \"mind map\", formalised the rules, and commercialised it with great success (Buzan, 1984; Buzan & Buzan, 1993). In iCPS it's most useful for structuring data in Information Finding, analysing the problem in Problem Finding, and generating ideas in Idea Finding.",
     "custom": false,
     "source": "Road Map for CPS Techniques (Heijne & van der Meer, 2019), §3.1.22, pp. 124-127",
-    "pendingTranscription": false
+    "pendingTranscription": false,
+    "headerImage": "technique-headers/mind-mapping-in-a-group-session.jpg"
   },
   {
     "id": "morphological-synthesis",
@@ -901,7 +923,8 @@
     "background": "In biology, morphology is the study of the structure and form of organisms; you can identify a plant from its characteristics. Listing every parameter also lets you explore all their combinations. Fritz Zwicky introduced this \"general morphology\" in the late 1940s (Zwicky, 1969). Allen (1961) brought it into creative problem solving, and others (e.g. Parnes, 1976) turned it into a session technique. The entertainment industry uses similar approaches to map out plots for games, films and TV (Grasbon & Braun, 2001).",
     "custom": false,
     "source": "Road Map for CPS Techniques (Heijne & van der Meer, 2019), §3.1.23, pp. 128-131",
-    "pendingTranscription": false
+    "pendingTranscription": false,
+    "headerImage": "technique-headers/morphological-synthesis.jpg"
   },
   {
     "id": "picture-the-problem",
@@ -942,7 +965,8 @@
     "background": "A variant of Brainsketching (Pickens, 1980; van der Lugt, 2001), developed for analysing complex problems because it guides non-verbal thinking and supports discussion (Ferguson, 1992). Sketching puts every facet on paper, which acts as an extension of the brain and frees working memory to find the essence (Bilda & Gero, 2007). It also builds mutual understanding, shown neatly by Tom Wujec's DrawToast exercise (2018), which also works as an energizer to start the technique.",
     "custom": false,
     "source": "Road Map for CPS Techniques (Heijne & van der Meer, 2019), §3.1.24, pp. 132-135",
-    "pendingTranscription": false
+    "pendingTranscription": false,
+    "headerImage": "technique-headers/picture-the-problem.jpg"
   },
   {
     "id": "scamper",
@@ -982,7 +1006,8 @@
     "background": "Osborn (1953) already used provocative questions to keep option generation going in brainstorming; he wrote over eighty idea-spurring questions. Eberle (1971) grouped them into seven clusters under the SCAMPER mnemonic. Later Buffalo scholars kept only the strongest: magnify, minimise, rearrange (Parnes, 1997). Later lists like SIT's 5 Templates (Goldenberg et al., 1999) and Lupton's Action Verbs (2011) closely resemble it.",
     "custom": false,
     "source": "Road Map for CPS Techniques (Heijne & van der Meer, 2019), §3.1.25, pp. 136-139",
-    "pendingTranscription": false
+    "pendingTranscription": false,
+    "headerImage": "technique-headers/scamper.jpg"
   },
   {
     "id": "40-inventive-principles-of-triz",
@@ -1024,7 +1049,8 @@
     "background": "Genrich Altshuller started TRIZ in the USSR in 1946; the Russian acronym means \"theory of inventive problem solving\" (Altshuller & Shapiro, 1956). He studied thousands of patents, found recurring patterns, and distilled 40 inventive principles. Most patents resolve a technical contradiction (improving one parameter without worsening another), so he built a contradiction matrix pointing to the most relevant principles (Altshuller, 2005). Modern TRIZ covers the whole creative problem-solving process, which it calls the \"Systematic Innovation Process\".",
     "custom": false,
     "source": "Road Map for CPS Techniques (Heijne & van der Meer, 2019), §3.1.26, pp. 140-143",
-    "pendingTranscription": false
+    "pendingTranscription": false,
+    "headerImage": "technique-headers/40-inventive-principles-of-triz.jpg"
   },
   {
     "id": "5w1h",
@@ -1067,7 +1093,8 @@
     "background": "Hermagoras of Temnos, a Greek rhetorician of the second century BC, defined seven \"circumstances\" as sources of information on an issue: who, what, when, where, why, in what way, and by what means (Dieter & Kurth, 1968). The approach shaped many Greek and Latin authors and later became standard for orators, confessors and journalists. It's often linked to Kipling's poem (1902) about six honest serving men named What, Why, When, How, Where and Who.",
     "custom": false,
     "source": "Road Map for CPS Techniques (Heijne & van der Meer, 2019), §3.1.27, pp. 144-147",
-    "pendingTranscription": false
+    "pendingTranscription": false,
+    "headerImage": "technique-headers/5w1h.jpg"
   },
   {
     "id": "idea-gallery",
@@ -1104,7 +1131,8 @@
     "background": "Reading every option aloud is the most basic form of reverging and long-standing facilitator practice, but the authors say this is its first written description. The Nominal Group Technique (Delbecq & Van de Ven, 1971) has a similar step.",
     "custom": false,
     "source": "Road Map for CPS Techniques (Heijne & van der Meer, 2019), §3.2.1, pp. 150-153",
-    "pendingTranscription": false
+    "pendingTranscription": false,
+    "headerImage": "technique-headers/idea-gallery.jpg"
   },
   {
     "id": "elevator-pitch",
@@ -1141,7 +1169,8 @@
     "background": "Born as an entrepreneur's tool: be ready to pitch an idea to an executive or investor in the length of a lift ride. First in print with Philip Crosby (1981) as an \"elevator speech\". Milo Frank (1986) wrote about getting a point across in 30 seconds. O'Leary (2008) stresses that the aim is to open a conversation, not close a sale.",
     "custom": false,
     "source": "Road Map for CPS Techniques (Heijne & van der Meer, 2019), §3.2.2, pp. 154-157. Starting point: the RG has developed one or more options in pairs or subgroups.",
-    "pendingTranscription": false
+    "pendingTranscription": false,
+    "headerImage": "technique-headers/elevator-pitch.jpg"
   },
   {
     "id": "spontaneous-clustering",
@@ -1181,6 +1210,7 @@
     "custom": false,
     "source": "Road Map for CPS Techniques (Heijne & van der Meer, 2019), §3.2.3, pp. 158-161",
     "pendingTranscription": false,
+    "headerImage": "technique-headers/spontaneous-clustering.jpg",
     "materialsNote": "The generated options on Post-its"
   },
   {
@@ -1219,7 +1249,8 @@
     "background": "The authors coined \"Sequencing\" for every reverging technique that rearranges options along one axis (scale), two (matrix) or three (cube). Heijne and Smit (2018) studied existing examples and found most embedded in hybrids that pair sequencing with a diverging or converging step. Scale example: SML. Matrix example: the screening matrix for ideas (Majaro, 1988; Higgins, 1994), which became the C-Box. Cubes are rarely used because they're complex.",
     "custom": false,
     "source": "Road Map for CPS Techniques (Heijne & van der Meer, 2019), §3.2.4, pp. 162-167",
-    "pendingTranscription": false
+    "pendingTranscription": false,
+    "headerImage": "technique-headers/sequencing.jpg"
   },
   {
     "id": "restating-the-problem",
@@ -1262,7 +1293,8 @@
     "background": "A strong starting point is vital for complex open problems (Ma, 2009). All later work solves the problem \"as named\" (Kepner & Tregoe). Engaging the RG in reformulating raises quality and originality (Mumford et al., 1994). Wording shapes the approach people take (Ward, 2004). SPARK builds on Osborn's \"one single concrete target\".",
     "custom": false,
     "source": "Road Map for CPS Techniques (Heijne & van der Meer, 2019), §3.3.1, pp. 170-173",
-    "pendingTranscription": false
+    "pendingTranscription": false,
+    "headerImage": "technique-headers/restating-the-problem.jpg"
   },
   {
     "id": "hits-or-dots",
@@ -1300,7 +1332,8 @@
     "background": "Diverging techniques produced huge option sets, so converging had to scale. People always circled favourites, but the first formal write-up was \"Highlighting\" (Firestien & Treffinger, 1983). Also called \"Head and shoulders\". This version follows Buijs and van der Meer (2013).",
     "custom": false,
     "source": "Road Map for CPS Techniques (Heijne & van der Meer, 2019), §3.3.2, pp. 174-177. Starting point: 50+ reverged options.",
-    "pendingTranscription": false
+    "pendingTranscription": false,
+    "headerImage": "technique-headers/hits-or-dots.jpg"
   },
   {
     "id": "paired-comparison",
@@ -1341,7 +1374,8 @@
     "background": "Thurstone (1927) proposed the law of comparative judgment for measuring psychological values. Bradley and Terry (1952) gave it the name Paired Comparison, now used for prioritising in many fields. Isaksen et al. (2000) report its use in creative facilitation from the 1970s and describe it for sessions.",
     "custom": false,
     "source": "Road Map for CPS Techniques (Heijne & van der Meer, 2019), §3.3.3, pp. 178-181",
-    "pendingTranscription": false
+    "pendingTranscription": false,
+    "headerImage": "technique-headers/paired-comparison.jpg"
   },
   {
     "id": "criteria-and-ranking",
@@ -1381,7 +1415,8 @@
     "background": "Judging by criteria is ancient (de Boer, 1989). In CPS, Parnes (1967) discussed criteria and Isaksen et al. (2000) formalised C&R. Often used with a fixed set, e.g. NAF. Adding weights turns it into MCA; Cooper (1979) built NewProd on MCA with statistically derived criteria and weights. The authors prefer plain C&R because MCA is hard to run with groups and leans on subjective weights.",
     "custom": false,
     "source": "Road Map for CPS Techniques (Heijne & van der Meer, 2019), §3.3.4, pp. 182-185. Starting point: 5 to 10 preselected options.",
-    "pendingTranscription": false
+    "pendingTranscription": false,
+    "headerImage": "technique-headers/criteria-and-ranking.jpg"
   },
   {
     "id": "ualo",
@@ -1424,7 +1459,8 @@
     "background": "Pros and cons with pros first. Builds on Synectics' itemized response and the converging principles \"protect novelty\" and \"affirmative judgment\" (Parnes, Noller & Biondi, 1977). Predecessor ALU (1985) built on PPC (1982). UALo puts even more weight on positives first.",
     "custom": false,
     "source": "Road Map for CPS Techniques (Heijne & van der Meer, 2019), §3.3.5, pp. 186-190. Starting point: 2 to 5 preselected options.",
-    "pendingTranscription": false
+    "pendingTranscription": false,
+    "headerImage": "technique-headers/ualo.jpg"
   },
   {
     "id": "making-a-poster",
@@ -1464,7 +1500,8 @@
     "background": "The poster works as a \"boundary object\" (Star & Griesemer, 1989) that has to speak to different audiences. McWhinney (1992) describes four kinds of reality people construct: sensory, unitary, mythic and social. Tassoul (2009) turned these into a presentation checklist. The poster itself is the sensory part; it should also carry a description (unitary), an inspiring name (mythic) and what adopting it achieves (social). A sketch is essential. It's essentially a form of rapid prototyping.",
     "custom": false,
     "source": "Road Map for CPS Techniques (Heijne & van der Meer, 2019), §3.3.6, pp. 192-195",
-    "pendingTranscription": false
+    "pendingTranscription": false,
+    "headerImage": "technique-headers/making-a-poster.jpg"
   },
   {
     "id": "devils-and-angels-advocates",
@@ -1501,7 +1538,8 @@
     "background": "Irving Janis (1971) studied disasters like the Bay of Pigs (1961) and blamed \"groupthink\", the drive for consensus in cohesive groups. One of his nine remedies was to have at least one member play devil's advocate when alternatives are evaluated. The term comes from the Catholic Church's Promotor Fidei, whose job was to argue against candidates for sainthood (Fanning, 1911).",
     "custom": false,
     "source": "Road Map for CPS Techniques (Heijne & van der Meer, 2019), §3.4.1, pp. 198-201",
-    "pendingTranscription": false
+    "pendingTranscription": false,
+    "headerImage": "technique-headers/devils-and-angels-advocates.jpg"
   },
   {
     "id": "force-field-analysis",
@@ -1542,7 +1580,8 @@
     "background": "Kurt Lewin (1947, 1951) developed FFA for change management: think in terms of moving from the present level to the desired one rather than a fixed goal. Implementing a session's output means change, which Lewin framed as unfreeze, change, refreeze. FFA is a good way to prepare for the unfreezing. It's now common in organisational management (Schein, 1996; Thomas, 1985).",
     "custom": false,
     "source": "Road Map for CPS Techniques (Heijne & van der Meer, 2019), §3.4.2, pp. 202-207. Starting point: 1 to 10 options you'd like to take forward after the session.",
-    "pendingTranscription": false
+    "pendingTranscription": false,
+    "headerImage": "technique-headers/force-field-analysis.jpg"
   },
   {
     "id": "parking-lot",
@@ -1573,7 +1612,8 @@
     "background": "Treating Information Finding, Content Finding and Acceptance Finding as separate processes is fairly new (Buijs, Smulders & van der Meer, 2009), so there are few Information Finding techniques in CPS literature. Gordon (1961) paired short Synectics sessions with longer experiments to test solutions. The first good description of the Parking Lot comes from the Metaplan school (Schnelle, 1979).",
     "custom": false,
     "source": "Road Map for CPS Techniques (Heijne & van der Meer, 2019), §3.5.1, pp. 210-213",
-    "pendingTranscription": false
+    "pendingTranscription": false,
+    "headerImage": "technique-headers/parking-lot.jpg"
   },
   {
     "id": "mind-mapping",

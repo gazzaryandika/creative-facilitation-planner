@@ -76,6 +76,8 @@ export interface Technique {
   variants?: string
   /** History and origins, as summarised from the book's History section. */
   background?: string
+  /** Path under public/ to the photo from the technique's title page in the book. */
+  headerImage?: string
   /** Excursions only: the book's Table 3.1 safety rating, 1 (risky) to 5 (safe). */
   safety?: number
   custom: boolean

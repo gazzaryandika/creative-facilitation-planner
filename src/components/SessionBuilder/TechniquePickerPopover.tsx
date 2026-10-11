@@ -1,7 +1,7 @@
 import { Info, PenLine, Search, X } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { SECTION_LABELS, type SectionId, type Stage, type Technique } from '../../data/models'
-import { FIT_ORDER, matchesQuery, nameMatches, sectionFit, shortDescription, type Fit } from '../../lib/techniqueFit'
+import { FIT_ORDER, headerImageUrl, matchesQuery, nameMatches, sectionFit, shortDescription, type Fit } from '../../lib/techniqueFit'
 import { usePlannerStore } from '../../store/usePlannerStore'
 import { TechniqueDetailModal } from '../TechniqueDetailModal'
 import { TechniqueTags } from '../TechniqueTags'
@@ -116,12 +116,22 @@ export function TechniquePickerPopover({ sectionId, onPickLibrary, onWriteOwn, o
                     <button
                       type="button"
                       onClick={() => onPickLibrary(t.id)}
-                      className="min-w-0 flex-1 rounded-md px-1.5 py-2 text-left hover:bg-stone-50"
+                      className="flex min-w-0 flex-1 gap-3 rounded-md px-1.5 py-2 text-left hover:bg-stone-50"
                     >
-                      <p className="text-sm font-medium text-stone-900">{t.name}</p>
-                      <p className="mt-0.5 line-clamp-2 text-xs text-stone-500">{shortDescription(t)}</p>
-                      <div className="mt-1.5">
-                        <TechniqueTags technique={t} compact />
+                      {t.headerImage && (
+                        <img
+                          src={headerImageUrl(t)}
+                          alt=""
+                          loading="lazy"
+                          className="mt-0.5 h-14 w-16 shrink-0 rounded object-cover sm:w-20"
+                        />
+                      )}
+                      <div className="min-w-0 flex-1">
+                        <p className="text-sm font-medium text-stone-900">{t.name}</p>
+                        <p className="mt-0.5 line-clamp-2 text-xs text-stone-500">{shortDescription(t)}</p>
+                        <div className="mt-1.5">
+                          <TechniqueTags technique={t} compact />
+                        </div>
                       </div>
                     </button>
                     <button

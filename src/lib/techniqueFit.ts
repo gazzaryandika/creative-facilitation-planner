@@ -76,6 +76,11 @@ export function nameMatches(technique: Technique, query: string): boolean {
   return q.length > 0 && technique.name.toLowerCase().includes(q)
 }
 
+/** Full URL of a technique's header photo, respecting the app's base path. */
+export function headerImageUrl(technique: Technique): string | undefined {
+  return technique.headerImage ? `${import.meta.env.BASE_URL}${technique.headerImage}` : undefined
+}
+
 /** The book's short "how it works" (or purpose) as one line for list rows. */
 export function shortDescription(technique: Technique): string {
   const text = technique.inShort || technique.purpose || ''

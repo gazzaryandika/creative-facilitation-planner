@@ -1,5 +1,6 @@
 import { X } from 'lucide-react'
 import type { Technique } from '../data/models'
+import { headerImageUrl } from '../lib/techniqueFit'
 import { TechniqueTags } from './TechniqueTags'
 
 interface TechniqueDetailModalProps {
@@ -27,6 +28,13 @@ export function TechniqueDetailModal({ technique: t, onClose }: TechniqueDetailM
         className="max-h-[85vh] w-full max-w-2xl overflow-y-auto rounded-2xl border border-stone-200 bg-white p-6 shadow-xl"
         onClick={(e) => e.stopPropagation()}
       >
+        {t.headerImage && (
+          <img
+            src={headerImageUrl(t)}
+            alt={`${t.name}, illustration from the Road Map book`}
+            className="-mx-6 -mt-6 mb-4 block aspect-[16/9] w-[calc(100%+3rem)] max-w-none rounded-t-2xl object-cover"
+          />
+        )}
         <div className="flex items-start justify-between gap-4">
           <div>
             <h3 className="text-lg font-semibold text-stone-900">{t.name}</h3>

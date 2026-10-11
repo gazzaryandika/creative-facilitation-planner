@@ -19,6 +19,9 @@ import sys
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SEED = os.path.join(REPO, "src", "data", "seed", "techniques.json")
+HEADERS_DIR = os.path.join(REPO, "public", "technique-headers")
+# Title-page captures are looked up in this order; the Boom Student captures are the sharpest.
+SOURCE_FOLDERS = ["Boom Student screenshots", "Road Map excerpt", "Excursion screenshots"]
 
 # Book sections that already have an app id. Everything else gets a slug.
 EXISTING_IDS = {
@@ -136,11 +139,88 @@ def material_items(text):
     return items, note
 
 
+def title_page(vault, page):
+    for folder in SOURCE_FOLDERS:
+        hits = glob.glob(os.path.join(vault, "_Source Pages", folder, f"RM p{page:03d} - *.png"))
+        if hits:
+            return hits[0]
+    return None
+
+
+def longest_run(flags, max_gap):
+    """Longest stretch of True values, bridging gaps of up to max_gap False values."""
+    best, start, last = (0, 0), None, None
+    for i, f in enumerate(flags):
+        if not f:
+            continue
+        if start is None or i - last > max_gap + 1:
+            start = i
+        last = i
+        if last - start > best[1] - best[0]:
+            best = (start, last)
+    return best
+
+
+def crop_header(page_png, out_path):
+    """
+    Crops the photo under a technique's title block. Its top edge is where the tallest
+    band of mostly-dark rows starts. From there it runs down, and out to the sides,
+    as far as any ink reaches before a clear blank gap (the page edge, or the gap to
+    the next page in a two-page capture), so pale areas inside the photo stay in.
+    """
+    from PIL import Image
+
+    im = Image.open(page_png).convert("RGB")
+    grey = im.convert("L")
+    w, h = grey.size
+    px = grey.load()
+    step = max(1, w // 300)
+    xs = range(0, w, step)
+
+    def busy_row(y):
+        return sum(1 for x in xs if px[x, y] < 238) / len(xs) > 0.45
+
+    core_top, _ = longest_run([busy_row(y) for y in range(h)], max_gap=h // 60)
+
+    # Pale photo edges (a light wall, a grey sky) aren't "busy" but aren't page-white either.
+    def tinted_row(y):
+        return sum(1 for x in xs if px[x, y] >= 250) / len(xs) < 0.5
+
+    top = core_top
+    while top > 0 and tinted_row(top - 1):
+        top -= 1
+
+    def inked_row(y):
+        return any(px[x, y] < 225 for x in xs)
+
+    # Walk down from the photo's busy core, not its pale top edge, which may have no ink at all.
+    bottom, blank, y = core_top, 0, core_top
+    while y < h and blank <= h // 40:
+        if inked_row(y):
+            bottom, blank = y, 0
+        else:
+            blank += 1
+        y += 1
+
+    ys = range(top, bottom + 1, step)
+    inked_cols = [x for x in range(w) if any(px[x, yy] < 225 for yy in ys)]
+    if not inked_cols or bottom - top < h * 0.2:
+        return False
+    left, right = inked_cols[0], inked_cols[-1]
+
+    photo = im.crop((left, top, right + 1, bottom + 1))
+    if photo.width > 900:
+        photo = photo.resize((900, round(photo.height * 900 / photo.width)), Image.LANCZOS)
+    os.makedirs(os.path.dirname(out_path), exist_ok=True)
+    photo.save(out_path, "JPEG", quality=82, optimize=True, progressive=True)
+    return True
+
+
 def slug(name):
     return re.sub(r"[^a-z0-9]+", "-", name.lower().replace("'", "")).strip("-")
 
 
-def convert(path):
+def convert(path, vault):
     text = open(path).read()
     fm = frontmatter(text)
     sec = sections(text)
@@ -184,6 +264,10 @@ def convert(path):
         + (f". {step_intro}" if step_intro else ""),
         "pendingTranscription": False,
     }
+    first_page = re.search(r"pp?\. (\d+)", fm.get("source", ""))
+    page_png = first_page and title_page(vault, int(first_page.group(1)))
+    if page_png and crop_header(page_png, os.path.join(HEADERS_DIR, tech["id"] + ".jpg")):
+        tech["headerImage"] = f"technique-headers/{tech['id']}.jpg"
     return {k: v for k, v in tech.items() if k == "materialItems" or v not in (None, "", [])}
 
 
@@ -194,7 +278,7 @@ def section_key(t):
 def main():
     vault = sys.argv[1]
     notes = sorted(glob.glob(os.path.join(vault, "**", "3.*.md"), recursive=True))
-    book = sorted((convert(p) for p in notes), key=section_key)
+    book = sorted((convert(p, vault) for p in notes), key=section_key)
     book_ids = {t["id"] for t in book}
     existing = json.load(open(SEED))
 
@@ -214,6 +298,8 @@ def main():
 
     with open(SEED, "w") as f:
         f.write(format_json(out) + "\n")
+    missing = [t["name"] for t in book if "headerImage" not in t]
+    print(f"{len(book) - len(missing)} header images cropped" + (f"; none for: {', '.join(missing)}" if missing else ""))
     print(f"{len(book)} book techniques from the vault, {len(kept)} team/derived techniques kept, {len(out)} total")
 
 
