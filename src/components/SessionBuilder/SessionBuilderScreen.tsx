@@ -1,6 +1,7 @@
-import { AlertTriangle, Check, Download, Save } from 'lucide-react'
+import { AlertTriangle, Check, Download, FileJson, Save } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { TECHNIQUE_SECTION_ORDER } from '../../data/models'
+import { downloadPlanFile } from '../../export/planFile'
 import { exportPlanToDocx } from '../../export/planToDocx'
 import { instanceMap, planTotalMinutes } from '../../lib/planMath'
 import { usePlannerStore } from '../../store/usePlannerStore'
@@ -33,7 +34,7 @@ export function SessionBuilderScreen({ planId, onDone }: SessionBuilderScreenPro
     !plan.problemOwnerName.trim() && 'Problem owner name',
     !plan.problemOwnerDescription.trim() && 'Problem owner description',
     !plan.problemAsGiven.trim() && 'Problem as Given',
-    !plan.introduction.trim() && 'Introduction',
+    !plan.introduction.trim() && 'Case background',
     plan.targetLengthMinutes <= 0 && 'Target length',
     techniqueCount === 0 && 'At least one technique',
   ].filter((x): x is string => Boolean(x))
@@ -88,7 +89,16 @@ export function SessionBuilderScreen({ planId, onDone }: SessionBuilderScreenPro
               </span>
             </div>
           </div>
-          <div className="flex shrink-0 items-center gap-2">
+          <div className="flex shrink-0 flex-wrap items-center gap-2">
+            <button
+              type="button"
+              onClick={() => downloadPlanFile(plan, allInstances)}
+              title="Download this plan as a file you can send to someone else"
+              className="flex items-center gap-1.5 rounded-md border border-stone-300 bg-white px-3.5 py-2 text-sm font-medium text-stone-700 transition-colors hover:bg-stone-50"
+            >
+              <FileJson size={15} />
+              Download .json
+            </button>
             <button
               type="button"
               onClick={() => exportPlanToDocx(plan, allInstances, allTechniques)}
@@ -145,7 +155,7 @@ export function SessionBuilderScreen({ planId, onDone }: SessionBuilderScreenPro
           </div>
           <div>
             <label className="text-xs font-medium uppercase tracking-wide text-stone-400">
-              Introduction
+              Case background
             </label>
             <textarea
               value={plan.introduction}

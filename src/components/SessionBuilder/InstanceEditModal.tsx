@@ -225,7 +225,13 @@ export function InstanceEditModal(props: InstanceEditModalProps) {
             <textarea
               value={draftDescription}
               onChange={(e) => setDraftDescription(e.target.value)}
-              placeholder={isFreeText ? 'What happens in this step…' : "Override this technique's purpose for this plan…"}
+              placeholder={
+                isFreeText
+                  ? draftSectionId === 'introduction'
+                    ? 'What will be introduced — e.g. welcome, who we are, the brief, the agenda, the ground rules…'
+                    : 'What happens in this step…'
+                  : "Override this technique's purpose for this plan…"
+              }
               rows={3}
               className={fieldClass}
             />
@@ -247,7 +253,7 @@ export function InstanceEditModal(props: InstanceEditModalProps) {
             <input
               value={draftNote}
               onChange={(e) => setDraftNote(e.target.value)}
-              placeholder="Other notes on materials (e.g. wall space, keep the PaP visible)…"
+              placeholder="What to prepare, in your own words — e.g. just talking, print the brief, slides on screen, wall space…"
               className="mt-2 w-full rounded-md border border-stone-200 px-3 py-1.5 text-xs text-stone-700 focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
             />
             {technique?.materials && (

@@ -1,5 +1,6 @@
-import { Copy, FilePlus, FolderOpen, Trash2 } from 'lucide-react'
-import { useMemo, useState } from 'react'
+import { Copy, FilePlus, FileUp, FolderOpen, Trash2 } from 'lucide-react'
+import { useMemo, useRef, useState } from 'react'
+import { PlanFileError, parsePlanFile } from '../../export/planFile'
 import { instanceMap, planTotalMinutes } from '../../lib/planMath'
 import { relativeTime } from '../../lib/relativeTime'
 import { usePlannerStore } from '../../store/usePlannerStore'
@@ -15,7 +16,10 @@ export function TemplatePickerScreen({ onPlanReady }: TemplatePickerScreenProps)
   const cloneTemplate = usePlannerStore((s) => s.cloneTemplate)
   const createBlankPlan = usePlannerStore((s) => s.createBlankPlan)
   const deletePlan = usePlannerStore((s) => s.deletePlan)
+  const importPlanFile = usePlannerStore((s) => s.importPlanFile)
   const [busy, setBusy] = useState<string | null>(null)
+  const [importError, setImportError] = useState<string | null>(null)
+  const fileInput = useRef<HTMLInputElement>(null)
 
   const templates = plans.filter((p) => p.isSeedTemplate)
   const savedPlans = useMemo(
@@ -49,6 +53,20 @@ export function TemplatePickerScreen({ onPlanReady }: TemplatePickerScreenProps)
       onPlanReady(newPlanId, 'edit')
     } finally {
       setBusy(null)
+    }
+  }
+
+  async function handleImport(file: File) {
+    setImportError(null)
+    setBusy('import')
+    try {
+      const planId = await importPlanFile(parsePlanFile(await file.text()))
+      onPlanReady(planId, 'view')
+    } catch (err) {
+      setImportError(err instanceof PlanFileError ? err.message : "Couldn't import that file.")
+    } finally {
+      setBusy(null)
+      if (fileInput.current) fileInput.current.value = ''
     }
   }
 
@@ -142,7 +160,7 @@ export function TemplatePickerScreen({ onPlanReady }: TemplatePickerScreenProps)
           <div>
             <p className="font-semibold text-stone-900">Blank plan</p>
             <p className="mt-1 text-sm text-stone-500">
-              Six empty sections from the base framework. Add every technique instance by hand.
+              Empty sections from the base framework. Add every technique instance by hand.
             </p>
           </div>
           <button
@@ -154,6 +172,39 @@ export function TemplatePickerScreen({ onPlanReady }: TemplatePickerScreenProps)
             <FilePlus size={14} />
             {busy === 'blank' ? 'Creating…' : 'Start blank'}
           </button>
+        </div>
+
+        <div className="rounded-xl border border-dashed border-stone-300 bg-white p-4">
+          <div className="flex items-center justify-between gap-4">
+            <div>
+              <p className="font-semibold text-stone-900">Import a plan</p>
+              <p className="mt-1 text-sm text-stone-500">
+                Open a .json plan someone shared with you (from "Download .json"). It's added as your own copy.
+              </p>
+            </div>
+            <button
+              type="button"
+              disabled={busy === 'import'}
+              onClick={() => fileInput.current?.click()}
+              className="flex shrink-0 items-center gap-1.5 rounded-md border border-stone-300 px-3.5 py-2 text-sm font-medium text-stone-700 transition-colors hover:bg-stone-50 disabled:opacity-50"
+            >
+              <FileUp size={14} />
+              {busy === 'import' ? 'Importing…' : 'Choose file'}
+            </button>
+            <input
+              ref={fileInput}
+              type="file"
+              accept="application/json,.json"
+              className="hidden"
+              onChange={(e) => {
+                const file = e.target.files?.[0]
+                if (file) handleImport(file)
+              }}
+            />
+          </div>
+          {importError && (
+            <p className="mt-2 rounded-md bg-rose-50 px-3 py-2 text-sm text-rose-700">{importError}</p>
+          )}
         </div>
       </div>
     </div>

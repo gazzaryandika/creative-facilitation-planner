@@ -127,13 +127,12 @@ export const SECTION_LABELS: Record<SectionId, string> = {
 }
 
 /**
- * Problem as Given and Introduction are free-text brief fields, not technique-bearing
- * stages — the UI already has dedicated inputs for them. This is the subset of
- * SECTION_ORDER that actually renders as an accordion and accepts technique instances.
+ * Problem as Given is a free-text brief field with its own input, not a section of steps.
+ * This is the subset of SECTION_ORDER that renders as an accordion and holds steps —
+ * Introduction included, for timed items like the welcome, the brief and the ice breaker.
  */
 export const TECHNIQUE_SECTION_ORDER = SECTION_ORDER.filter(
-  (id): id is Exclude<SectionId, 'problem-as-given' | 'introduction'> =>
-    id !== 'problem-as-given' && id !== 'introduction',
+  (id): id is Exclude<SectionId, 'problem-as-given'> => id !== 'problem-as-given',
 )
 
 export type SectionInstances = Record<SectionId, string[]> // ordered TechniqueInstance ids
@@ -167,6 +166,7 @@ export interface SessionPlan {
   problemOwnerName: string
   problemOwnerDescription: string
   problemAsGiven: string
+  /** Case background for the facilitator (shown as "Case background"); the timed introduction items live in sections.introduction. */
   introduction: string
   sections: SectionInstances
   createdAt: string

@@ -60,6 +60,12 @@ export const MATERIALS_CATALOG: CatalogItem[] = [
   { id: 'random-objects-box', name: 'Box of random objects', category: 'Stimuli', quantity: 1, scaling: 'fixed', reusable: true },
   { id: 'picture-cards', name: 'Picture cards (set)', category: 'Stimuli', quantity: 1, scaling: 'fixed', reusable: true },
 
+  // Handouts and presenting
+  { id: 'printed-brief', name: 'Printed brief / PaG', category: 'Handouts and presenting', quantity: 1, scaling: 'perParticipant', reusable: false },
+  { id: 'printed-agenda', name: 'Printed agenda', category: 'Handouts and presenting', quantity: 1, scaling: 'perParticipant', reusable: false },
+  { id: 'name-tags', name: 'Name tags', category: 'Handouts and presenting', quantity: 1, scaling: 'perParticipant', reusable: false },
+  { id: 'slides', name: 'Slides on screen', category: 'Handouts and presenting', quantity: 1, scaling: 'fixed', reusable: true },
+
   // Room and tech
   { id: 'timer', name: 'Timer', category: 'Room and tech', quantity: 1, scaling: 'fixed', reusable: true },
   { id: 'speaker', name: 'Speaker for music', category: 'Room and tech', quantity: 1, scaling: 'fixed', reusable: true },

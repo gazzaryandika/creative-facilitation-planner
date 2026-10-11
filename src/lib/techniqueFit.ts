@@ -39,6 +39,9 @@ export function phaseFit(technique: Technique, phase: DiamondPhase): Fit {
 export function sectionFit(technique: Technique, sectionId: SectionId): Fit {
   const phase = SECTION_PHASE[sectionId]
   if (phase) return phaseFit(technique, phase)
+  if (sectionId === 'introduction') {
+    return /ice ?breaker|energi[sz]er|warm[- ]?up/i.test(technique.name) ? 'mainly' : 'notUsual'
+  }
   if (sectionId === 'wrap-up') {
     if (technique.diamond.length === 0) return 'mainly'
     if (/acceptance finding|information finding/i.test(technique.familyOfTechniques ?? '')) return 'also'
