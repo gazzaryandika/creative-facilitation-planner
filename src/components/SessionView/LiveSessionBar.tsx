@@ -73,20 +73,25 @@ export function LiveSessionBar({
       role="region"
       aria-label="Live session timer"
     >
-      {/* Whole-session strip: one segment per section, the current one lit. */}
-      <div className="flex h-1.5 w-full">
-        {sections.map((sec) => {
-          const done = index > sec.last
-          const active = index >= sec.first && index <= sec.last
-          return (
-            <div
-              key={`${sec.id}-${sec.first}`}
-              style={{ width: `${(sec.minutes / totalMinutes) * 100}%` }}
-              className={`border-r border-stone-900/60 ${done ? 'bg-teal-400' : active ? 'bg-white' : 'bg-stone-600'}`}
-              title={SECTION_LABELS[sec.id]}
-            />
-          )
-        })}
+      {/*
+        Whole-session progress: fills with session time against the planned total.
+        Dividers mark where each section starts; hovering a segment names the section.
+      */}
+      <div className="relative flex h-2 w-full bg-white/15">
+        <div
+          className={`absolute inset-y-0 left-0 transition-[width] duration-500 ${
+            sessionSeconds > totalPlanned ? 'bg-amber-400' : 'bg-teal-400'
+          }`}
+          style={{ width: `${Math.min(1, totalPlanned > 0 ? sessionSeconds / totalPlanned : 0) * 100}%` }}
+        />
+        {sections.map((sec, i) => (
+          <div
+            key={`${sec.id}-${sec.first}`}
+            style={{ width: `${(sec.minutes / totalMinutes) * 100}%` }}
+            className={`relative h-full ${i > 0 ? 'border-l-2 border-black/50' : ''}`}
+            title={`${SECTION_LABELS[sec.id]} · ${sec.minutes} min`}
+          />
+        ))}
       </div>
 
       <div className="mx-auto flex max-w-5xl flex-wrap items-center gap-x-5 gap-y-2 px-4 py-3 sm:flex-nowrap">

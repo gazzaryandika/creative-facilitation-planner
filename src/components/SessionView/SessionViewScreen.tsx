@@ -1,5 +1,5 @@
-import { Download, FileJson, Info, Pencil, Play } from 'lucide-react'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { ChevronRight, Download, FileJson, Info, Pencil, Play } from 'lucide-react'
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { SECTION_LABELS, TECHNIQUE_SECTION_ORDER } from '../../data/models'
 import { downloadPlanFile } from '../../export/planFile'
 import { exportPlanToDocx } from '../../export/planToDocx'
@@ -83,6 +83,34 @@ export function SessionViewScreen({ planId, onEdit }: SessionViewScreenProps) {
   const sessionSeconds = live ? live.sessionBanked + runningFor : 0
   const currentStepId = live ? steps[live.index]?.instance.id : undefined
   const currentOver = live ? stepSeconds > (steps[live.index]?.instance.actualMinutes ?? 0) * 60 : false
+
+  // The highlight box is drawn over the article rather than on the row itself, so it can
+  // have rounded corners and a chevron outside the table, and slide between rows.
+  const articleRef = useRef<HTMLElement>(null)
+  const [highlightBox, setHighlightBox] = useState<{ top: number; left: number; width: number; height: number } | null>(null)
+  useLayoutEffect(() => {
+    // No session: the box isn't rendered, so there's nothing to measure.
+    if (!currentStepId) return
+    function measure() {
+      const row = rowRefs.current.get(currentStepId!)
+      const article = articleRef.current
+      if (!row || !article) return
+      const r = row.getBoundingClientRect()
+      const a = article.getBoundingClientRect()
+      setHighlightBox({ top: r.top - a.top, left: r.left - a.left, width: r.width, height: r.height })
+    }
+    measure()
+    const observer = new ResizeObserver(measure)
+    if (articleRef.current) observer.observe(articleRef.current)
+    window.addEventListener('resize', measure)
+    // Catches the table's own sideways scrolling on small screens.
+    window.addEventListener('scroll', measure, true)
+    return () => {
+      observer.disconnect()
+      window.removeEventListener('resize', measure)
+      window.removeEventListener('scroll', measure, true)
+    }
+  }, [currentStepId])
   const stepPosition = new Map(steps.map((s, i) => [s.instance.id, i]))
 
   function startLive() {
@@ -122,7 +150,32 @@ export function SessionViewScreen({ planId, onEdit }: SessionViewScreenProps) {
   const sectionsWithContent = TECHNIQUE_SECTION_ORDER.filter((id) => plan.sections[id].length > 0)
 
   return (
-    <article className={`mx-auto max-w-5xl px-6 py-8 ${live ? 'pb-56 sm:pb-40' : ''}`}>
+    <article ref={articleRef} className={`relative mx-auto max-w-5xl px-6 py-8 ${live ? 'pb-56 sm:pb-40' : ''}`}>
+      {live && highlightBox && (
+        <div
+          aria-hidden
+          className="pointer-events-none absolute z-10 transition-all duration-300 ease-out"
+          style={{
+            top: highlightBox.top - 4,
+            left: highlightBox.left - 6,
+            width: highlightBox.width + 12,
+            height: highlightBox.height + 8,
+          }}
+        >
+          <div
+            className={`h-full w-full rounded-xl border-2 ${
+              currentOver ? 'border-rose-500' : 'border-sky-400'
+            }`}
+          />
+          <ChevronRight
+            size={26}
+            strokeWidth={2.5}
+            className={`absolute top-1/2 -left-4 h-4 w-4 -translate-y-1/2 sm:-left-9 sm:h-[26px] sm:w-[26px] ${
+              currentOver ? 'text-rose-500' : 'text-sky-500'
+            }`}
+          />
+        </div>
+      )}
       <div className="flex flex-wrap items-start justify-between gap-4">
         <h1 className="text-3xl font-bold tracking-tight text-stone-900">{plan.name}</h1>
         <div className="flex flex-wrap items-center gap-2">
@@ -253,8 +306,8 @@ export function SessionViewScreen({ planId, onEdit }: SessionViewScreenProps) {
                             className={`border-b border-stone-100 align-top transition-colors ${
                               instanceId === currentStepId
                                 ? currentOver
-                                  ? 'bg-rose-50 shadow-[inset_4px_0_0_var(--color-rose-600)]'
-                                  : 'bg-sky-50 shadow-[inset_4px_0_0_var(--color-sky-500)]'
+                                  ? 'bg-rose-50'
+                                  : 'bg-sky-50'
                                 : live && (stepPosition.get(instanceId) ?? 0) < live.index
                                   ? 'opacity-45'
                                   : ''
