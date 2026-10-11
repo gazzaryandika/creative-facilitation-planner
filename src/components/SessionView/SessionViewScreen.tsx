@@ -20,6 +20,25 @@ import { TechniqueDetailModal } from '../TechniqueDetailModal'
 import { TimeBudgetBar } from '../TimeBudgetBar'
 import { LiveSessionBar } from './LiveSessionBar'
 
+/**
+ * Live-session highlight: the box drawn around the current step and the chevron
+ * beside it. Tuned by eye on the plan view. On narrow screens the chevron scales
+ * down so it fits beside the table.
+ */
+const HIGHLIGHT = {
+  chevronSize: 89,
+  /** Negative tucks the chevron in: the icon's own whitespace keeps the stroke outside the box. */
+  chevronGap: -11,
+  chevronStroke: 1.25,
+  borderWidth: 2,
+  radius: 12,
+  padX: 6,
+  padY: 4,
+  /** Below this window width, the chevron shrinks by narrowScale. */
+  narrowBelow: 640,
+  narrowScale: 0.28,
+}
+
 interface SessionViewScreenProps {
   planId: string
   onEdit: () => void
@@ -87,7 +106,15 @@ export function SessionViewScreen({ planId, onEdit }: SessionViewScreenProps) {
   // The highlight box is drawn over the article rather than on the row itself, so it can
   // have rounded corners and a chevron outside the table, and slide between rows.
   const articleRef = useRef<HTMLElement>(null)
-  const [highlightBox, setHighlightBox] = useState<{ top: number; left: number; width: number; height: number } | null>(null)
+  const [highlightBox, setHighlightBox] = useState<{
+    top: number
+    left: number
+    width: number
+    height: number
+    /** The article's distance from the window's left edge, to keep the chevron on screen. */
+    articleLeft: number
+    narrow: boolean
+  } | null>(null)
   useLayoutEffect(() => {
     // No session: the box isn't rendered, so there's nothing to measure.
     if (!currentStepId) return
@@ -97,7 +124,15 @@ export function SessionViewScreen({ planId, onEdit }: SessionViewScreenProps) {
       if (!row || !article) return
       const r = row.getBoundingClientRect()
       const a = article.getBoundingClientRect()
-      setHighlightBox({ top: r.top - a.top, left: r.left - a.left, width: r.width, height: r.height })
+      setHighlightBox({
+        top: r.top - a.top,
+        left: r.left - a.left,
+        width: r.width,
+        height: r.height,
+        articleLeft: a.left,
+        // Same test as the layout's `sm` breakpoint; innerWidth can disagree with the layout width.
+        narrow: window.matchMedia(`(max-width: ${HIGHLIGHT.narrowBelow - 1}px)`).matches,
+      })
     }
     measure()
     const observer = new ResizeObserver(measure)
@@ -151,31 +186,40 @@ export function SessionViewScreen({ planId, onEdit }: SessionViewScreenProps) {
 
   return (
     <article ref={articleRef} className={`relative mx-auto max-w-5xl px-6 py-8 ${live ? 'pb-56 sm:pb-40' : ''}`}>
-      {live && highlightBox && (
-        <div
-          aria-hidden
-          className="pointer-events-none absolute z-10 transition-all duration-300 ease-out"
-          style={{
-            top: highlightBox.top - 4,
-            left: highlightBox.left - 6,
-            width: highlightBox.width + 12,
-            height: highlightBox.height + 8,
-          }}
-        >
+      {live && highlightBox && (() => {
+        const scale = highlightBox.narrow ? HIGHLIGHT.narrowScale : 1
+        const chevronSize = Math.round(HIGHLIGHT.chevronSize * scale)
+        const chevronGap = Math.round(HIGHLIGHT.chevronGap * scale)
+        return (
           <div
-            className={`h-full w-full rounded-xl border-2 ${
-              currentOver ? 'border-rose-500' : 'border-sky-400'
-            }`}
-          />
-          <ChevronRight
-            size={26}
-            strokeWidth={2.5}
-            className={`absolute top-1/2 -left-4 h-4 w-4 -translate-y-1/2 sm:-left-9 sm:h-[26px] sm:w-[26px] ${
-              currentOver ? 'text-rose-500' : 'text-sky-500'
-            }`}
-          />
-        </div>
-      )}
+            aria-hidden
+            className="pointer-events-none absolute z-10 transition-all duration-300 ease-out"
+            style={{
+              top: highlightBox.top - HIGHLIGHT.padY,
+              left: highlightBox.left - HIGHLIGHT.padX,
+              width: highlightBox.width + HIGHLIGHT.padX * 2,
+              height: highlightBox.height + HIGHLIGHT.padY * 2,
+            }}
+          >
+            <div
+              className={`h-full w-full border-solid ${currentOver ? 'border-rose-500' : 'border-sky-400'}`}
+              style={{ borderWidth: HIGHLIGHT.borderWidth, borderRadius: HIGHLIGHT.radius }}
+            />
+            <ChevronRight
+              size={chevronSize}
+              strokeWidth={HIGHLIGHT.chevronStroke}
+              className={`absolute top-1/2 -translate-y-1/2 ${currentOver ? 'text-rose-500' : 'text-sky-500'}`}
+              style={{
+                // Left of the box by the chosen gap, but never past the window's left edge.
+                left: Math.max(
+                  -(chevronGap + chevronSize),
+                  2 - (highlightBox.articleLeft + highlightBox.left - HIGHLIGHT.padX),
+                ),
+              }}
+            />
+          </div>
+        )
+      })()}
       <div className="flex flex-wrap items-start justify-between gap-4">
         <h1 className="text-3xl font-bold tracking-tight text-stone-900">{plan.name}</h1>
         <div className="flex flex-wrap items-center gap-2">
