@@ -82,6 +82,7 @@ export function SessionViewScreen({ planId, onEdit }: SessionViewScreenProps) {
   const stepSeconds = live ? live.stepBanked + runningFor : 0
   const sessionSeconds = live ? live.sessionBanked + runningFor : 0
   const currentStepId = live ? steps[live.index]?.instance.id : undefined
+  const currentOver = live ? stepSeconds > (steps[live.index]?.instance.actualMinutes ?? 0) * 60 : false
   const stepPosition = new Map(steps.map((s, i) => [s.instance.id, i]))
 
   function startLive() {
@@ -226,7 +227,7 @@ export function SessionViewScreen({ planId, onEdit }: SessionViewScreenProps) {
                   <table className="w-full min-w-[720px] border-collapse text-left text-sm">
                     <thead>
                       <tr className="border-b border-stone-200 text-[11px] font-semibold uppercase tracking-wide text-stone-400">
-                        <th className="w-[18%] py-2 pr-3 font-semibold">Step</th>
+                        <th className="w-[18%] py-2 pr-3 pl-3 font-semibold">Step</th>
                         <th className="w-[7%] py-2 pr-3 text-right font-semibold">Time</th>
                         <th className="w-[30%] py-2 pr-3 font-semibold">Description</th>
                         <th className="w-[22%] py-2 pr-3 font-semibold">Materials</th>
@@ -251,13 +252,15 @@ export function SessionViewScreen({ planId, onEdit }: SessionViewScreenProps) {
                             }}
                             className={`border-b border-stone-100 align-top transition-colors ${
                               instanceId === currentStepId
-                                ? 'bg-sky-50 shadow-[inset_4px_0_0_var(--color-sky-500)]'
+                                ? currentOver
+                                  ? 'bg-rose-50 shadow-[inset_4px_0_0_var(--color-rose-600)]'
+                                  : 'bg-sky-50 shadow-[inset_4px_0_0_var(--color-sky-500)]'
                                 : live && (stepPosition.get(instanceId) ?? 0) < live.index
                                   ? 'opacity-45'
                                   : ''
                             }`}
                           >
-                            <td className="py-2.5 pr-3 font-semibold text-stone-900">
+                            <td className="py-2.5 pr-3 pl-3 font-semibold text-stone-900">
                               {effectiveName(instance, technique)}
                               {technique && (
                                 <button

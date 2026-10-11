@@ -103,12 +103,17 @@ export function LiveSessionBar({
         </div>
 
         <div className="w-44 shrink-0 sm:w-60">
-          <div className="flex items-baseline justify-between gap-2">
-            <span className={`text-3xl font-bold tabular-nums ${over ? 'animate-pulse' : ''}`}>
-              {over ? `+${clock(-remaining)}` : clock(remaining)}
-            </span>
-            <span className="text-xs text-white/70">{over ? 'over time' : `of ${current.instance.actualMinutes} min`}</span>
-          </div>
+          {over ? (
+            <div className="animate-pulse">
+              <span className="block text-[11px] font-bold uppercase tracking-widest text-white/90">Overtime by</span>
+              <span className="text-3xl font-bold leading-none tabular-nums">{clock(-remaining)}</span>
+            </div>
+          ) : (
+            <div className="flex items-baseline justify-between gap-2">
+              <span className="text-3xl font-bold tabular-nums">{clock(remaining)}</span>
+              <span className="text-xs text-white/70">of {current.instance.actualMinutes} min</span>
+            </div>
+          )}
           <div className={`mt-1 h-2 overflow-hidden rounded-full ${over ? 'bg-rose-950/50' : 'bg-white/15'}`}>
             <div
               className={`h-full rounded-full ${over ? 'bg-white' : stepProgress > 0.8 ? 'bg-amber-400' : 'bg-teal-400'}`}
