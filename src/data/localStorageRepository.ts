@@ -48,12 +48,15 @@ function syncSeedData(): void {
   )
 }
 
+const DEFAULT_PARTICIPANT_COUNT = 6
+
 /** Backfills fields added to SessionPlan after some plans were already saved. */
 function normalizePlan(plan: SessionPlan): SessionPlan {
   return {
     ...plan,
     problemOwnerName: plan.problemOwnerName ?? '',
     problemOwnerDescription: plan.problemOwnerDescription ?? '',
+    participantCount: plan.participantCount ?? DEFAULT_PARTICIPANT_COUNT,
   }
 }
 

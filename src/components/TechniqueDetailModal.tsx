@@ -1,5 +1,7 @@
 import { X } from 'lucide-react'
 import type { Technique } from '../data/models'
+import { headerImageUrl } from '../lib/techniqueFit'
+import { TechniqueTags } from './TechniqueTags'
 
 interface TechniqueDetailModalProps {
   technique: Technique
@@ -11,7 +13,7 @@ function Field({ label, value }: { label: string; value?: string }) {
   return (
     <div>
       <dt className="text-xs font-medium uppercase tracking-wide text-stone-400">{label}</dt>
-      <dd className="mt-0.5 font-serif text-[15px] text-stone-800">{value}</dd>
+      <dd className="mt-0.5 whitespace-pre-line font-serif text-[15px] text-stone-800">{value}</dd>
     </div>
   )
 }
@@ -26,12 +28,19 @@ export function TechniqueDetailModal({ technique: t, onClose }: TechniqueDetailM
         className="max-h-[85vh] w-full max-w-2xl overflow-y-auto rounded-2xl border border-stone-200 bg-white p-6 shadow-xl"
         onClick={(e) => e.stopPropagation()}
       >
+        {t.headerImage && (
+          <img
+            src={headerImageUrl(t)}
+            alt={`${t.name}, illustration from the Road Map book`}
+            className="-mx-6 -mt-6 mb-4 block aspect-[16/9] w-[calc(100%+3rem)] max-w-none rounded-t-2xl object-cover"
+          />
+        )}
         <div className="flex items-start justify-between gap-4">
           <div>
             <h3 className="text-lg font-semibold text-stone-900">{t.name}</h3>
-            <p className="text-sm text-stone-500">
-              {t.stage} · {t.diamond.join(', ') || 'Outside the diamond'}
-            </p>
+            <div className="mt-1.5">
+              <TechniqueTags technique={t} />
+            </div>
           </div>
           <button
             type="button"
@@ -43,21 +52,10 @@ export function TechniqueDetailModal({ technique: t, onClose }: TechniqueDetailM
           </button>
         </div>
 
-        <div className="mt-3 flex gap-2">
-          {t.custom && (
-            <span className="rounded-full bg-violet-100 px-2 py-0.5 text-xs font-medium text-violet-700">
-              Custom
-            </span>
-          )}
-          {t.pendingTranscription && (
-            <span className="rounded-full bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-700">
-              Pending transcription
-            </span>
-          )}
-        </div>
 
         <dl className="mt-5 grid grid-cols-2 gap-4">
           <Field label="Section reference" value={t.sectionReference} />
+          <Field label="Diamond (book)" value={t.diamondNote} />
           <Field label="Family of techniques" value={t.familyOfTechniques} />
           <Field label="Type of problem" value={t.typeOfProblem} />
           <Field label="Type of options" value={t.typeOfOptions} />
@@ -75,6 +73,7 @@ export function TechniqueDetailModal({ technique: t, onClose }: TechniqueDetailM
             value={t.time ? `${t.time.minMinutes} to ${t.time.maxMinutes} minutes` : undefined}
           />
           <Field label="Fun-factor" value={t.funFactor} />
+          <Field label="Excursion safety" value={t.safety ? `${t.safety} / 5` : undefined} />
           <Field label="Materials" value={t.materials} />
           <Field label="Website" value={t.website} />
         </dl>
@@ -116,6 +115,7 @@ export function TechniqueDetailModal({ technique: t, onClose }: TechniqueDetailM
 
           <Field label="Tips and tricks" value={t.tipsAndTricks} />
           <Field label="Variants" value={t.variants} />
+          <Field label="Background" value={t.background} />
           <Field label="Source" value={t.source} />
         </div>
       </div>

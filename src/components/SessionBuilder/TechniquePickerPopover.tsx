@@ -1,147 +1,169 @@
-import { PenLine, Search, X } from 'lucide-react'
-import { useState } from 'react'
-import type { Technique } from '../../data/models'
+import { Info, PenLine, Search, X } from 'lucide-react'
+import { useMemo, useState } from 'react'
+import { SECTION_LABELS, type SectionId, type Stage, type Technique } from '../../data/models'
+import { FIT_ORDER, headerImageUrl, matchesQuery, nameMatches, sectionFit, shortDescription, type Fit } from '../../lib/techniqueFit'
 import { usePlannerStore } from '../../store/usePlannerStore'
+import { TechniqueDetailModal } from '../TechniqueDetailModal'
+import { TechniqueTags } from '../TechniqueTags'
 
 interface TechniquePickerPopoverProps {
+  sectionId: SectionId
   onPickLibrary: (techniqueId: string) => void
-  onAddFreeText: (customName: string, description: string) => void
+  /** Opens a blank step in the edit modal — a one-off just for this plan, not added to the library. */
+  onWriteOwn: () => void
   onClose: () => void
 }
 
-type Mode = 'library' | 'freeText'
+const STAGE_FILTERS: (Stage | 'all')[] = ['all', 'Diverging', 'Reverging', 'Converging', 'Multiple']
 
-export function TechniquePickerPopover({ onPickLibrary, onAddFreeText, onClose }: TechniquePickerPopoverProps) {
+const GROUP_STYLES: Record<Fit, { dot: string; text: string }> = {
+  mainly: { dot: 'bg-teal-500', text: 'text-teal-800' },
+  also: { dot: 'bg-sky-400', text: 'text-sky-800' },
+  notUsual: { dot: 'bg-stone-300', text: 'text-stone-500' },
+}
+
+function groupHeading(fit: Fit, section: string): string {
+  if (fit === 'mainly') return `Recommended for ${section}`
+  if (fit === 'also') return `Also used in ${section}`
+  return `Other techniques — not usual here, but free to use`
+}
+
+export function TechniquePickerPopover({ sectionId, onPickLibrary, onWriteOwn, onClose }: TechniquePickerPopoverProps) {
   const techniques = usePlannerStore((s) => s.techniques)
-  const [mode, setMode] = useState<Mode>('library')
   const [query, setQuery] = useState('')
-  const [freeName, setFreeName] = useState('')
-  const [freeDescription, setFreeDescription] = useState('')
+  const [stage, setStage] = useState<Stage | 'all'>('all')
+  const [detail, setDetail] = useState<Technique | null>(null)
+  const section = SECTION_LABELS[sectionId]
 
-  const filtered = techniques.filter((t: Technique) =>
-    t.name.toLowerCase().includes(query.toLowerCase()),
-  )
+  const groups = useMemo(() => {
+    const bookOrder = new Map(techniques.map((t, i) => [t.id, i]))
+    const list = techniques
+      .filter((t) => matchesQuery(t, query) && (stage === 'all' || t.stage === stage))
+      .map((t) => ({ t, fit: sectionFit(t, sectionId) }))
+      .sort(
+        (a, b) =>
+          FIT_ORDER[a.fit] - FIT_ORDER[b.fit] ||
+          Number(nameMatches(b.t, query)) - Number(nameMatches(a.t, query)) ||
+          bookOrder.get(a.t.id)! - bookOrder.get(b.t.id)!,
+      )
+    return (['mainly', 'also', 'notUsual'] as Fit[])
+      .map((fit) => ({ fit, items: list.filter((x) => x.fit === fit).map((x) => x.t) }))
+      .filter((g) => g.items.length > 0)
+  }, [techniques, query, stage, sectionId])
 
-  function handleAddFreeText() {
-    if (!freeName.trim()) return
-    onAddFreeText(freeName.trim(), freeDescription.trim())
-  }
+  const total = groups.reduce((n, g) => n + g.items.length, 0)
 
   return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-stone-900/40 p-4"
-      onClick={onClose}
-    >
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-stone-900/40 p-4" onClick={onClose}>
       <div
-        className="max-h-[70vh] w-full max-w-md overflow-y-auto rounded-2xl border border-stone-200 bg-white p-4 shadow-xl"
+        className="flex max-h-[85vh] w-full max-w-2xl flex-col rounded-2xl border border-stone-200 bg-white shadow-xl"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex items-center justify-between">
-          <h4 className="font-semibold text-stone-900">Add a step</h4>
-          <button
-            type="button"
-            onClick={onClose}
-            className="rounded-full p-1 text-stone-400 hover:bg-stone-100 hover:text-stone-600"
-            aria-label="Close"
-          >
-            <X size={16} />
-          </button>
-        </div>
-
-        <div className="mt-3 flex gap-1 rounded-md bg-stone-100 p-1">
-          <button
-            type="button"
-            onClick={() => setMode('library')}
-            className={`flex-1 rounded px-2 py-1.5 text-xs font-medium transition-colors ${
-              mode === 'library' ? 'bg-white text-stone-900 shadow-sm' : 'text-stone-500 hover:text-stone-700'
-            }`}
-          >
-            From library
-          </button>
-          <button
-            type="button"
-            onClick={() => setMode('freeText')}
-            className={`flex-1 rounded px-2 py-1.5 text-xs font-medium transition-colors ${
-              mode === 'freeText' ? 'bg-white text-stone-900 shadow-sm' : 'text-stone-500 hover:text-stone-700'
-            }`}
-          >
-            Write your own
-          </button>
-        </div>
-
-        {mode === 'library' ? (
-          <>
-            <div className="relative mt-3">
-              <Search
-                size={15}
-                className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-stone-400"
-              />
-              <input
-                autoFocus
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder="Filter by name…"
-                className="w-full rounded-md border border-stone-300 py-1.5 pl-8 pr-2 text-sm focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
-              />
+        <div className="border-b border-stone-100 px-4 pt-4 pb-3">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-xs font-medium uppercase tracking-wide text-stone-400">Add a step to</p>
+              <h4 className="font-semibold text-stone-900">{section}</h4>
             </div>
-            <ul className="mt-3 divide-y divide-stone-100">
-              {filtered.map((t) => (
-                <li key={t.id}>
-                  <button
-                    type="button"
-                    onClick={() => onPickLibrary(t.id)}
-                    className="flex w-full items-center justify-between gap-2 rounded-md px-1.5 py-2 text-left text-sm hover:bg-stone-50"
-                  >
-                    <span className="text-stone-900">{t.name}</span>
-                    <span className="shrink-0 text-xs text-stone-400">
-                      {t.stage}
-                      {t.time ? ` · ${t.time.minMinutes}–${t.time.maxMinutes}m` : ''}
-                    </span>
-                  </button>
-                </li>
-              ))}
-              {filtered.length === 0 && (
-                <li className="py-4 text-center text-sm text-stone-400">No matches.</li>
-              )}
-            </ul>
-          </>
-        ) : (
-          <div className="mt-3 space-y-3">
-            <p className="text-xs text-stone-500">
-              A one-off step just for this plan — it won't be added to the technique library.
-            </p>
-            <label className="block">
-              <span className="text-xs font-medium uppercase tracking-wide text-stone-400">Name</span>
-              <input
-                autoFocus
-                value={freeName}
-                onChange={(e) => setFreeName(e.target.value)}
-                placeholder="What is this step called?"
-                className="mt-1 w-full rounded-md border border-stone-300 px-3 py-2 text-sm focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
-              />
-            </label>
-            <label className="block">
-              <span className="text-xs font-medium uppercase tracking-wide text-stone-400">Description</span>
-              <textarea
-                value={freeDescription}
-                onChange={(e) => setFreeDescription(e.target.value)}
-                rows={3}
-                placeholder="What happens in this step…"
-                className="mt-1 w-full rounded-md border border-stone-300 px-3 py-2 text-sm focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
-              />
-            </label>
             <button
               type="button"
-              onClick={handleAddFreeText}
-              disabled={!freeName.trim()}
-              className="flex w-full items-center justify-center gap-1.5 rounded-md bg-teal-700 px-3.5 py-2 text-sm font-medium text-white transition-colors hover:bg-teal-800 disabled:cursor-not-allowed disabled:bg-stone-200 disabled:text-stone-400"
+              onClick={onClose}
+              className="rounded-full p-1 text-stone-400 hover:bg-stone-100 hover:text-stone-600"
+              aria-label="Close"
             >
-              <PenLine size={14} />
-              Add step
+              <X size={16} />
             </button>
           </div>
-        )}
+
+          <div className="relative mt-3">
+            <Search size={15} className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-stone-400" />
+            <input
+              autoFocus
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Search anything — name, what it does, “sketch”, “quiet group”…"
+              className="w-full rounded-md border border-stone-300 py-1.5 pl-8 pr-2 text-sm focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
+            />
+          </div>
+
+          <div className="mt-2 flex flex-wrap gap-1">
+            {STAGE_FILTERS.map((s) => (
+              <button
+                key={s}
+                type="button"
+                onClick={() => setStage(s)}
+                className={`rounded-full px-2.5 py-1 text-xs font-medium transition-colors ${
+                  stage === s ? 'bg-stone-800 text-white' : 'bg-stone-100 text-stone-600 hover:bg-stone-200'
+                }`}
+              >
+                {s === 'all' ? 'All stages' : s}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="min-h-0 flex-1 overflow-y-auto px-4 py-2">
+          {groups.map((group) => (
+            <section key={group.fit} className="py-2">
+              <h5 className={`flex items-center gap-1.5 text-xs font-semibold ${GROUP_STYLES[group.fit].text}`}>
+                <span className={`h-2 w-2 rounded-full ${GROUP_STYLES[group.fit].dot}`} />
+                {groupHeading(group.fit, section)}
+                <span className="font-normal text-stone-400">({group.items.length})</span>
+              </h5>
+              <ul className="mt-1 divide-y divide-stone-100">
+                {group.items.map((t) => (
+                  <li key={t.id} className="flex items-start gap-1">
+                    <button
+                      type="button"
+                      onClick={() => onPickLibrary(t.id)}
+                      className="flex min-w-0 flex-1 gap-3 rounded-md px-1.5 py-2 text-left hover:bg-stone-50"
+                    >
+                      {t.headerImage && (
+                        <img
+                          src={headerImageUrl(t)}
+                          alt=""
+                          loading="lazy"
+                          className="mt-0.5 h-14 w-16 shrink-0 rounded object-cover sm:w-20"
+                        />
+                      )}
+                      <div className="min-w-0 flex-1">
+                        <p className="text-sm font-medium text-stone-900">{t.name}</p>
+                        <p className="mt-0.5 line-clamp-2 text-xs text-stone-500">{shortDescription(t)}</p>
+                        <div className="mt-1.5">
+                          <TechniqueTags technique={t} compact />
+                        </div>
+                      </div>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setDetail(t)}
+                      aria-label={`Full details of ${t.name}`}
+                      title="Full details"
+                      className="mt-2 shrink-0 rounded-md p-1.5 text-stone-400 hover:bg-stone-100 hover:text-teal-700"
+                    >
+                      <Info size={16} />
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ))}
+          {total === 0 && <p className="py-6 text-center text-sm text-stone-400">No matches. Try fewer words.</p>}
+        </div>
+
+        <div className="border-t border-stone-100 p-3">
+          <button
+            type="button"
+            onClick={onWriteOwn}
+            className="flex w-full items-center justify-center gap-1.5 rounded-md border border-dashed border-stone-300 px-3.5 py-2 text-sm font-medium text-stone-600 transition-colors hover:border-teal-400 hover:bg-teal-50 hover:text-teal-700"
+          >
+            <PenLine size={14} />
+            Write your own step
+          </button>
+        </div>
       </div>
+
+      {detail && <TechniqueDetailModal technique={detail} onClose={() => setDetail(null)} />}
     </div>
   )
 }

@@ -11,13 +11,15 @@ import {
   WidthType,
 } from 'docx'
 import { SECTION_LABELS, TECHNIQUE_SECTION_ORDER, type SessionPlan, type Technique, type TechniqueInstance } from '../data/models'
-import { effectiveDescription, effectiveMaterials, effectiveName, resolveTechnique } from '../lib/planMath'
+import { billOfMaterials, effectiveMaterialItems, effectiveMaterialsNote, formatLine } from '../lib/materials'
+import { effectiveDescription, effectiveName, resolveTechnique } from '../lib/planMath'
 
-const TABLE_HEADERS = ['Time', 'What', 'Aim', 'Materials', 'Notes']
+const TABLE_HEADERS = ['Step', 'Time', 'Description', 'Materials', 'Facilitator notes']
+const BOM_HEADERS = ['Item', 'Qty', 'Used in']
 
-function headerRow(): TableRow {
+function headerRow(headers: string[] = TABLE_HEADERS): TableRow {
   return new TableRow({
-    children: TABLE_HEADERS.map(
+    children: headers.map(
       (text) =>
         new TableCell({
           children: [new Paragraph({ children: [new TextRun({ text, bold: true })] })],
@@ -26,16 +28,25 @@ function headerRow(): TableRow {
   })
 }
 
-function instanceRow(instance: TechniqueInstance, technique: Technique | undefined): TableRow {
-  const cells = [
-    `${instance.actualMinutes} min`,
-    effectiveName(instance, technique),
-    effectiveDescription(instance, technique),
-    effectiveMaterials(instance, technique),
-    instance.facilitatorNotes,
-  ]
+function textCell(text: string): TableCell {
+  return new TableCell({ children: [new Paragraph(text)] })
+}
+
+function instanceRow(instance: TechniqueInstance, technique: Technique | undefined, participantCount: number): TableRow {
+  const materialLines = [
+    ...effectiveMaterialItems(instance, technique).map((line) => formatLine(line, participantCount)),
+    effectiveMaterialsNote(instance, technique),
+  ].filter(Boolean)
   return new TableRow({
-    children: cells.map((text) => new TableCell({ children: [new Paragraph(text)] })),
+    children: [
+      textCell(effectiveName(instance, technique)),
+      textCell(`${instance.actualMinutes} min`),
+      textCell(effectiveDescription(instance, technique)),
+      new TableCell({
+        children: materialLines.length ? materialLines.map((line) => new Paragraph(line)) : [new Paragraph('')],
+      }),
+      textCell(instance.facilitatorNotes),
+    ],
   })
 }
 
@@ -49,6 +60,7 @@ export async function exportPlanToDocx(
 
   const children: (Paragraph | Table)[] = [
     new Paragraph({ text: plan.name, heading: HeadingLevel.TITLE }),
+    new Paragraph(`RG of ${plan.participantCount} participants`),
 
     new Paragraph({ text: 'Problem Owner', heading: HeadingLevel.HEADING_1 }),
     new Paragraph({
@@ -89,8 +101,31 @@ export async function exportPlanToDocx(
                 ],
               })
             }
-            return instanceRow(instance, resolveTechnique(instance, techniqueById))
+            return instanceRow(instance, resolveTechnique(instance, techniqueById), plan.participantCount)
           }),
+        ],
+      }),
+    )
+  }
+
+  const bom = billOfMaterials(plan, instanceById, techniqueById, effectiveName)
+  if (bom.length > 0) {
+    children.push(
+      new Paragraph({ text: 'Bill of materials', heading: HeadingLevel.HEADING_1 }),
+      new Table({
+        width: { size: 100, type: WidthType.PERCENTAGE },
+        rows: [
+          headerRow(BOM_HEADERS),
+          ...bom.map(
+            (row) =>
+              new TableRow({
+                children: [
+                  textCell(row.reusable ? `${row.name} (reusable)` : row.name),
+                  textCell(String(row.quantity)),
+                  textCell(row.usedIn.join(', ')),
+                ],
+              }),
+          ),
         ],
       }),
     )

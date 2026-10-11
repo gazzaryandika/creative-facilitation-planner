@@ -53,7 +53,7 @@ export function SessionBuilderScreen({ planId, onDone }: SessionBuilderScreenPro
               onChange={(e) => updatePlanMeta(plan.id, { name: e.target.value })}
               className="w-full border-none bg-transparent text-2xl font-bold tracking-tight text-stone-900 focus:outline-none"
             />
-            <div className="mt-1.5 flex items-center gap-2">
+            <div className="mt-1.5 flex flex-wrap items-center gap-2">
               <label htmlFor="target-length" className="text-xs font-medium text-stone-500">
                 Target length
               </label>
@@ -68,6 +68,20 @@ export function SessionBuilderScreen({ planId, onDone }: SessionBuilderScreenPro
                 className="w-20 rounded-md border border-stone-300 px-1.5 py-0.5 text-sm tabular-nums focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
               />
               <span className="text-xs text-stone-500">min</span>
+              <label htmlFor="participant-count" className="ml-3 text-xs font-medium text-stone-500">
+                RG size
+              </label>
+              <input
+                id="participant-count"
+                type="number"
+                min={1}
+                value={plan.participantCount}
+                onChange={(e) =>
+                  updatePlanMeta(plan.id, { participantCount: Math.max(1, Number(e.target.value) || 1) })
+                }
+                className="w-16 rounded-md border border-stone-300 px-1.5 py-0.5 text-sm tabular-nums focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
+              />
+              <span className="text-xs text-stone-500">participants</span>
               <span className="ml-1 flex items-center gap-1 text-xs text-stone-400">
                 <Check size={12} strokeWidth={2.5} className="text-teal-600" />
                 Saves automatically
