@@ -106,6 +106,7 @@ export function SectionColumn({ plan, sectionId, instances, techniques }: Sectio
 
       {pickerOpen && (
         <TechniquePickerPopover
+          sectionId={sectionId}
           onClose={() => setPickerOpen(false)}
           onPickLibrary={(techniqueId) => {
             setPendingDraft({ technique: techniques.get(techniqueId) })

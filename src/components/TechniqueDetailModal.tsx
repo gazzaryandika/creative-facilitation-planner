@@ -1,5 +1,6 @@
 import { X } from 'lucide-react'
 import type { Technique } from '../data/models'
+import { TechniqueTags } from './TechniqueTags'
 
 interface TechniqueDetailModalProps {
   technique: Technique
@@ -29,9 +30,9 @@ export function TechniqueDetailModal({ technique: t, onClose }: TechniqueDetailM
         <div className="flex items-start justify-between gap-4">
           <div>
             <h3 className="text-lg font-semibold text-stone-900">{t.name}</h3>
-            <p className="text-sm text-stone-500">
-              {t.stage} · {t.diamond.join(', ') || 'Outside the diamond'}
-            </p>
+            <div className="mt-1.5">
+              <TechniqueTags technique={t} />
+            </div>
           </div>
           <button
             type="button"
@@ -43,21 +44,10 @@ export function TechniqueDetailModal({ technique: t, onClose }: TechniqueDetailM
           </button>
         </div>
 
-        <div className="mt-3 flex gap-2">
-          {t.custom && (
-            <span className="rounded-full bg-violet-100 px-2 py-0.5 text-xs font-medium text-violet-700">
-              Custom
-            </span>
-          )}
-          {t.pendingTranscription && (
-            <span className="rounded-full bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-700">
-              Pending transcription
-            </span>
-          )}
-        </div>
 
         <dl className="mt-5 grid grid-cols-2 gap-4">
           <Field label="Section reference" value={t.sectionReference} />
+          <Field label="Diamond (book)" value={t.diamondNote} />
           <Field label="Family of techniques" value={t.familyOfTechniques} />
           <Field label="Type of problem" value={t.typeOfProblem} />
           <Field label="Type of options" value={t.typeOfOptions} />
