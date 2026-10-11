@@ -102,7 +102,7 @@ export function LiveSessionBar({
           )}
         </div>
 
-        <div className="w-40 shrink-0">
+        <div className="w-44 shrink-0 sm:w-60">
           <div className="flex items-baseline justify-between gap-2">
             <span className={`text-3xl font-bold tabular-nums ${over ? 'animate-pulse' : ''}`}>
               {over ? `+${clock(-remaining)}` : clock(remaining)}
@@ -115,7 +115,7 @@ export function LiveSessionBar({
               style={{ width: `${stepProgress * 100}%` }}
             />
           </div>
-          <p className="mt-1 text-[11px] tabular-nums text-white/60">
+          <p className="mt-1 whitespace-nowrap text-[11px] tabular-nums text-white/60">
             Session {clock(sessionSeconds)} / {clock(totalPlanned)}
             {Math.abs(drift) >= 60 && (
               <span className={drift > 0 ? 'text-amber-300' : 'text-teal-300'}>

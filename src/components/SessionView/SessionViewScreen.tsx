@@ -73,7 +73,9 @@ export function SessionViewScreen({ planId, onEdit }: SessionViewScreenProps) {
   useEffect(() => {
     if (liveIndex === undefined) return
     const id = steps[liveIndex]?.instance.id
-    if (id) rowRefs.current.get(id)?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    // A hidden page runs no animation frames, so a smooth scroll would never move; jump instead.
+    const behavior = document.visibilityState === 'visible' ? 'smooth' : 'auto'
+    if (id) rowRefs.current.get(id)?.scrollIntoView({ behavior, block: 'center' })
   }, [liveIndex, steps])
 
   const runningFor = live?.running ? Math.max(0, (now - live.since) / 1000) : 0
