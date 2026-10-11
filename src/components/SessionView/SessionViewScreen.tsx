@@ -1,5 +1,5 @@
-import { Download, FileJson, Pencil, Play } from 'lucide-react'
-import { useMemo } from 'react'
+import { Download, FileJson, Info, Pencil, Play } from 'lucide-react'
+import { useMemo, useState } from 'react'
 import { SECTION_LABELS, TECHNIQUE_SECTION_ORDER } from '../../data/models'
 import { downloadPlanFile } from '../../export/planFile'
 import { exportPlanToDocx } from '../../export/planToDocx'
@@ -15,6 +15,7 @@ import {
 } from '../../lib/planMath'
 import { usePlannerStore } from '../../store/usePlannerStore'
 import { StageFlowBadges } from '../StageFlowBadges'
+import { TechniqueDetailModal } from '../TechniqueDetailModal'
 import { TimeBudgetBar } from '../TimeBudgetBar'
 
 interface SessionViewScreenProps {
@@ -35,6 +36,9 @@ export function SessionViewScreen({ planId, onEdit, onStartLive }: SessionViewSc
 
   const instances = useMemo(() => instanceMap(allInstances), [allInstances])
   const techniques = useMemo(() => new Map(allTechniques.map((t) => [t.id, t])), [allTechniques])
+  // The library method behind a step, opened from the step's info button to recall how it works.
+  const [infoTechniqueId, setInfoTechniqueId] = useState<string | null>(null)
+  const infoTechnique = infoTechniqueId ? techniques.get(infoTechniqueId) : undefined
 
   if (!plan) {
     return <div className="p-8 text-stone-500">Plan not found.</div>
@@ -170,6 +174,17 @@ export function SessionViewScreen({ planId, onEdit, onStartLive }: SessionViewSc
                           <tr key={instanceId} className="border-b border-stone-100 align-top">
                             <td className="py-2.5 pr-3 font-semibold text-stone-900">
                               {effectiveName(instance, technique)}
+                              {technique && (
+                                <button
+                                  type="button"
+                                  onClick={() => setInfoTechniqueId(technique.id)}
+                                  aria-label={`How ${technique.name} works`}
+                                  title="How this method works"
+                                  className="ml-1 inline-flex translate-y-0.5 rounded-full p-0.5 text-stone-400 hover:bg-teal-50 hover:text-teal-700"
+                                >
+                                  <Info size={15} />
+                                </button>
+                              )}
                               {!technique && (
                                 <span className="block text-xs font-normal text-stone-400">free text</span>
                               )}
@@ -241,6 +256,8 @@ export function SessionViewScreen({ planId, onEdit, onStartLive }: SessionViewSc
           </p>
         </section>
       )}
+
+      {infoTechnique && <TechniqueDetailModal technique={infoTechnique} onClose={() => setInfoTechniqueId(null)} />}
     </article>
   )
 }
