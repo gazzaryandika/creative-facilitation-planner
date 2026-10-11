@@ -13,6 +13,21 @@ export interface TimeRange {
   maxMinutes: number
 }
 
+/**
+ * How a material line's quantity is read: a fixed total for the whole step
+ * (one flip-chart stand), or an amount per RG member (one Post-it pad each),
+ * multiplied by the plan's participant count when the plan is printed.
+ */
+export type MaterialScaling = 'fixed' | 'perParticipant'
+
+export interface MaterialLine {
+  /** Set when the line came from the materials catalog; absent for a custom item. */
+  catalogId?: string
+  name: string
+  quantity: number
+  scaling: MaterialScaling
+}
+
 export interface StepByStepEntry {
   number: number
   text: string
@@ -43,7 +58,12 @@ export interface Technique {
   rgLevel?: ExperienceLevel
   time?: TimeRange
   funFactor?: string
+  /** The book's own materials text, shown as-is in the technique detail view. */
   materials?: string
+  /** The same materials as countable items — the default bill of materials for a new instance. */
+  materialItems?: MaterialLine[]
+  /** Anything in the materials text that isn't a countable item (e.g. "wall space"). */
+  materialsNote?: string
   website?: string
   purpose?: string
   inShort?: string
@@ -62,11 +82,17 @@ export interface TechniqueInstance {
   techniqueId?: string
   /** The step's name when it has no techniqueId. Ignored for a library-backed instance, which uses the technique's own name. */
   customName?: string
+  /** A free-text step's stage, chosen by hand. Undefined means "not set". Ignored for a library-backed instance, which uses the technique's own stage. */
+  stage?: Stage
   /** Overrides the technique's purpose/aim for this plan only; the whole description for a free-text step. Undefined falls back to the technique's own purpose/inShort. */
   description?: string
   actualMinutes: number
   facilitatorNotes: string
-  /** Overrides the technique's default materials for this plan only. Undefined falls back to the technique's own materials; an explicit empty string means "none for this plan," not "unset." */
+  /** Overrides the technique's default material items for this plan only. Undefined falls back to the technique's own; an empty array means "none for this plan." */
+  materialItems?: MaterialLine[]
+  /** Overrides the technique's materials note for this plan only. */
+  materialsNote?: string
+  /** @deprecated Free-text materials from before materialItems existed. Read only as a fallback note. */
   materials?: string
 }
 
@@ -126,6 +152,8 @@ export interface SessionPlan {
   isSeedTemplate: boolean
   clonedFromId?: string
   targetLengthMinutes: number
+  /** Resource Group size — scales every per-participant material line. */
+  participantCount: number
   problemOwnerName: string
   problemOwnerDescription: string
   problemAsGiven: string

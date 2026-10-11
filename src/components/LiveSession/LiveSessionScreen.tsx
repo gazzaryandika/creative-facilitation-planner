@@ -1,7 +1,8 @@
 import { ChevronLeft, ChevronRight, Pause, Play, Square } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
 import { SECTION_LABELS } from '../../data/models'
-import { effectiveDescription, effectiveMaterials, effectiveName, flattenInstances, instanceMap } from '../../lib/planMath'
+import { formatMaterialsInline } from '../../lib/materials'
+import { effectiveDescription, effectiveName, effectiveStage, flattenInstances, instanceMap } from '../../lib/planMath'
 import { usePlannerStore } from '../../store/usePlannerStore'
 import { StageFlowBadges } from '../StageFlowBadges'
 import { TimeBudgetBar } from '../TimeBudgetBar'
@@ -73,7 +74,7 @@ export function LiveSessionScreen({ planId, onEnd }: LiveSessionScreenProps) {
   const currentRemaining = currentTotalSeconds - secondsElapsedInStep
   const wholeTotalSeconds = steps.reduce((sum, s) => sum + s.instance.actualMinutes * 60, 0)
   const aim = effectiveDescription(current.instance, current.technique)
-  const materials = effectiveMaterials(current.instance, current.technique)
+  const materials = formatMaterialsInline(current.instance, current.technique, plan.participantCount)
 
   return (
     <div className="min-h-screen bg-stone-50">
@@ -138,7 +139,9 @@ export function LiveSessionScreen({ planId, onEnd }: LiveSessionScreenProps) {
             <span className="rounded-full bg-stone-100 px-2.5 py-1 text-xs font-semibold text-stone-600">
               {SECTION_LABELS[current.sectionId]}
             </span>
-            <StageFlowBadges stages={current.technique ? [current.technique.stage] : []} />
+            <StageFlowBadges
+              stages={[effectiveStage(current.instance, current.technique)].filter((s) => s !== undefined)}
+            />
           </div>
           <h1 className="mt-2 text-3xl font-bold tracking-tight text-stone-900">
             {effectiveName(current.instance, current.technique)}

@@ -35,6 +35,7 @@ interface PlannerState {
         SessionPlan,
         | 'name'
         | 'targetLengthMinutes'
+        | 'participantCount'
         | 'problemOwnerName'
         | 'problemOwnerDescription'
         | 'problemAsGiven'
@@ -43,22 +44,28 @@ interface PlannerState {
     >,
   ) => Promise<void>
 
+  /**
+   * Places a step the user has already reviewed in the edit modal — either drawn
+   * from the library (techniqueId set) or written from scratch (customName set).
+   */
   addInstanceToSection: (
     planId: string,
     sectionId: SectionId,
-    techniqueId: string,
-  ) => Promise<void>
-  /** Adds a one-off step written directly into the plan, not drawn from (or added to) the technique library. */
-  addFreeTextInstanceToSection: (
-    planId: string,
-    sectionId: SectionId,
-    customName: string,
-    description: string,
+    draft: Omit<TechniqueInstance, 'id'>,
   ) => Promise<void>
   updateInstance: (
     instanceId: string,
     patch: Partial<
-      Pick<TechniqueInstance, 'actualMinutes' | 'facilitatorNotes' | 'materials' | 'description' | 'customName'>
+      Pick<
+        TechniqueInstance,
+        | 'actualMinutes'
+        | 'facilitatorNotes'
+        | 'materialItems'
+        | 'materialsNote'
+        | 'description'
+        | 'customName'
+        | 'stage'
+      >
     >,
   ) => Promise<void>
   removeInstanceFromSection: (
@@ -172,6 +179,7 @@ export const usePlannerStore = create<PlannerState>((set, get) => {
       name,
       isSeedTemplate: false,
       targetLengthMinutes: 150,
+      participantCount: 6,
       problemOwnerName: '',
       problemOwnerDescription: '',
       problemAsGiven: '',
@@ -219,25 +227,8 @@ export const usePlannerStore = create<PlannerState>((set, get) => {
     }))
   },
 
-  addInstanceToSection: async (planId, sectionId, techniqueId) => {
-    const technique = get().techniques.find((t) => t.id === techniqueId)
-    if (!technique) throw new Error(`Technique ${techniqueId} not found`)
-    await attachInstance(planId, sectionId, {
-      id: newId('instance'),
-      techniqueId,
-      actualMinutes: technique.time?.minMinutes ?? 0,
-      facilitatorNotes: '',
-    })
-  },
-
-  addFreeTextInstanceToSection: async (planId, sectionId, customName, description) => {
-    await attachInstance(planId, sectionId, {
-      id: newId('instance'),
-      customName,
-      description,
-      actualMinutes: 10,
-      facilitatorNotes: '',
-    })
+  addInstanceToSection: async (planId, sectionId, draft) => {
+    await attachInstance(planId, sectionId, { ...draft, id: newId('instance') })
   },
 
   updateInstance: async (instanceId, patch) => {

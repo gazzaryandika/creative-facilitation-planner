@@ -3,7 +3,7 @@ import { SortableContext, arrayMove, verticalListSortingStrategy } from '@dnd-ki
 import { ChevronDown, Plus } from 'lucide-react'
 import { useState } from 'react'
 import { SECTION_LABELS, type SectionId, type SessionPlan, type Technique, type TechniqueInstance } from '../../data/models'
-import { resolveTechnique, sectionStageFlow, sectionTotalMinutes } from '../../lib/planMath'
+import { blankDraft, draftFromTechnique, resolveTechnique, sectionStageFlow, sectionTotalMinutes } from '../../lib/planMath'
 import { usePlannerStore } from '../../store/usePlannerStore'
 import { StageFlowBadges } from '../StageFlowBadges'
 import { InstanceCard } from './InstanceCard'
@@ -19,11 +19,11 @@ interface SectionColumnProps {
 
 export function SectionColumn({ plan, sectionId, instances, techniques }: SectionColumnProps) {
   const reorderWithinSection = usePlannerStore((s) => s.reorderWithinSection)
-  const addInstanceToSection = usePlannerStore((s) => s.addInstanceToSection)
-  const addFreeTextInstanceToSection = usePlannerStore((s) => s.addFreeTextInstanceToSection)
   const [collapsed, setCollapsed] = useState(false)
   const [pickerOpen, setPickerOpen] = useState(false)
   const [editingInstanceId, setEditingInstanceId] = useState<string | null>(null)
+  // A step picked from the library (or a blank one) that's being reviewed before placement.
+  const [pendingDraft, setPendingDraft] = useState<{ technique?: Technique } | null>(null)
 
   const instanceIds = plan.sections[sectionId]
   const sectionTotal = sectionTotalMinutes(plan, sectionId, instances)
@@ -93,6 +93,7 @@ export function SectionColumn({ plan, sectionId, instances, techniques }: Sectio
                       key={instanceId}
                       instance={instance}
                       technique={resolveTechnique(instance, techniques)}
+                      participantCount={plan.participantCount}
                       onEdit={() => setEditingInstanceId(instanceId)}
                     />
                   )
@@ -106,19 +107,35 @@ export function SectionColumn({ plan, sectionId, instances, techniques }: Sectio
       {pickerOpen && (
         <TechniquePickerPopover
           onClose={() => setPickerOpen(false)}
-          onPickLibrary={async (techniqueId) => {
-            await addInstanceToSection(plan.id, sectionId, techniqueId)
+          onPickLibrary={(techniqueId) => {
+            setPendingDraft({ technique: techniques.get(techniqueId) })
             setPickerOpen(false)
           }}
-          onAddFreeText={async (customName, description) => {
-            await addFreeTextInstanceToSection(plan.id, sectionId, customName, description)
+          onWriteOwn={() => {
+            setPendingDraft({})
             setPickerOpen(false)
+          }}
+        />
+      )}
+
+      {pendingDraft && (
+        <InstanceEditModal
+          mode="create"
+          instance={pendingDraft.technique ? draftFromTechnique(pendingDraft.technique) : blankDraft()}
+          technique={pendingDraft.technique}
+          planId={plan.id}
+          sectionId={sectionId}
+          onClose={() => setPendingDraft(null)}
+          onBack={() => {
+            setPendingDraft(null)
+            setPickerOpen(true)
           }}
         />
       )}
 
       {editingInstance && (
         <InstanceEditModal
+          mode="edit"
           instance={editingInstance}
           technique={resolveTechnique(editingInstance, techniques)}
           planId={plan.id}

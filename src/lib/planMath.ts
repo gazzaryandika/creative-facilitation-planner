@@ -1,22 +1,39 @@
 import { TECHNIQUE_SECTION_ORDER, type SectionId, type SessionPlan, type Stage, type Technique, type TechniqueInstance } from '../data/models'
 
+/** An instance's content, with or without an id — so a draft not yet placed in a plan reads the same way. */
+export type InstanceFields = Omit<TechniqueInstance, 'id'>
+
+/** A fresh, unplaced instance of a library technique, pre-filled from its defaults. */
+export function draftFromTechnique(technique: Technique): InstanceFields {
+  return {
+    techniqueId: technique.id,
+    actualMinutes: technique.time?.minMinutes ?? 0,
+    facilitatorNotes: '',
+  }
+}
+
+/** A fresh, unplaced free-text step. */
+export function blankDraft(): InstanceFields {
+  return { customName: '', actualMinutes: 10, facilitatorNotes: '', materialItems: [] }
+}
+
 export function instanceMap(instances: TechniqueInstance[]): Map<string, TechniqueInstance> {
   return new Map(instances.map((i) => [i.id, i]))
 }
 
-/** The instance's own materials override if set, otherwise the technique's default. */
-export function effectiveMaterials(instance: TechniqueInstance, technique: Technique | undefined): string {
-  return instance.materials ?? technique?.materials ?? ''
-}
-
 /** A free-text step's own name, or the library technique's name. */
-export function effectiveName(instance: TechniqueInstance, technique: Technique | undefined): string {
+export function effectiveName(instance: InstanceFields, technique: Technique | undefined): string {
   return technique?.name ?? instance.customName ?? 'Untitled step'
 }
 
 /** The instance's own description/aim override if set, the technique's purpose/inShort otherwise, or the whole description for a free-text step. */
-export function effectiveDescription(instance: TechniqueInstance, technique: Technique | undefined): string {
+export function effectiveDescription(instance: InstanceFields, technique: Technique | undefined): string {
   return instance.description ?? technique?.purpose ?? technique?.inShort ?? ''
+}
+
+/** The library technique's stage, or the stage picked by hand for a free-text step (undefined if not set). */
+export function effectiveStage(instance: InstanceFields, technique: Technique | undefined): Stage | undefined {
+  return technique?.stage ?? instance.stage
 }
 
 /** A free-text instance has no techniqueId — it's a one-off written directly into the plan. */
@@ -64,9 +81,10 @@ export function sectionStageFlow(
   const flow: Stage[] = []
   for (const id of instanceIds) {
     const instance = instances.get(id)
-    const technique = instance && resolveTechnique(instance, techniques)
-    if (!technique) continue
-    if (flow[flow.length - 1] !== technique.stage) flow.push(technique.stage)
+    if (!instance) continue
+    const stage = effectiveStage(instance, resolveTechnique(instance, techniques))
+    if (!stage) continue
+    if (flow[flow.length - 1] !== stage) flow.push(stage)
   }
   return flow
 }

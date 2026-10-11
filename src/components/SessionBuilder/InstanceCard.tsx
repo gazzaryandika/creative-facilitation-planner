@@ -3,15 +3,17 @@ import { CSS } from '@dnd-kit/utilities'
 import { ChevronDown, GripVertical, Pencil } from 'lucide-react'
 import { useState } from 'react'
 import type { Technique, TechniqueInstance } from '../../data/models'
-import { effectiveDescription, effectiveMaterials, effectiveName } from '../../lib/planMath'
+import { formatMaterialsInline } from '../../lib/materials'
+import { effectiveDescription, effectiveName } from '../../lib/planMath'
 
 interface InstanceCardProps {
   instance: TechniqueInstance
   technique: Technique | undefined
+  participantCount: number
   onEdit: () => void
 }
 
-export function InstanceCard({ instance, technique, onEdit }: InstanceCardProps) {
+export function InstanceCard({ instance, technique, participantCount, onEdit }: InstanceCardProps) {
   const [expanded, setExpanded] = useState(true)
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: instance.id,
@@ -39,7 +41,7 @@ export function InstanceCard({ instance, technique, onEdit }: InstanceCardProps)
 
   const isFreeText = !instance.techniqueId
   const description = effectiveDescription(instance, technique)
-  const materials = effectiveMaterials(instance, technique)
+  const materials = formatMaterialsInline(instance, technique, participantCount)
   const hasDetail = Boolean(description || materials || instance.facilitatorNotes)
 
   return (

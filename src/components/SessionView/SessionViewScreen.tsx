@@ -2,9 +2,9 @@ import { Download, Pencil, Play } from 'lucide-react'
 import { useMemo } from 'react'
 import { SECTION_LABELS, TECHNIQUE_SECTION_ORDER } from '../../data/models'
 import { exportPlanToDocx } from '../../export/planToDocx'
+import { billOfMaterials, effectiveMaterialItems, effectiveMaterialsNote, formatLine } from '../../lib/materials'
 import {
   effectiveDescription,
-  effectiveMaterials,
   effectiveName,
   instanceMap,
   planTotalMinutes,
@@ -40,13 +40,14 @@ export function SessionViewScreen({ planId, onEdit, onStartLive }: SessionViewSc
   }
 
   const total = planTotalMinutes(plan, instances)
+  const bom = billOfMaterials(plan, instances, techniques, effectiveName)
   const sectionsWithContent = TECHNIQUE_SECTION_ORDER.filter((id) => plan.sections[id].length > 0)
 
   return (
-    <article className="mx-auto max-w-3xl px-6 py-8">
-      <div className="flex items-start justify-between gap-4">
+    <article className="mx-auto max-w-5xl px-6 py-8">
+      <div className="flex flex-wrap items-start justify-between gap-4">
         <h1 className="text-3xl font-bold tracking-tight text-stone-900">{plan.name}</h1>
-        <div className="flex shrink-0 items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           <button
             type="button"
             onClick={() => exportPlanToDocx(plan, allInstances, allTechniques)}
@@ -75,6 +76,10 @@ export function SessionViewScreen({ planId, onEdit, onStartLive }: SessionViewSc
           </button>
         </div>
       </div>
+
+      <p className="mt-1 text-sm text-stone-500">
+        RG of <span className="font-semibold tabular-nums text-stone-700">{plan.participantCount}</span> participants
+      </p>
 
       <div className="mt-4">
         <TimeBudgetBar actualMinutes={total} targetMinutes={plan.targetLengthMinutes} label="Whole plan" />
@@ -131,47 +136,100 @@ export function SessionViewScreen({ planId, onEdit, onStartLive }: SessionViewSc
                   </span>
                 </div>
 
-                <ol className="mt-3 space-y-4">
-                  {instanceIds.map((instanceId) => {
-                    const instance = instances.get(instanceId)
-                    if (!instance) return null
-                    const technique = resolveTechnique(instance, techniques)
-                    const aim = effectiveDescription(instance, technique)
-                    const materials = effectiveMaterials(instance, technique)
+                <div className="mt-3 overflow-x-auto">
+                  <table className="w-full min-w-[720px] border-collapse text-left text-sm">
+                    <thead>
+                      <tr className="border-b border-stone-200 text-[11px] font-semibold uppercase tracking-wide text-stone-400">
+                        <th className="w-[18%] py-2 pr-3 font-semibold">Step</th>
+                        <th className="w-[7%] py-2 pr-3 text-right font-semibold">Time</th>
+                        <th className="w-[30%] py-2 pr-3 font-semibold">Description</th>
+                        <th className="w-[22%] py-2 pr-3 font-semibold">Materials</th>
+                        <th className="w-[23%] py-2 font-semibold">Facilitator notes</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {instanceIds.map((instanceId) => {
+                        const instance = instances.get(instanceId)
+                        if (!instance) return null
+                        const technique = resolveTechnique(instance, techniques)
+                        const aim = effectiveDescription(instance, technique)
+                        const items = effectiveMaterialItems(instance, technique)
+                        const note = effectiveMaterialsNote(instance, technique)
 
-                    return (
-                      <li key={instanceId}>
-                        <div className="flex items-baseline justify-between gap-3">
-                          <h3 className="font-semibold text-stone-900">
-                            {effectiveName(instance, technique)}
-                            {!technique && (
-                              <span className="ml-2 align-middle text-xs font-normal text-stone-400">
-                                (free text)
-                              </span>
-                            )}
-                          </h3>
-                          <span className="shrink-0 text-xs font-semibold tabular-nums text-stone-500">
-                            {instance.actualMinutes} min
-                          </span>
-                        </div>
-                        {aim && <p className="mt-0.5 font-serif text-[15px] text-stone-700">{aim}</p>}
-                        {materials && (
-                          <p className="mt-1 text-xs text-stone-500">
-                            <span className="font-medium text-stone-600">Materials: </span>
-                            {materials}
-                          </p>
-                        )}
-                        {instance.facilitatorNotes && (
-                          <p className="mt-1 text-xs text-stone-500 italic">{instance.facilitatorNotes}</p>
-                        )}
-                      </li>
-                    )
-                  })}
-                </ol>
+                        return (
+                          <tr key={instanceId} className="border-b border-stone-100 align-top">
+                            <td className="py-2.5 pr-3 font-semibold text-stone-900">
+                              {effectiveName(instance, technique)}
+                              {!technique && (
+                                <span className="block text-xs font-normal text-stone-400">free text</span>
+                              )}
+                            </td>
+                            <td className="py-2.5 pr-3 text-right text-xs font-semibold whitespace-nowrap tabular-nums text-stone-600">
+                              {instance.actualMinutes} min
+                            </td>
+                            <td className="py-2.5 pr-3 font-serif text-[15px] leading-snug text-stone-700">
+                              {aim || <span className="text-stone-300">—</span>}
+                            </td>
+                            <td className="py-2.5 pr-3 text-xs text-stone-600">
+                              {items.length > 0 && (
+                                <ul className="space-y-0.5">
+                                  {items.map((line, i) => (
+                                    <li key={i} className="tabular-nums">{formatLine(line, plan.participantCount)}</li>
+                                  ))}
+                                </ul>
+                              )}
+                              {note && <p className={`italic text-stone-500 ${items.length ? 'mt-1' : ''}`}>{note}</p>}
+                              {!items.length && !note && <span className="text-stone-300">—</span>}
+                            </td>
+                            <td className="py-2.5 text-xs whitespace-pre-line text-stone-600">
+                              {instance.facilitatorNotes || <span className="text-stone-300">—</span>}
+                            </td>
+                          </tr>
+                        )
+                      })}
+                    </tbody>
+                  </table>
+                </div>
               </section>
             )
           })}
         </div>
+      )}
+
+      {bom.length > 0 && (
+        <section className="mt-10">
+          <div className="flex items-baseline justify-between gap-3 border-b border-stone-200 pb-2">
+            <h2 className="text-lg font-bold tracking-tight text-stone-900">Bill of materials</h2>
+            <span className="text-xs text-stone-500">for an RG of {plan.participantCount}</span>
+          </div>
+          <div className="mt-3 overflow-x-auto">
+            <table className="w-full min-w-[560px] border-collapse text-left text-sm">
+              <thead>
+                <tr className="border-b border-stone-200 text-[11px] font-semibold uppercase tracking-wide text-stone-400">
+                  <th className="py-2 pr-3 font-semibold">Item</th>
+                  <th className="py-2 pr-3 text-right font-semibold">Qty</th>
+                  <th className="py-2 font-semibold">Used in</th>
+                </tr>
+              </thead>
+              <tbody>
+                {bom.map((row) => (
+                  <tr key={row.name} className="border-b border-stone-100 align-top">
+                    <td className="py-2 pr-3 text-stone-900">
+                      {row.name}
+                      {row.reusable && <span className="ml-1.5 text-xs text-stone-400">reusable</span>}
+                    </td>
+                    <td className="py-2 pr-3 text-right font-semibold tabular-nums text-stone-900">{row.quantity}</td>
+                    <td className="py-2 text-xs text-stone-500">{row.usedIn.join(', ')}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p className="mt-2 text-xs text-stone-400">
+            Consumables add up across steps. Reusable items (markers, pens, tape, stands) count once, at the most any
+            single step needs.
+          </p>
+        </section>
       )}
     </article>
   )

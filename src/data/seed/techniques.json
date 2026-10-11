@@ -14,6 +14,12 @@
     "time": { "minMinutes": 20, "maxMinutes": 45 },
     "funFactor": "4",
     "materials": "Post-its, black markers, flip-over sheets, tape",
+    "materialItems": [
+      { "catalogId": "post-it-pads", "name": "Post-it pads", "quantity": 1, "scaling": "perParticipant" },
+      { "catalogId": "black-markers", "name": "Black markers", "quantity": 1, "scaling": "perParticipant" },
+      { "catalogId": "flip-over-sheets", "name": "Flip-over sheets", "quantity": 3, "scaling": "fixed" },
+      { "catalogId": "masking-tape", "name": "Masking tape (roll)", "quantity": 1, "scaling": "fixed" }
+    ],
     "purpose": "A silent variation on Brainstorming, built for speed and to limit dominant RG members. Useful for purging.",
     "inShort": "The RG generates options in silence and records them on Post-its.",
     "tipsAndTricks": "Remind the RG to write clearly, one option per Post-it.",
@@ -30,6 +36,14 @@
     "time": { "minMinutes": 12, "maxMinutes": 12 },
     "funFactor": "3",
     "materials": "One A2 or flip-over sheet, Post-its, black and coloured markers per participant, wall space, the PaG printed large",
+    "materialItems": [
+      { "catalogId": "flip-over-sheets", "name": "Flip-over sheets", "quantity": 1, "scaling": "fixed" },
+      { "catalogId": "post-it-pads", "name": "Post-it pads", "quantity": 1, "scaling": "perParticipant" },
+      { "catalogId": "black-markers", "name": "Black markers", "quantity": 1, "scaling": "perParticipant" },
+      { "catalogId": "coloured-markers", "name": "Coloured markers (set)", "quantity": 1, "scaling": "perParticipant" },
+      { "catalogId": "pap-printed-large", "name": "PaP / PaG printed large", "quantity": 1, "scaling": "fixed" }
+    ],
+    "materialsNote": "Wall space; an A2 sheet works instead of flip-over",
     "purpose": "Explores a vague term in the PaG by writing whatever it brings to mind, one word per Post-it, connected by lines — surfaces both what's written down (books, named techniques) and what only passes by example (a mindset, a way of working no book captures).",
     "inShort": "Write the vague term in the centre of a sheet. The RG adds words that come to mind, one per Post-it, each connected by a line to the word that triggered it.",
     "stepByStep": [
@@ -61,6 +75,12 @@
     "time": { "minMinutes": 30, "maxMinutes": 60 },
     "funFactor": "4",
     "materials": "Flip-over sheets, tape, generated options on Post-its, markers",
+    "materialItems": [
+      { "catalogId": "flip-over-sheets", "name": "Flip-over sheets", "quantity": 4, "scaling": "fixed" },
+      { "catalogId": "masking-tape", "name": "Masking tape (roll)", "quantity": 1, "scaling": "fixed" },
+      { "catalogId": "black-markers", "name": "Black markers", "quantity": 1, "scaling": "perParticipant" }
+    ],
+    "materialsNote": "The generated options on Post-its",
     "purpose": "Helps the RG move from the energizing divergent stage to a calmer, focused converging stage, once 50 or more options exist.",
     "inShort": "The RG clusters related options into groups, then names each group.",
     "tipsAndTricks": "Works best when Post-its carried the diverging stage's options straight over. The Creativity Guru session ran this in just 8 minutes with well under 50 options — notably faster than the book's 30-to-60-minute range, because the RG was tired after a full day and the facilitators kept methods simple and adjusted timings on the spot. Don't treat 8 minutes as the new normal; it was a deliberate trim for that RG's energy.",
@@ -90,6 +110,11 @@
     "time": { "minMinutes": 30, "maxMinutes": 45 },
     "funFactor": "Excursion 4, forced fit 2",
     "materials": "Flip-over sheets, Post-its, black markers",
+    "materialItems": [
+      { "catalogId": "flip-over-sheets", "name": "Flip-over sheets", "quantity": 3, "scaling": "fixed" },
+      { "catalogId": "post-it-pads", "name": "Post-it pads", "quantity": 1, "scaling": "perParticipant" },
+      { "catalogId": "black-markers", "name": "Black markers", "quantity": 1, "scaling": "perParticipant" }
+    ],
     "website": "Creative Confrontation worksheet",
     "purpose": "Take the RG away from the PaP on a safe excursion",
     "inShort": "Purge, excursion, force fit",
@@ -107,6 +132,11 @@
     "diamond": ["Idea Finding"],
     "diamondNote": "Diverging, inside Creative Confrontation",
     "materials": "A jar or box of random word cards, Post-its, markers",
+    "materialItems": [
+      { "catalogId": "random-word-cards", "name": "Random word cards (jar or box)", "quantity": 1, "scaling": "fixed" },
+      { "catalogId": "post-it-pads", "name": "Post-it pads", "quantity": 1, "scaling": "perParticipant" },
+      { "catalogId": "black-markers", "name": "Black markers", "quantity": 1, "scaling": "perParticipant" }
+    ],
     "purpose": "Builds a pile of options in a domain far from the PaP, with no link to it yet.",
     "inShort": "Draw a random word with no link to the PaP, free associate and chain associations further and further from the start word, then harvest the pile.",
     "tipsAndTricks": "Book safety rating is 2 of 5 — keep the mood light and watch the RG's energy. Random Objects works the same way if an object is easier to source at the venue than a word. The Creativity Guru session ran this for 15 minutes, drawing the word with the PaP out of sight and chaining each new word from the last answer, not just one layer deep. Word list prepped in advance for that session: umbrella, bicycle, lighthouse, volcano, spider, magnet, waterfall, puzzle, campfire, mirror, balloon, anchor, compass, thunderstorm, chameleon — concrete, everyday words, nothing close to books, school or teaching, which would kill the distance the excursion needs.",
@@ -123,7 +153,12 @@
     "diamondNote": "Diverging, inside Creative Confrontation",
     "custom": false,
     "source": "Road Map §3.1.10 — safety/experience rating is in the book's table, but the full step-by-step is not in the vault excerpt. Do not guess the steps. The Creativity Guru session plan names this as the daylight/outdoor fallback for Excursion: Random Words, not run in that session.",
-    "pendingTranscription": true
+    "pendingTranscription": true,
+    "materialItems": [
+      { "catalogId": "random-objects-box", "name": "Box of random objects", "quantity": 1, "scaling": "fixed" },
+      { "catalogId": "post-it-pads", "name": "Post-it pads", "quantity": 1, "scaling": "perParticipant" },
+      { "catalogId": "black-markers", "name": "Black markers", "quantity": 1, "scaling": "perParticipant" }
+    ]
   },
   {
     "id": "force-fitting-brainsketching",
@@ -132,6 +167,12 @@
     "stage": "Diverging",
     "diamond": ["Idea Finding"],
     "materials": "Paper, markers or pencils, the PaP written large for reference",
+    "materialItems": [
+      { "catalogId": "a4-paper", "name": "A4 paper", "quantity": 2, "scaling": "perParticipant" },
+      { "catalogId": "black-markers", "name": "Black markers", "quantity": 1, "scaling": "perParticipant" },
+      { "catalogId": "pap-printed-large", "name": "PaP / PaG printed large", "quantity": 1, "scaling": "fixed" }
+    ],
+    "materialsNote": "Pencils work instead of markers",
     "purpose": "Produces many rough visual ideas, each tied to the PaP through the excursion.",
     "inShort": "For each option harvested from the excursion, ask what it suggests for the PaP, list the connection, then draw a picture to visualise the answer.",
     "tipsAndTricks": "Pass drawings around and build on them. The Creativity Guru session ran this for 35 minutes directly after the excursion; the team considered and dropped MATEC as too complex for that case, and a mentor confirmed force fitting plus brainsketching as a good combination in its place.",
@@ -145,6 +186,12 @@
     "stage": "Reverging",
     "diamond": ["Solution Finding"],
     "materials": "A large C-box drawn on paper or a whiteboard, dot stickers, markers",
+    "materialItems": [
+      { "catalogId": "flip-over-sheets", "name": "Flip-over sheets", "quantity": 1, "scaling": "fixed" },
+      { "catalogId": "dot-stickers", "name": "Dot stickers (sheets)", "quantity": 1, "scaling": "perParticipant" },
+      { "catalogId": "black-markers", "name": "Black markers", "quantity": 1, "scaling": "perParticipant" }
+    ],
+    "materialsNote": "C-box drawn large on paper or a whiteboard",
     "purpose": "Selects ideas worth building and worth trying, without losing a bold one.",
     "inShort": "Locate ideas in a C-box plotted on two axes, then select from the strongest quadrant.",
     "tipsAndTricks": "Axes are case-specific — the Creativity Guru session used value creation for students (benefit to creative growth, not money) against student engagement (how much students want to take part): a book chapter can be high value and low engagement, a cartoon the reverse, so look for ideas strong on both. A joker card or dot can protect one bold, low-scoring idea if the problem owner says they can make a crazy idea work themselves. Confirm the axes with the problem owner before the session — they follow the case, not a fixed book default.",
@@ -161,6 +208,12 @@
     "time": { "minMinutes": 10, "maxMinutes": 10 },
     "funFactor": "4",
     "materials": "Paper balls, 4 labelled containers or a dartboard, cards with method descriptions and alternative names",
+    "materialItems": [
+      { "name": "Paper balls", "quantity": 1, "scaling": "perParticipant" },
+      { "name": "Labelled containers", "quantity": 4, "scaling": "fixed" },
+      { "name": "Method description cards (set)", "quantity": 1, "scaling": "fixed" }
+    ],
+    "materialsNote": "A dartboard works instead of containers",
     "purpose": "Set the mood. Show the value of preserved knowledge and why passing it on matters.",
     "inShort": "Recognise creativity methods by description or alternative name, then reflect on what they gave you.",
     "stepByStep": [
@@ -182,6 +235,11 @@
     "diamond": ["Idea Finding"],
     "time": { "minMinutes": 10, "maxMinutes": 10 },
     "materials": "Post-its, markers, the PaP written large",
+    "materialItems": [
+      { "catalogId": "post-it-pads", "name": "Post-it pads", "quantity": 1, "scaling": "perParticipant" },
+      { "catalogId": "black-markers", "name": "Black markers", "quantity": 1, "scaling": "perParticipant" },
+      { "catalogId": "pap-printed-large", "name": "PaP / PaG printed large", "quantity": 1, "scaling": "fixed" }
+    ],
     "purpose": "Clear the obvious answers, so a following excursion generates options beyond them.",
     "inShort": "Write down every option that already comes to mind for the PaP, one per Post-it, until the pace drops.",
     "tipsAndTricks": "Read a few aloud, no discussion. This empties the obvious so the excursion isn't spent regenerating it.",
@@ -197,6 +255,12 @@
     "diamondNote": "Diverges into How-To's per cluster, then converges them into one PaP checked against SPARK",
     "time": { "minMinutes": 15, "maxMinutes": 15 },
     "materials": "Fresh Post-its, markers, a large sheet or wall space for the PaP",
+    "materialItems": [
+      { "catalogId": "post-it-pads", "name": "Post-it pads", "quantity": 1, "scaling": "perParticipant" },
+      { "catalogId": "black-markers", "name": "Black markers", "quantity": 1, "scaling": "perParticipant" },
+      { "catalogId": "flip-over-sheets", "name": "Flip-over sheets", "quantity": 2, "scaling": "fixed" }
+    ],
+    "materialsNote": "Or wall space for the PaP",
     "purpose": "Turns clustered output into a set of How-To's, then one PaP checked against SPARK.",
     "inShort": "For each cluster, write \"How to convey [cluster] to students?\" questions. Then choose and reformulate into one PaP.",
     "stepByStep": [
@@ -218,6 +282,8 @@
     "diamondNote": "Closing activity, outside the diamond's three phases",
     "time": { "minMinutes": 5, "maxMinutes": 5 },
     "materials": "None. Keep the PaP, C-box and chosen idea visible on the wall.",
+    "materialItems": [],
+    "materialsNote": "Keep the PaP, C-box and chosen idea visible on the wall.",
     "purpose": "Close the session and agree the follow-up.",
     "inShort": "Thank the RG. The problem owner reacts. Agree what the client receives afterward.",
     "tipsAndTricks": "The client report needs this agreement up front.",
@@ -233,6 +299,10 @@
     "diamondNote": "Closing reflection, outside the diamond's three phases",
     "time": { "minMinutes": 15, "maxMinutes": 15 },
     "materials": "Paper or notecards, pens",
+    "materialItems": [
+      { "catalogId": "index-cards", "name": "Index cards", "quantity": 2, "scaling": "perParticipant" },
+      { "catalogId": "pens", "name": "Pens", "quantity": 1, "scaling": "perParticipant" }
+    ],
     "purpose": "Participants name what they learned.",
     "inShort": "Each participant answers What? So What? Now What? alone, then shares.",
     "tipsAndTricks": "Ask the problem owner to reflect too.",
