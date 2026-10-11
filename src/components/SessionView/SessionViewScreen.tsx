@@ -1,5 +1,5 @@
-import { Download, FileJson, Info, Pencil, Play } from 'lucide-react'
-import { useMemo, useState } from 'react'
+import { ChevronRight, Download, FileJson, Info, Pencil, Play } from 'lucide-react'
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { SECTION_LABELS, TECHNIQUE_SECTION_ORDER } from '../../data/models'
 import { downloadPlanFile } from '../../export/planFile'
 import { exportPlanToDocx } from '../../export/planToDocx'
@@ -7,6 +7,7 @@ import { billOfMaterials, effectiveMaterialItems, effectiveMaterialsNote, format
 import {
   effectiveDescription,
   effectiveName,
+  flattenInstances,
   instanceMap,
   planTotalMinutes,
   resolveTechnique,
@@ -17,11 +18,44 @@ import { usePlannerStore } from '../../store/usePlannerStore'
 import { StageFlowBadges } from '../StageFlowBadges'
 import { TechniqueDetailModal } from '../TechniqueDetailModal'
 import { TimeBudgetBar } from '../TimeBudgetBar'
+import { LiveSessionBar } from './LiveSessionBar'
+
+/**
+ * Live-session highlight: the box drawn around the current step and the chevron
+ * beside it. Tuned by eye on the plan view. On narrow screens the chevron scales
+ * down so it fits beside the table.
+ */
+const HIGHLIGHT = {
+  chevronSize: 89,
+  /** Negative tucks the chevron in: the icon's own whitespace keeps the stroke outside the box. */
+  chevronGap: -11,
+  chevronStroke: 1.25,
+  borderWidth: 2,
+  radius: 12,
+  padX: 6,
+  padY: 4,
+  /** Below this window width, the chevron shrinks by narrowScale. */
+  narrowBelow: 640,
+  narrowScale: 0.28,
+}
 
 interface SessionViewScreenProps {
   planId: string
   onEdit: () => void
-  onStartLive: () => void
+}
+
+/**
+ * A running session. Time is kept as wall-clock timestamps rather than ticks, so it
+ * stays right when the laptop sleeps or the tab is in the background.
+ */
+interface LiveState {
+  index: number
+  running: boolean
+  /** Seconds banked in the current step / whole session up to `since`. */
+  stepBanked: number
+  sessionBanked: number
+  /** When the timer last started running (ms). */
+  since: number
 }
 
 function Prose({ text, placeholder }: { text: string; placeholder: string }) {
@@ -29,7 +63,7 @@ function Prose({ text, placeholder }: { text: string; placeholder: string }) {
   return <p className="whitespace-pre-line font-serif text-[15px] leading-relaxed text-stone-800">{text}</p>
 }
 
-export function SessionViewScreen({ planId, onEdit, onStartLive }: SessionViewScreenProps) {
+export function SessionViewScreen({ planId, onEdit }: SessionViewScreenProps) {
   const plan = usePlannerStore((s) => s.plans.find((p) => p.id === planId))
   const allInstances = usePlannerStore((s) => s.instances)
   const allTechniques = usePlannerStore((s) => s.techniques)
@@ -40,6 +74,108 @@ export function SessionViewScreen({ planId, onEdit, onStartLive }: SessionViewSc
   const [infoTechniqueId, setInfoTechniqueId] = useState<string | null>(null)
   const infoTechnique = infoTechniqueId ? techniques.get(infoTechniqueId) : undefined
 
+  const steps = useMemo(
+    () => (plan ? flattenInstances(plan, instances, techniques) : []),
+    [plan, instances, techniques],
+  )
+  const [live, setLive] = useState<LiveState | null>(null)
+  const [now, setNow] = useState(() => Date.now())
+  const rowRefs = useRef(new Map<string, HTMLTableRowElement>())
+
+  useEffect(() => {
+    if (!live?.running) return
+    const id = setInterval(() => setNow(Date.now()), 250)
+    return () => clearInterval(id)
+  }, [live?.running])
+
+  const liveIndex = live?.index
+  useEffect(() => {
+    if (liveIndex === undefined) return
+    const id = steps[liveIndex]?.instance.id
+    // A hidden page runs no animation frames, so a smooth scroll would never move; jump instead.
+    const behavior = document.visibilityState === 'visible' ? 'smooth' : 'auto'
+    if (id) rowRefs.current.get(id)?.scrollIntoView({ behavior, block: 'center' })
+  }, [liveIndex, steps])
+
+  const runningFor = live?.running ? Math.max(0, (now - live.since) / 1000) : 0
+  const stepSeconds = live ? live.stepBanked + runningFor : 0
+  const sessionSeconds = live ? live.sessionBanked + runningFor : 0
+  const currentStepId = live ? steps[live.index]?.instance.id : undefined
+  const currentOver = live ? stepSeconds > (steps[live.index]?.instance.actualMinutes ?? 0) * 60 : false
+
+  // The highlight box is drawn over the article rather than on the row itself, so it can
+  // have rounded corners and a chevron outside the table, and slide between rows.
+  const articleRef = useRef<HTMLElement>(null)
+  const [highlightBox, setHighlightBox] = useState<{
+    top: number
+    left: number
+    width: number
+    height: number
+    /** The article's distance from the window's left edge, to keep the chevron on screen. */
+    articleLeft: number
+    narrow: boolean
+  } | null>(null)
+  useLayoutEffect(() => {
+    // No session: the box isn't rendered, so there's nothing to measure.
+    if (!currentStepId) return
+    function measure() {
+      const row = rowRefs.current.get(currentStepId!)
+      const article = articleRef.current
+      if (!row || !article) return
+      const r = row.getBoundingClientRect()
+      const a = article.getBoundingClientRect()
+      setHighlightBox({
+        top: r.top - a.top,
+        left: r.left - a.left,
+        width: r.width,
+        height: r.height,
+        articleLeft: a.left,
+        // Same test as the layout's `sm` breakpoint; innerWidth can disagree with the layout width.
+        narrow: window.matchMedia(`(max-width: ${HIGHLIGHT.narrowBelow - 1}px)`).matches,
+      })
+    }
+    measure()
+    const observer = new ResizeObserver(measure)
+    if (articleRef.current) observer.observe(articleRef.current)
+    window.addEventListener('resize', measure)
+    // Catches the table's own sideways scrolling on small screens.
+    window.addEventListener('scroll', measure, true)
+    return () => {
+      observer.disconnect()
+      window.removeEventListener('resize', measure)
+      window.removeEventListener('scroll', measure, true)
+    }
+  }, [currentStepId])
+  const stepPosition = new Map(steps.map((s, i) => [s.instance.id, i]))
+
+  function startLive() {
+    const t = Date.now()
+    setNow(t)
+    setLive({ index: 0, running: true, stepBanked: 0, sessionBanked: 0, since: t })
+  }
+
+  function toggleRunning() {
+    if (!live) return
+    const t = Date.now()
+    setNow(t)
+    setLive(
+      live.running
+        ? { ...live, running: false, stepBanked: stepSeconds, sessionBanked: sessionSeconds }
+        : { ...live, running: true, since: t },
+    )
+  }
+
+  function goToStep(index: number) {
+    if (!live) return
+    const t = Date.now()
+    setNow(t)
+    setLive({ ...live, index, stepBanked: 0, sessionBanked: sessionSeconds, since: t })
+  }
+
+  function endLive() {
+    if (window.confirm('End the live session? The timer will reset.')) setLive(null)
+  }
+
   if (!plan) {
     return <div className="p-8 text-stone-500">Plan not found.</div>
   }
@@ -49,7 +185,41 @@ export function SessionViewScreen({ planId, onEdit, onStartLive }: SessionViewSc
   const sectionsWithContent = TECHNIQUE_SECTION_ORDER.filter((id) => plan.sections[id].length > 0)
 
   return (
-    <article className="mx-auto max-w-5xl px-6 py-8">
+    <article ref={articleRef} className={`relative mx-auto max-w-5xl px-6 py-8 ${live ? 'pb-56 sm:pb-40' : ''}`}>
+      {live && highlightBox && (() => {
+        const scale = highlightBox.narrow ? HIGHLIGHT.narrowScale : 1
+        const chevronSize = Math.round(HIGHLIGHT.chevronSize * scale)
+        const chevronGap = Math.round(HIGHLIGHT.chevronGap * scale)
+        return (
+          <div
+            aria-hidden
+            className="pointer-events-none absolute z-10 transition-all duration-300 ease-out"
+            style={{
+              top: highlightBox.top - HIGHLIGHT.padY,
+              left: highlightBox.left - HIGHLIGHT.padX,
+              width: highlightBox.width + HIGHLIGHT.padX * 2,
+              height: highlightBox.height + HIGHLIGHT.padY * 2,
+            }}
+          >
+            <div
+              className={`h-full w-full border-solid ${currentOver ? 'border-rose-500' : 'border-sky-400'}`}
+              style={{ borderWidth: HIGHLIGHT.borderWidth, borderRadius: HIGHLIGHT.radius }}
+            />
+            <ChevronRight
+              size={chevronSize}
+              strokeWidth={HIGHLIGHT.chevronStroke}
+              className={`absolute top-1/2 -translate-y-1/2 ${currentOver ? 'text-rose-500' : 'text-sky-500'}`}
+              style={{
+                // Left of the box by the chosen gap, but never past the window's left edge.
+                left: Math.max(
+                  -(chevronGap + chevronSize),
+                  2 - (highlightBox.articleLeft + highlightBox.left - HIGHLIGHT.padX),
+                ),
+              }}
+            />
+          </div>
+        )
+      })()}
       <div className="flex flex-wrap items-start justify-between gap-4">
         <h1 className="text-3xl font-bold tracking-tight text-stone-900">{plan.name}</h1>
         <div className="flex flex-wrap items-center gap-2">
@@ -80,13 +250,13 @@ export function SessionViewScreen({ planId, onEdit, onStartLive }: SessionViewSc
           </button>
           <button
             type="button"
-            onClick={onStartLive}
-            disabled={sectionsWithContent.length === 0}
+            onClick={startLive}
+            disabled={sectionsWithContent.length === 0 || live !== null}
             title={sectionsWithContent.length === 0 ? 'Add at least one technique before going live' : undefined}
             className="flex items-center gap-1.5 rounded-md bg-rose-600 px-3.5 py-2 text-sm font-medium text-white transition-colors hover:bg-rose-700 disabled:cursor-not-allowed disabled:bg-stone-200 disabled:text-stone-400"
           >
             <Play size={15} />
-            Start Live Session
+            {live ? 'Session running' : 'Start Live Session'}
           </button>
         </div>
       </div>
@@ -154,7 +324,7 @@ export function SessionViewScreen({ planId, onEdit, onStartLive }: SessionViewSc
                   <table className="w-full min-w-[720px] border-collapse text-left text-sm">
                     <thead>
                       <tr className="border-b border-stone-200 text-[11px] font-semibold uppercase tracking-wide text-stone-400">
-                        <th className="w-[18%] py-2 pr-3 font-semibold">Step</th>
+                        <th className="w-[18%] py-2 pr-3 pl-3 font-semibold">Step</th>
                         <th className="w-[7%] py-2 pr-3 text-right font-semibold">Time</th>
                         <th className="w-[30%] py-2 pr-3 font-semibold">Description</th>
                         <th className="w-[22%] py-2 pr-3 font-semibold">Materials</th>
@@ -171,8 +341,23 @@ export function SessionViewScreen({ planId, onEdit, onStartLive }: SessionViewSc
                         const note = effectiveMaterialsNote(instance, technique)
 
                         return (
-                          <tr key={instanceId} className="border-b border-stone-100 align-top">
-                            <td className="py-2.5 pr-3 font-semibold text-stone-900">
+                          <tr
+                            key={instanceId}
+                            ref={(el) => {
+                              if (el) rowRefs.current.set(instanceId, el)
+                              else rowRefs.current.delete(instanceId)
+                            }}
+                            className={`border-b border-stone-100 align-top transition-colors ${
+                              instanceId === currentStepId
+                                ? currentOver
+                                  ? 'bg-rose-50'
+                                  : 'bg-sky-50'
+                                : live && (stepPosition.get(instanceId) ?? 0) < live.index
+                                  ? 'opacity-45'
+                                  : ''
+                            }`}
+                          >
+                            <td className="py-2.5 pr-3 pl-3 font-semibold text-stone-900">
                               {effectiveName(instance, technique)}
                               {technique && (
                                 <button
@@ -255,6 +440,20 @@ export function SessionViewScreen({ planId, onEdit, onStartLive }: SessionViewSc
             single step needs.
           </p>
         </section>
+      )}
+
+      {live && steps.length > 0 && (
+        <LiveSessionBar
+          steps={steps}
+          index={live.index}
+          stepSeconds={stepSeconds}
+          sessionSeconds={sessionSeconds}
+          running={live.running}
+          onToggle={toggleRunning}
+          onPrev={() => goToStep(Math.max(0, live.index - 1))}
+          onNext={() => goToStep(Math.min(steps.length - 1, live.index + 1))}
+          onEnd={endLive}
+        />
       )}
 
       {infoTechnique && <TechniqueDetailModal technique={infoTechnique} onClose={() => setInfoTechniqueId(null)} />}

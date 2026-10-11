@@ -1,13 +1,12 @@
 import { NotebookPen } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { LibraryScreen } from './components/Library/LibraryScreen'
-import { LiveSessionScreen } from './components/LiveSession/LiveSessionScreen'
 import { SessionBuilderScreen } from './components/SessionBuilder/SessionBuilderScreen'
 import { SessionViewScreen } from './components/SessionView/SessionViewScreen'
 import { TemplatePickerScreen } from './components/TemplatePicker/TemplatePickerScreen'
 import { usePlannerStore } from './store/usePlannerStore'
 
-type View = 'templates' | 'library' | 'view' | 'builder' | 'live'
+type View = 'templates' | 'library' | 'view' | 'builder'
 
 function NavTab({
   active,
@@ -51,10 +50,6 @@ function App() {
   }
 
   const activePlan = plans.find((p) => p.id === activePlanId)
-
-  if (view === 'live' && activePlanId) {
-    return <LiveSessionScreen planId={activePlanId} onEnd={() => setView('view')} />
-  }
 
   return (
     <div className="min-h-screen bg-stone-50">
@@ -104,7 +99,6 @@ function App() {
           <SessionViewScreen
             planId={activePlanId}
             onEdit={() => setView('builder')}
-            onStartLive={() => setView('live')}
           />
         )}
         {view === 'builder' && activePlanId && (
