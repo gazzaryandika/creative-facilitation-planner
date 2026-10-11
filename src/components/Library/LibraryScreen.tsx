@@ -4,7 +4,7 @@ import type { DiamondPhase, ExperienceLevel, Stage, Technique } from '../../data
 import { usePlannerStore } from '../../store/usePlannerStore'
 import { TechniqueDetailModal } from '../TechniqueDetailModal'
 
-const STAGES: Stage[] = ['Diverging', 'Reverging', 'Converging']
+const STAGES: Stage[] = ['Diverging', 'Reverging', 'Converging', 'Multiple']
 const PHASES: DiamondPhase[] = ['Problem Finding', 'Idea Finding', 'Solution Finding']
 const LEVELS: ExperienceLevel[] = ['Novice', 'Intermediate', 'Expert']
 

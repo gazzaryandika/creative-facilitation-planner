@@ -2,7 +2,11 @@
 // Field names and shapes trace back to the Road Map for CPS Techniques book layout
 // as described in the PRD's "Technique entity schema" section — not invented for the app.
 
-export type Stage = 'Diverging' | 'Reverging' | 'Converging'
+/**
+ * 'Multiple' covers techniques that run their own diverge/reverge/converge cycle or fit
+ * any stage — the book's Acceptance Finding (§3.4) and Information Finding (§3.5) techniques.
+ */
+export type Stage = 'Diverging' | 'Reverging' | 'Converging' | 'Multiple'
 
 export type DiamondPhase = 'Problem Finding' | 'Idea Finding' | 'Solution Finding'
 
@@ -70,6 +74,10 @@ export interface Technique {
   stepByStep?: StepByStepEntry[]
   tipsAndTricks?: string
   variants?: string
+  /** History and origins, as summarised from the book's History section. */
+  background?: string
+  /** Excursions only: the book's Table 3.1 safety rating, 1 (risky) to 5 (safe). */
+  safety?: number
   custom: boolean
   source: string
   /** True when stepByStep/tipsAndTricks/variants still need transcribing from the book. */

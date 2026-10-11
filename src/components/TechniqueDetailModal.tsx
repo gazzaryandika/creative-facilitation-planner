@@ -11,7 +11,7 @@ function Field({ label, value }: { label: string; value?: string }) {
   return (
     <div>
       <dt className="text-xs font-medium uppercase tracking-wide text-stone-400">{label}</dt>
-      <dd className="mt-0.5 font-serif text-[15px] text-stone-800">{value}</dd>
+      <dd className="mt-0.5 whitespace-pre-line font-serif text-[15px] text-stone-800">{value}</dd>
     </div>
   )
 }
@@ -75,6 +75,7 @@ export function TechniqueDetailModal({ technique: t, onClose }: TechniqueDetailM
             value={t.time ? `${t.time.minMinutes} to ${t.time.maxMinutes} minutes` : undefined}
           />
           <Field label="Fun-factor" value={t.funFactor} />
+          <Field label="Excursion safety" value={t.safety ? `${t.safety} / 5` : undefined} />
           <Field label="Materials" value={t.materials} />
           <Field label="Website" value={t.website} />
         </dl>
@@ -116,6 +117,7 @@ export function TechniqueDetailModal({ technique: t, onClose }: TechniqueDetailM
 
           <Field label="Tips and tricks" value={t.tipsAndTricks} />
           <Field label="Variants" value={t.variants} />
+          <Field label="Background" value={t.background} />
           <Field label="Source" value={t.source} />
         </div>
       </div>

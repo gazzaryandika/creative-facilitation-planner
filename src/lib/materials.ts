@@ -30,6 +30,7 @@ export const MATERIALS_CATALOG: CatalogItem[] = [
   { id: 'a2-sheets', name: 'A2 sheets', category: 'Paper and surfaces', quantity: 1, scaling: 'perParticipant', reusable: false },
   { id: 'a3-sheets', name: 'A3 sheets', category: 'Paper and surfaces', quantity: 1, scaling: 'perParticipant', reusable: false },
   { id: 'a4-paper', name: 'A4 paper', category: 'Paper and surfaces', quantity: 2, scaling: 'perParticipant', reusable: false },
+  { id: 'worksheets', name: 'Printed worksheets', category: 'Paper and surfaces', quantity: 1, scaling: 'perParticipant', reusable: false },
   { id: 'index-cards', name: 'Index cards', category: 'Paper and surfaces', quantity: 3, scaling: 'perParticipant', reusable: false },
   { id: 'brown-paper-roll', name: 'Brown paper roll', category: 'Paper and surfaces', quantity: 1, scaling: 'fixed', reusable: false },
   { id: 'whiteboard', name: 'Whiteboard', category: 'Paper and surfaces', quantity: 1, scaling: 'fixed', reusable: true },

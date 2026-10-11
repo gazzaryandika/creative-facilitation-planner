@@ -21,3 +21,13 @@ React + TypeScript + Vite, Zustand, dnd-kit, Tailwind v4, `docx` for export. No 
 npm install
 npm run dev
 ```
+
+## Updating the technique library
+
+Book techniques are generated from the Road Map notes in the course's Obsidian vault (one `3.x.y` note per technique in the "Techniques Database" folder). After editing a note, rebuild the seed data:
+
+```bash
+python3 scripts/import-techniques.py "<path to Techniques Database>"
+```
+
+Team-authored techniques (ice breaker, wrap up, etc.) aren't in the vault and are left untouched.
