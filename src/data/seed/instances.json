@@ -1,62 +1,291 @@
 [
   {
-    "id": "instance-ddbb19ee-fc3f-45ba-a533-8451471bd9f5",
-    "techniqueId": "ice-breaker-technique-quiz",
+    "customName": "Welcome, and context of the session",
+    "actualMinutes": 2,
+    "description": "This section is a brief explanation of what Creative facilitation is, and why are they here, thanking them and telling the participant on how long the session will be, and set them in the right mood before welcoming the problem owner to give them the brief",
+    "materialItems": [],
+    "materialsNote": "Mostly talking. Agenda written on a flip chart beforehand",
+    "facilitatorNotes": "Keep it short; the kick-off at 08:30 already introduced Appèl.",
+    "id": "seed-appel-step-01"
+  },
+  {
+    "customName": "The client's Aula story",
+    "actualMinutes": 4,
+    "description": "The community manager tells the brief in her own words: the Aula before COVID (queues, students on the stairs), the renovated seating area opening 4 January, and her dream: \"You really have to rush to get a table.\" The space manager adds one sentence on their role.",
+    "materialItems": [
+      {
+        "catalogId": "printed-brief",
+        "name": "Printed brief / PaG",
+        "quantity": 1,
+        "scaling": "perParticipant"
+      }
+    ],
+    "materialsNote": "Floor plan of the new seating area, if the client has emailed it",
+    "facilitatorNotes": "Ask the community manager beforehand to keep it to 4 minutes and to end on the 'rush to get a table' image. Write the PaG large on the wall before we start.",
+    "id": "seed-appel-step-02"
+  },
+  {
+    "customName": "Ice breaker: Aula line-up",
+    "actualMinutes": 4,
+    "description": "The RG lines up across the space from \"I'm in the Aula every day\" to \"Where is the Aula?\". Each person says one word for how the Aula feels to them outside lunch.",
+    "materialItems": [],
+    "materialsNote": "Nothing to prepare. Uses the space itself",
+    "facilitatorNotes": "The community manager and the space manager just listen: this is the first real data point on who comes and who stays away. Note the words on a Post-it each for later.",
+    "id": "seed-appel-step-03"
+  },
+  {
+    "techniqueId": "brainwriting-with-post-its",
+    "actualMinutes": 6,
+    "description": "Purge on the PaG: everyone writes every idea they already have for getting students into the Aula, one per Post-it, so heads are empty before we analyse the problem.",
+    "facilitatorNotes": "Purge only, no discussion. Stick Post-its up quietly and read a few aloud. Aim for 30+.",
+    "id": "seed-appel-step-04"
+  },
+  {
+    "techniqueId": "5w1h",
     "actualMinutes": 10,
-    "facilitatorNotes": "Four containers, four answers (or a dartboard with four zones, decided on the spot per venue). Keep it quick and light, with no scores."
+    "description": "The community manager and the space manager answer prepared W-questions in front of the RG; RG members add their own student view. Who comes and who stays away? When is it empty? Why don't students stay after lunch? Where do they go instead (Pulse, library, X)? What changes on 4 January? How has it been tried before (meal deal, pizza night, chess group)?",
+    "facilitatorNotes": "Write the questions on the flip chart before the session to save time. One answer per Post-it next to its question. Facts, not ideas: ideas go to the purge wall.\n\nWho\tWho do you usually spend time with on campus between classes?\nWhat\tWhat do you need from a place to stay after lunch: study, chat, eat, play, charge your laptop?\nWhen\tWhen are you on campus with time to kill?\nWhere\tWhere do you go after 2pm, and why there?\nWhy\tWhy don't you stay in the Aula? Did you know you can sit there without buying anything?\nHow\tHow did you find your current favourite spot on campus?",
+    "id": "seed-appel-step-05",
+    "materialItems": [
+      {
+        "catalogId": "post-it-pads",
+        "name": "Post-it pads",
+        "quantity": 1,
+        "scaling": "perParticipant"
+      },
+      {
+        "catalogId": "black-markers",
+        "name": "Black markers",
+        "quantity": 1,
+        "scaling": "perParticipant"
+      },
+      {
+        "catalogId": "flip-over-sheets",
+        "name": "Flip-over sheets",
+        "quantity": 3,
+        "scaling": "fixed"
+      },
+      {
+        "catalogId": "masking-tape",
+        "name": "Masking tape (roll)",
+        "quantity": 1,
+        "scaling": "fixed"
+      }
+    ],
+    "materialsNote": ""
   },
   {
-    "id": "instance-0558069f-3a32-4c78-9e8d-91d48c9f872f",
-    "techniqueId": "mind-mapping",
-    "actualMinutes": 12,
-    "facilitatorNotes": "Problem owner explains the PaG and answers questions. Centre word: \"creativity knowledge\" — confirmed after the mentor session. Prompt the RG twice: once for what's written down (books, named techniques), once for what only passes by example (a mindset, the kind of thing Mark gave students that's in no book)."
+    "customName": "Aula field check",
+    "actualMinutes": 7,
+    "stage": "Diverging",
+    "description": "In pairs, go out into the Aula. Each pair watches for 2 minutes, then asks one student who is there: \"Why are you here right now?\" and \"What would make you come back at 3pm?\" Bring back one surprise each, on a Post-it.",
+    "materialItems": [
+      {
+        "catalogId": "post-it-pads",
+        "name": "Post-it pads",
+        "quantity": 1,
+        "scaling": "perParticipant"
+      },
+      {
+        "catalogId": "black-markers",
+        "name": "Black markers",
+        "quantity": 1,
+        "scaling": "perParticipant"
+      },
+      {
+        "catalogId": "timer",
+        "name": "Timer",
+        "quantity": 1,
+        "scaling": "fixed"
+      }
+    ],
+    "materialsNote": "A phone timer is fine",
+    "facilitatorNotes": "This uses the location: the session is in the Aula itself. Strict 5 minutes out, 2 minutes sharing. If the Aula is empty at that hour, that is the finding: ask pairs to note what they see instead.",
+    "id": "seed-appel-step-06"
   },
   {
-    "id": "instance-cf01ae65-914c-47bd-bade-86cfc4efc67b",
-    "techniqueId": "spontaneous-clustering",
-    "actualMinutes": 8,
-    "facilitatorNotes": "RG was tired after a full day — kept to 8 minutes, well under the book's usual range. Facilitator helps if the RG is slow. Aim for 3 to 6 families; a rest cluster is fine. Many distinct clusters → all go forward to How-To's; few, similar clusters → pick the most outstanding."
+    "techniqueId": "how-tos-or-h2s",
+    "actualMinutes": 7,
+    "description": "Everyone rewrites the problem as \"How to…?\" statements, one per Post-it, building on the purge, the 5W1H answers and the field check. Target: 20+.",
+    "facilitatorNotes": "Shift viewpoints when it slows: \"How would an Applied Sciences student across the bridge phrase it? A first-year who never knew the old Aula? The space manager?\"",
+    "id": "seed-appel-step-07"
   },
   {
-    "id": "instance-generate-how-tos-pap-1a2b3c4d",
-    "techniqueId": "generate-how-tos-and-pap",
+    "techniqueId": "restating-the-problem",
+    "actualMinutes": 7,
+    "description": "The community manager picks 1 to 3 H2s that capture the essence. The RG reworks them into one Problem as Posed and checks it with SPARK. Starting point if needed: \"How might we make the Aula the place where students rush to get a table outside lunch?\"",
+    "facilitatorNotes": "Other drafts from the check-in: \"…give students a daily reason to come to the Aula after lunch?\" and \"…turn students who pass the Aula into students who stay?\" Avoid the 'living room' angle: challenge 2 covers positioning. Write the final PaP large on the wall.",
+    "id": "seed-appel-step-08"
+  },
+  {
+    "customName": "Q&A with the client",
+    "actualMinutes": 4,
+    "facilitatorNotes": "Should let the RG ask as many questions as possible in the limited time timespan",
+    "materialItems": [],
+    "materialsNote": "WRTIE THE PaG on the wall or on the board as big as possible",
+    "description": "The audience have a brief moment going back and forth with the PO to get an understanding and fulfill their curiosity",
+    "id": "seed-appel-step-09"
+  },
+  {
+    "techniqueId": "excursion-visual-stimulation",
     "actualMinutes": 15,
-    "facilitatorNotes": "Default: many clusters → many How-To's, to diverge as much as possible. Few, similar clusters → How-To's only for the most outstanding ones. If the RG stalls after 3 minutes, offer one of the three fallback PaPs. Problem owner confirms the PaP is relevant before it's read aloud and written large."
+    "facilitatorNotes": "Each person will get 1-2 mins with a picture and then the give it to the person on the right and the process repeats again\nAsking questions like :  What observations can you make from this picture? What impressions or reactions can you get? Is there some deeper meaning or some contexts around this picture? ",
+    "materialItems": [
+      {
+        "catalogId": "black-markers",
+        "name": "Black markers",
+        "quantity": 1,
+        "scaling": "perParticipant"
+      },
+      {
+        "catalogId": "flip-over-sheets",
+        "name": "Flip-over sheets",
+        "quantity": 3,
+        "scaling": "fixed"
+      },
+      {
+        "catalogId": "a4-paper",
+        "name": "A4 paper",
+        "quantity": 2,
+        "scaling": "perParticipant"
+      }
+    ],
+    "materialsNote": "",
+    "description": "A more introvert excursion. Pictures send people on a virtual trip in their heads. Their observations get force fitted to the PaP.\n\nUse it to:\n• Tap the non-verbal side of the RG, in a quiet way.\n• Get options beyond the obvious.",
+    "id": "seed-appel-step-10"
   },
   {
-    "id": "instance-purge-on-pap-5e6f7a8b",
+    "techniqueId": "excursion-criminal-round",
+    "actualMinutes": 13,
+    "facilitatorNotes": "",
+    "materialItems": [
+      {
+        "catalogId": "post-it-pads",
+        "name": "Post-it pads",
+        "quantity": 1,
+        "scaling": "perParticipant"
+      },
+      {
+        "catalogId": "black-markers",
+        "name": "Black markers",
+        "quantity": 1,
+        "scaling": "perParticipant"
+      },
+      {
+        "catalogId": "flip-over-sheets",
+        "name": "Flip-over sheets",
+        "quantity": 3,
+        "scaling": "fixed"
+      }
+    ],
+    "materialsNote": "",
+    "description": "Everyone has a secret wish to do forbidden things. Playing with this inside a safe session frees options people normally keep to themselves.\n\nUse it to:\n• Bring energy back into the RG.\n• Get options beyond the obvious.\n• Remove the pressure to produce \"good\" ideas.",
+    "id": "seed-appel-step-11"
+  },
+  {
     "techniqueId": "purge-on-the-pap",
-    "actualMinutes": 10,
-    "facilitatorNotes": "Read a few aloud, no discussion. This empties the obvious so the excursion isn't spent regenerating it."
+    "actualMinutes": 3,
+    "facilitatorNotes": "",
+    "materialItems": [
+      {
+        "catalogId": "post-it-pads",
+        "name": "Post-it pads",
+        "quantity": 1,
+        "scaling": "perParticipant"
+      },
+      {
+        "catalogId": "black-markers",
+        "name": "Black markers",
+        "quantity": 1,
+        "scaling": "perParticipant"
+      },
+      {
+        "catalogId": "pap-printed-large",
+        "name": "PaP / PaG printed large",
+        "quantity": 1,
+        "scaling": "fixed"
+      }
+    ],
+    "materialsNote": "",
+    "description": "Clear the obvious answers, so a following excursion generates options beyond them.",
+    "id": "seed-appel-step-12"
   },
   {
-    "id": "instance-c75125b5-07a2-4637-9058-f5c7512ce557",
-    "techniqueId": "excursion-random-words",
-    "actualMinutes": 15,
-    "facilitatorNotes": "Cool evening outdoors ruled out running the whole session outside, so stayed with Random Words rather than Random Objects. Draw the word with the PaP out of sight; chain each new word from the last answer, not just one layer deep."
-  },
-  {
-    "id": "instance-force-fitting-9c0d1e2f",
-    "techniqueId": "force-fitting-brainsketching",
-    "actualMinutes": 35,
-    "facilitatorNotes": "Pass drawings around and build on them. MATEC was dropped as too complex for this case; mentor confirmed force fitting plus brainsketching as the better combination after the excursion."
-  },
-  {
-    "id": "instance-b47ef5f2-e26e-4eef-b7bd-d3ea99c54608",
-    "techniqueId": "c-box",
-    "actualMinutes": 20,
-    "facilitatorNotes": "Axes: value creation for students vs. student engagement. Sem said he can make a crazy idea work himself, so use a joker card or dot to protect one bold, low-scoring idea. Sem names the options he takes forward and wants something tangible to hand over — a poster or a booklet."
-  },
-  {
-    "id": "instance-wrap-up-3a4b5c6d",
-    "techniqueId": "wrap-up-close",
+    "techniqueId": "hits-or-dots",
     "actualMinutes": 5,
-    "facilitatorNotes": "Thank the RG. Sem reacts as problem owner. Agree what the client receives afterward — the client report needs this agreement up front. Keep the PaP, C-box and chosen idea visible on the wall."
+    "facilitatorNotes": "",
+    "materialItems": [
+      {
+        "catalogId": "dot-stickers",
+        "name": "Dot stickers (sheets)",
+        "quantity": 1,
+        "scaling": "perParticipant"
+      },
+      {
+        "catalogId": "black-markers",
+        "name": "Black markers",
+        "quantity": 1,
+        "scaling": "perParticipant"
+      }
+    ],
+    "materialsNote": "",
+    "description": "A focusing technique built on experience, personal judgment and intuition. One of the most used tools to screen hundreds of options.\n\nUse it to:\n• Screen promising options from a long list.\n• Select options for further work.",
+    "id": "seed-appel-step-13"
   },
   {
-    "id": "instance-reflection-7e8f9a0b",
-    "techniqueId": "reflection-what-so-what-now-what",
+    "techniqueId": "criteria-and-ranking",
     "actualMinutes": 15,
-    "facilitatorNotes": "Each participant answers alone, then shares. Ask Sem to reflect too."
+    "facilitatorNotes": "",
+    "materialItems": [
+      {
+        "catalogId": "black-markers",
+        "name": "Black markers",
+        "quantity": 1,
+        "scaling": "perParticipant"
+      },
+      {
+        "catalogId": "flip-over-sheets",
+        "name": "Flip-over sheets",
+        "quantity": 3,
+        "scaling": "fixed"
+      },
+      {
+        "catalogId": "worksheets",
+        "name": "Printed worksheets",
+        "quantity": 1,
+        "scaling": "perParticipant"
+      }
+    ],
+    "materialsNote": "",
+    "description": "C&R (Criteria & Ranking) helps a group agree on, and then apply, the standards it judges options by.\n\nUse it to:\n• Make evaluation standards explicit and easy to communicate.\n• Understand what makes an option promising.\n• Screen and prioritise promising options.",
+    "id": "seed-appel-step-14"
+  },
+  {
+    "techniqueId": "making-a-poster",
+    "actualMinutes": 10,
+    "facilitatorNotes": "",
+    "materialItems": [
+      {
+        "catalogId": "coloured-markers",
+        "name": "Coloured markers (set)",
+        "quantity": 1,
+        "scaling": "perParticipant"
+      },
+      {
+        "catalogId": "flip-over-sheets",
+        "name": "Flip-over sheets",
+        "quantity": 3,
+        "scaling": "fixed"
+      },
+      {
+        "catalogId": "masking-tape",
+        "name": "Masking tape (roll)",
+        "quantity": 1,
+        "scaling": "fixed"
+      }
+    ],
+    "materialsNote": "",
+    "description": "Turns a fragile idea into a sturdier concept. The poster format makes the RG cover what Acceptance Finding will need (an inspiring name, an explanatory sketch, a short description), which forces them to define the idea and make choices. New questions and challenges usually surface along the way. The finished poster is a strong way to share understanding and start a conversation.\n\nUse it to:\n• Develop options further.\n• Turn abstract ideas and discussion into concrete decisions and concepts.\n• Prepare for Acceptance Finding.",
+    "id": "seed-appel-step-15"
   }
 ]
