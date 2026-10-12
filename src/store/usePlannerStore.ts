@@ -9,6 +9,7 @@ import type {
 import type { Repository } from '../data/repository'
 import type { PlanFile } from '../export/planFile'
 import { emptySections } from '../data/models'
+import { retireRemovedTechniques } from '../data/retiredTechniques'
 
 // Swap this one line for a backend-backed Repository implementation in v2.
 const repository: Repository = new LocalStorageRepository()
@@ -180,7 +181,7 @@ export const usePlannerStore = create<PlannerState>((set, get) => {
     // Fresh ids for the plan and every step, so importing never overwrites anything
     // and the same file can be imported twice.
     const idMap = new Map<string, string>()
-    const instances: TechniqueInstance[] = file.instances.map((inst) => {
+    const instances: TechniqueInstance[] = retireRemovedTechniques(file.instances).map((inst) => {
       const id = newId('instance')
       idMap.set(inst.id, id)
       return { ...inst, id }

@@ -5,10 +5,11 @@ IDEM104 Obsidian vault ("Techniques Database" folder, one 3.x.y note per techniq
 
     python3 scripts/import-techniques.py "<path to Techniques Database>"
 
-Book techniques are regenerated from the notes on every run. Team-authored and
-derived techniques (anything without a matching note, e.g. Ice breaker, C-Box,
-Wrap up) are kept exactly as they are in the current JSON. Ids already used in
-the JSON are kept, so seed templates and saved plans keep resolving.
+The library holds book techniques only: the JSON is rebuilt from the notes on
+every run, and anything without a matching note is dropped. Ids already used are
+kept, so seed templates and saved plans keep resolving. Steps in saved plans that
+point at a technique no longer in the library are turned into write-your-own steps
+by the app on load (see src/data/seed/retiredTechniques.json).
 """
 
 import glob
@@ -291,8 +292,7 @@ def main():
             if old.get("materialsNote"):
                 t["materialsNote"] = old["materialsNote"]
 
-    kept = [t for t in existing if t["id"] not in book_ids]
-    out = book + kept
+    out = book
     ids = [t["id"] for t in out]
     assert len(ids) == len(set(ids)), "duplicate technique ids"
 
@@ -300,7 +300,8 @@ def main():
         f.write(format_json(out) + "\n")
     missing = [t["name"] for t in book if "headerImage" not in t]
     print(f"{len(book) - len(missing)} header images cropped" + (f"; none for: {', '.join(missing)}" if missing else ""))
-    print(f"{len(book)} book techniques from the vault, {len(kept)} team/derived techniques kept, {len(out)} total")
+    dropped = [t["id"] for t in existing if t["id"] not in book_ids]
+    print(f"{len(out)} book techniques from the vault" + (f"; dropped: {', '.join(dropped)}" if dropped else ""))
 
 
 def format_json(value, indent=0):
