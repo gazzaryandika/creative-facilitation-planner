@@ -246,7 +246,7 @@ export function SessionViewScreen({ planId, onEdit }: SessionViewScreenProps) {
             className="flex items-center gap-1.5 rounded-md bg-teal-700 px-3.5 py-2 text-sm font-medium text-white transition-colors hover:bg-teal-800"
           >
             <Pencil size={15} />
-            Edit
+            {plan.isSeedTemplate ? 'Edit a copy' : 'Edit'}
           </button>
           <button
             type="button"
@@ -260,6 +260,13 @@ export function SessionViewScreen({ planId, onEdit }: SessionViewScreenProps) {
           </button>
         </div>
       </div>
+
+      {plan.isSeedTemplate && (
+        <p className="mt-3 rounded-lg border border-teal-200 bg-teal-50 px-3.5 py-2.5 text-sm text-teal-900">
+          <strong>This is the demo plan.</strong> Look around, open the ⓘ next to a technique, or press Start Live
+          Session to try the timer. “Edit a copy” makes your own version; the demo stays as it is.
+        </p>
+      )}
 
       <p className="mt-1 text-sm text-stone-500">
         RG of <span className="font-semibold tabular-nums text-stone-700">{plan.participantCount}</span> participants

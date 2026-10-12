@@ -41,11 +41,19 @@ function upsertById<T extends { id: string }>(existing: T[], updates: T[]): T[] 
  */
 function syncSeedData(): void {
   write(KEYS.techniques, seedTechniques as Technique[])
-  write(KEYS.plans, upsertById(read<SessionPlan[]>(KEYS.plans, []), seedTemplates as SessionPlan[]))
-  write(
-    KEYS.instances,
-    upsertById(read<TechniqueInstance[]>(KEYS.instances, []), seedInstances as TechniqueInstance[]),
-  )
+
+  // Seed templates that were retired from the seed file are removed with their steps.
+  // Only built-in templates go: a user's own plans (and clones of templates, which
+  // have their own ids) are never touched.
+  const seedIds = new Set((seedTemplates as SessionPlan[]).map((p) => p.id))
+  const storedPlans = read<SessionPlan[]>(KEYS.plans, [])
+  const retired = storedPlans.filter((p) => p.isSeedTemplate && !seedIds.has(p.id))
+  const retiredSteps = new Set(retired.flatMap((p) => Object.values(p.sections ?? {}).flat()))
+  const keptPlans = storedPlans.filter((p) => !retired.includes(p))
+  const keptSteps = read<TechniqueInstance[]>(KEYS.instances, []).filter((i) => !retiredSteps.has(i.id))
+
+  write(KEYS.plans, upsertById(keptPlans, seedTemplates as SessionPlan[]))
+  write(KEYS.instances, upsertById(keptSteps, seedInstances as TechniqueInstance[]))
 }
 
 const DEFAULT_PARTICIPANT_COUNT = 6
