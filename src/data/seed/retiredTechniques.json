@@ -1,0 +1,191 @@
+{
+  "mind-mapping": {
+    "name": "Mind Mapping",
+    "stage": "Diverging",
+    "description": "Explores a vague term in the PaG by writing whatever it brings to mind, one word per Post-it, connected by lines — surfaces both what's written down (books, named techniques) and what only passes by example (a mindset, a way of working no book captures).",
+    "materialItems": [
+      {
+        "catalogId": "flip-over-sheets",
+        "name": "Flip-over sheets",
+        "quantity": 1,
+        "scaling": "fixed"
+      },
+      {
+        "catalogId": "post-it-pads",
+        "name": "Post-it pads",
+        "quantity": 1,
+        "scaling": "perParticipant"
+      },
+      {
+        "catalogId": "black-markers",
+        "name": "Black markers",
+        "quantity": 1,
+        "scaling": "perParticipant"
+      },
+      {
+        "catalogId": "coloured-markers",
+        "name": "Coloured markers (set)",
+        "quantity": 1,
+        "scaling": "perParticipant"
+      },
+      {
+        "catalogId": "pap-printed-large",
+        "name": "PaP / PaG printed large",
+        "quantity": 1,
+        "scaling": "fixed"
+      }
+    ],
+    "materialsNote": "Wall space; an A2 sheet works instead of flip-over"
+  },
+  "force-fitting-brainsketching": {
+    "name": "Force Fitting and interactive brainsketching",
+    "stage": "Diverging",
+    "description": "Produces many rough visual ideas, each tied to the PaP through the excursion.",
+    "materialItems": [
+      {
+        "catalogId": "a4-paper",
+        "name": "A4 paper",
+        "quantity": 2,
+        "scaling": "perParticipant"
+      },
+      {
+        "catalogId": "black-markers",
+        "name": "Black markers",
+        "quantity": 1,
+        "scaling": "perParticipant"
+      },
+      {
+        "catalogId": "pap-printed-large",
+        "name": "PaP / PaG printed large",
+        "quantity": 1,
+        "scaling": "fixed"
+      }
+    ],
+    "materialsNote": "Pencils work instead of markers"
+  },
+  "c-box": {
+    "name": "C-Box",
+    "stage": "Reverging",
+    "description": "Selects ideas worth building and worth trying, without losing a bold one.",
+    "materialItems": [
+      {
+        "catalogId": "flip-over-sheets",
+        "name": "Flip-over sheets",
+        "quantity": 1,
+        "scaling": "fixed"
+      },
+      {
+        "catalogId": "dot-stickers",
+        "name": "Dot stickers (sheets)",
+        "quantity": 1,
+        "scaling": "perParticipant"
+      },
+      {
+        "catalogId": "black-markers",
+        "name": "Black markers",
+        "quantity": 1,
+        "scaling": "perParticipant"
+      }
+    ],
+    "materialsNote": "C-box drawn large on paper or a whiteboard"
+  },
+  "ice-breaker-technique-quiz": {
+    "name": "Ice breaker: throw the answer",
+    "stage": "Diverging",
+    "description": "Set the mood. Show the value of preserved knowledge and why passing it on matters.",
+    "materialItems": [
+      {
+        "name": "Paper balls",
+        "quantity": 1,
+        "scaling": "perParticipant"
+      },
+      {
+        "name": "Labelled containers",
+        "quantity": 4,
+        "scaling": "fixed"
+      },
+      {
+        "name": "Method description cards (set)",
+        "quantity": 1,
+        "scaling": "fixed"
+      }
+    ],
+    "materialsNote": "A dartboard works instead of containers"
+  },
+  "purge-on-the-pap": {
+    "name": "Purge on the PaP",
+    "stage": "Diverging",
+    "description": "Clear the obvious answers, so a following excursion generates options beyond them.",
+    "materialItems": [
+      {
+        "catalogId": "post-it-pads",
+        "name": "Post-it pads",
+        "quantity": 1,
+        "scaling": "perParticipant"
+      },
+      {
+        "catalogId": "black-markers",
+        "name": "Black markers",
+        "quantity": 1,
+        "scaling": "perParticipant"
+      },
+      {
+        "catalogId": "pap-printed-large",
+        "name": "PaP / PaG printed large",
+        "quantity": 1,
+        "scaling": "fixed"
+      }
+    ]
+  },
+  "generate-how-tos-and-pap": {
+    "name": "Generate How-To's and the PaP",
+    "stage": "Diverging",
+    "description": "Turns clustered output into a set of How-To's, then one PaP checked against SPARK.",
+    "materialItems": [
+      {
+        "catalogId": "post-it-pads",
+        "name": "Post-it pads",
+        "quantity": 1,
+        "scaling": "perParticipant"
+      },
+      {
+        "catalogId": "black-markers",
+        "name": "Black markers",
+        "quantity": 1,
+        "scaling": "perParticipant"
+      },
+      {
+        "catalogId": "flip-over-sheets",
+        "name": "Flip-over sheets",
+        "quantity": 2,
+        "scaling": "fixed"
+      }
+    ],
+    "materialsNote": "Or wall space for the PaP"
+  },
+  "wrap-up-close": {
+    "name": "Wrap up",
+    "stage": "Converging",
+    "description": "Close the session and agree the follow-up.",
+    "materialsNote": "Keep the PaP, C-box and chosen idea visible on the wall."
+  },
+  "reflection-what-so-what-now-what": {
+    "name": "Reflection: What? So What? Now What?",
+    "stage": "Converging",
+    "description": "Participants name what they learned.",
+    "materialItems": [
+      {
+        "catalogId": "index-cards",
+        "name": "Index cards",
+        "quantity": 2,
+        "scaling": "perParticipant"
+      },
+      {
+        "catalogId": "pens",
+        "name": "Pens",
+        "quantity": 1,
+        "scaling": "perParticipant"
+      }
+    ]
+  }
+}

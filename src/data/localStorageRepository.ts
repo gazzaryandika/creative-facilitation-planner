@@ -1,4 +1,5 @@
 import type { Repository } from './repository'
+import { retireRemovedTechniques } from './retiredTechniques'
 import type { SessionPlan, Technique, TechniqueInstance } from './models'
 import seedInstances from './seed/instances.json'
 import seedTechniques from './seed/techniques.json'
@@ -50,7 +51,9 @@ function syncSeedData(): void {
   const retired = storedPlans.filter((p) => p.isSeedTemplate && !seedIds.has(p.id))
   const retiredSteps = new Set(retired.flatMap((p) => Object.values(p.sections ?? {}).flat()))
   const keptPlans = storedPlans.filter((p) => !retired.includes(p))
-  const keptSteps = read<TechniqueInstance[]>(KEYS.instances, []).filter((i) => !retiredSteps.has(i.id))
+  const keptSteps = retireRemovedTechniques(
+    read<TechniqueInstance[]>(KEYS.instances, []).filter((i) => !retiredSteps.has(i.id)),
+  )
 
   write(KEYS.plans, upsertById(keptPlans, seedTemplates as SessionPlan[]))
   write(KEYS.instances, upsertById(keptSteps, seedInstances as TechniqueInstance[]))

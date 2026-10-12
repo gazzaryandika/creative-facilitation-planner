@@ -3,15 +3,16 @@
     "customName": "Welcome, and context of the session",
     "actualMinutes": 2,
     "description": "This section is a brief explanation of what Creative facilitation is, and why are they here, thanking them and telling the participant on how long the session will be, and set them in the right mood before welcoming the problem owner to give them the brief",
+    "facilitatorNotes": "Keep it short; the kick-off at 08:30 already introduced Appèl.",
     "materialItems": [],
     "materialsNote": "Mostly talking. Agenda written on a flip chart beforehand",
-    "facilitatorNotes": "Keep it short; the kick-off at 08:30 already introduced Appèl.",
     "id": "seed-appel-step-01"
   },
   {
     "customName": "The client's Aula story",
     "actualMinutes": 4,
     "description": "The community manager tells the brief in her own words: the Aula before COVID (queues, students on the stairs), the renovated seating area opening 4 January, and her dream: \"You really have to rush to get a table.\" The space manager adds one sentence on their role.",
+    "facilitatorNotes": "Ask the community manager beforehand to keep it to 4 minutes and to end on the 'rush to get a table' image. Write the PaG large on the wall before we start.",
     "materialItems": [
       {
         "catalogId": "printed-brief",
@@ -21,16 +22,15 @@
       }
     ],
     "materialsNote": "Floor plan of the new seating area, if the client has emailed it",
-    "facilitatorNotes": "Ask the community manager beforehand to keep it to 4 minutes and to end on the 'rush to get a table' image. Write the PaG large on the wall before we start.",
     "id": "seed-appel-step-02"
   },
   {
     "customName": "Ice breaker: Aula line-up",
     "actualMinutes": 4,
     "description": "The RG lines up across the space from \"I'm in the Aula every day\" to \"Where is the Aula?\". Each person says one word for how the Aula feels to them outside lunch.",
+    "facilitatorNotes": "The community manager and the space manager just listen: this is the first real data point on who comes and who stays away. Note the words on a Post-it each for later.",
     "materialItems": [],
     "materialsNote": "Nothing to prepare. Uses the space itself",
-    "facilitatorNotes": "The community manager and the space manager just listen: this is the first real data point on who comes and who stays away. Note the words on a Post-it each for later.",
     "id": "seed-appel-step-03"
   },
   {
@@ -45,7 +45,6 @@
     "actualMinutes": 10,
     "description": "The community manager and the space manager answer prepared W-questions in front of the RG; RG members add their own student view. Who comes and who stays away? When is it empty? Why don't students stay after lunch? Where do they go instead (Pulse, library, X)? What changes on 4 January? How has it been tried before (meal deal, pizza night, chess group)?",
     "facilitatorNotes": "Write the questions on the flip chart before the session to save time. One answer per Post-it next to its question. Facts, not ideas: ideas go to the purge wall.\n\nWho\tWho do you usually spend time with on campus between classes?\nWhat\tWhat do you need from a place to stay after lunch: study, chat, eat, play, charge your laptop?\nWhen\tWhen are you on campus with time to kill?\nWhere\tWhere do you go after 2pm, and why there?\nWhy\tWhy don't you stay in the Aula? Did you know you can sit there without buying anything?\nHow\tHow did you find your current favourite spot on campus?",
-    "id": "seed-appel-step-05",
     "materialItems": [
       {
         "catalogId": "post-it-pads",
@@ -72,13 +71,15 @@
         "scaling": "fixed"
       }
     ],
-    "materialsNote": ""
+    "materialsNote": "",
+    "id": "seed-appel-step-05"
   },
   {
     "customName": "Aula field check",
-    "actualMinutes": 7,
     "stage": "Diverging",
+    "actualMinutes": 7,
     "description": "In pairs, go out into the Aula. Each pair watches for 2 minutes, then asks one student who is there: \"Why are you here right now?\" and \"What would make you come back at 3pm?\" Bring back one surprise each, on a Post-it.",
+    "facilitatorNotes": "This uses the location: the session is in the Aula itself. Strict 5 minutes out, 2 minutes sharing. If the Aula is empty at that hour, that is the finding: ask pairs to note what they see instead.",
     "materialItems": [
       {
         "catalogId": "post-it-pads",
@@ -100,7 +101,6 @@
       }
     ],
     "materialsNote": "A phone timer is fine",
-    "facilitatorNotes": "This uses the location: the session is in the Aula itself. Strict 5 minutes out, 2 minutes sharing. If the Aula is empty at that hour, that is the finding: ask pairs to note what they see instead.",
     "id": "seed-appel-step-06"
   },
   {
@@ -120,15 +120,16 @@
   {
     "customName": "Q&A with the client",
     "actualMinutes": 4,
+    "description": "The audience have a brief moment going back and forth with the PO to get an understanding and fulfill their curiosity",
     "facilitatorNotes": "Should let the RG ask as many questions as possible in the limited time timespan",
     "materialItems": [],
     "materialsNote": "WRTIE THE PaG on the wall or on the board as big as possible",
-    "description": "The audience have a brief moment going back and forth with the PO to get an understanding and fulfill their curiosity",
     "id": "seed-appel-step-09"
   },
   {
     "techniqueId": "excursion-visual-stimulation",
     "actualMinutes": 15,
+    "description": "A more introvert excursion. Pictures send people on a virtual trip in their heads. Their observations get force fitted to the PaP.\n\nUse it to:\n• Tap the non-verbal side of the RG, in a quiet way.\n• Get options beyond the obvious.",
     "facilitatorNotes": "Each person will get 1-2 mins with a picture and then the give it to the person on the right and the process repeats again\nAsking questions like :  What observations can you make from this picture? What impressions or reactions can you get? Is there some deeper meaning or some contexts around this picture? ",
     "materialItems": [
       {
@@ -151,12 +152,12 @@
       }
     ],
     "materialsNote": "",
-    "description": "A more introvert excursion. Pictures send people on a virtual trip in their heads. Their observations get force fitted to the PaP.\n\nUse it to:\n• Tap the non-verbal side of the RG, in a quiet way.\n• Get options beyond the obvious.",
     "id": "seed-appel-step-10"
   },
   {
     "techniqueId": "excursion-criminal-round",
     "actualMinutes": 13,
+    "description": "Everyone has a secret wish to do forbidden things. Playing with this inside a safe session frees options people normally keep to themselves.\n\nUse it to:\n• Bring energy back into the RG.\n• Get options beyond the obvious.\n• Remove the pressure to produce \"good\" ideas.",
     "facilitatorNotes": "",
     "materialItems": [
       {
@@ -179,12 +180,13 @@
       }
     ],
     "materialsNote": "",
-    "description": "Everyone has a secret wish to do forbidden things. Playing with this inside a safe session frees options people normally keep to themselves.\n\nUse it to:\n• Bring energy back into the RG.\n• Get options beyond the obvious.\n• Remove the pressure to produce \"good\" ideas.",
     "id": "seed-appel-step-11"
   },
   {
-    "techniqueId": "purge-on-the-pap",
+    "customName": "Purge on the PaP",
+    "stage": "Diverging",
     "actualMinutes": 3,
+    "description": "Clear the obvious answers, so a following excursion generates options beyond them.",
     "facilitatorNotes": "",
     "materialItems": [
       {
@@ -207,12 +209,12 @@
       }
     ],
     "materialsNote": "",
-    "description": "Clear the obvious answers, so a following excursion generates options beyond them.",
     "id": "seed-appel-step-12"
   },
   {
     "techniqueId": "hits-or-dots",
     "actualMinutes": 5,
+    "description": "A focusing technique built on experience, personal judgment and intuition. One of the most used tools to screen hundreds of options.\n\nUse it to:\n• Screen promising options from a long list.\n• Select options for further work.",
     "facilitatorNotes": "",
     "materialItems": [
       {
@@ -229,12 +231,12 @@
       }
     ],
     "materialsNote": "",
-    "description": "A focusing technique built on experience, personal judgment and intuition. One of the most used tools to screen hundreds of options.\n\nUse it to:\n• Screen promising options from a long list.\n• Select options for further work.",
     "id": "seed-appel-step-13"
   },
   {
     "techniqueId": "criteria-and-ranking",
     "actualMinutes": 15,
+    "description": "C&R (Criteria & Ranking) helps a group agree on, and then apply, the standards it judges options by.\n\nUse it to:\n• Make evaluation standards explicit and easy to communicate.\n• Understand what makes an option promising.\n• Screen and prioritise promising options.",
     "facilitatorNotes": "",
     "materialItems": [
       {
@@ -257,12 +259,12 @@
       }
     ],
     "materialsNote": "",
-    "description": "C&R (Criteria & Ranking) helps a group agree on, and then apply, the standards it judges options by.\n\nUse it to:\n• Make evaluation standards explicit and easy to communicate.\n• Understand what makes an option promising.\n• Screen and prioritise promising options.",
     "id": "seed-appel-step-14"
   },
   {
     "techniqueId": "making-a-poster",
     "actualMinutes": 10,
+    "description": "Turns a fragile idea into a sturdier concept. The poster format makes the RG cover what Acceptance Finding will need (an inspiring name, an explanatory sketch, a short description), which forces them to define the idea and make choices. New questions and challenges usually surface along the way. The finished poster is a strong way to share understanding and start a conversation.\n\nUse it to:\n• Develop options further.\n• Turn abstract ideas and discussion into concrete decisions and concepts.\n• Prepare for Acceptance Finding.",
     "facilitatorNotes": "",
     "materialItems": [
       {
@@ -285,7 +287,6 @@
       }
     ],
     "materialsNote": "",
-    "description": "Turns a fragile idea into a sturdier concept. The poster format makes the RG cover what Acceptance Finding will need (an inspiring name, an explanatory sketch, a short description), which forces them to define the idea and make choices. New questions and challenges usually surface along the way. The finished poster is a strong way to share understanding and start a conversation.\n\nUse it to:\n• Develop options further.\n• Turn abstract ideas and discussion into concrete decisions and concepts.\n• Prepare for Acceptance Finding.",
     "id": "seed-appel-step-15"
   }
 ]
