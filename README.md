@@ -1,6 +1,6 @@
 # Creative Facilitation Session Planner
 
-A session planner for IDEM104 Creative Facilitation at TU Delft, built from the course's *Road Map for CPS Techniques* book. Stores facilitation techniques as structured data — stage, diamond phase, time, materials, step-by-step, tips — and lets a facilitator assemble them into a timed session plan instead of writing one from scratch in a document every time.
+A personal project: a session planner for creative facilitation, built independently around the *Road Map for CPS Techniques* book (the course book of IDEM104 Creative Facilitation at TU Delft). Stores facilitation techniques as structured data — stage, diamond phase, time, materials, step-by-step, tips — and lets a facilitator assemble them into a timed session plan instead of writing one from scratch in a document every time.
 
 **Live demo:** https://gazzaryandika.github.io/creative-facilitation-planner/
 
