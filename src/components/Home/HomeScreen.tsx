@@ -245,7 +245,7 @@ export function HomeScreen({ onStartPlanning, onOpenLibrary, onOpenPlan }: HomeS
           </p>
           <p className="mt-3 flex items-center gap-1.5 text-sm text-stone-500">
             <CalendarClock size={15} />
-            Built as a student project for IDEM104, 2026.
+            A personal project, built independently in 2026.
           </p>
         </section>
 
